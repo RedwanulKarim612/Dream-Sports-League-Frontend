@@ -1,21 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import _, { set } from "lodash";
+import _, { set, update } from "lodash";
 import { getBuildSquad } from "../../api/User";
+import { TeamContext } from "./TeamContext";
 
 
 const PositionTable = ({position, players, maxNumber}) => {
+    const [team, updateTeam] = useContext(TeamContext);
     const [selectedPlayer, setSelectedPlayer] = useState(players);
     const handleRemovePlayer = (id) => {
         const newList = selectedPlayer.filter((player) => player.id !== id);
         setSelectedPlayer(newList);
+        if(position === "Goalkeepers"){
+            team.goalkeepers = newList;
+            updateTeam(team);
+        }
+        else if(position === "Defenders"){
+            team.defenders = newList;
+            updateTeam(team);
+        }
+        else if(position === "Midfielders"){
+            team.midfielders = newList;
+            updateTeam(team);
+        }
+        else if(position === "Forwards"){
+            team.forwards = newList;
+            updateTeam(team);
+        }
+        console.log(team);
     }
     const handleAddPlayer = () => {
-
+        console.log(team);
     }
     return(
         <div>
@@ -71,15 +90,23 @@ const PositionTable = ({position, players, maxNumber}) => {
 }
 
 const BuildSquad = () => {
-    const [players, setPlayers] = useState(null);
-    useEffect(() => {
-        getBuildSquad().then(res => {
-            setPlayers(res.players);
-        });
-    }, []);
+    // const msg = useContext(TeamContext);
+    const [players, setPlayers] = useContext(TeamContext);
+    // useEffect(() => {
+    //     getBuildSquad().then(res => {
+    //         setPlayers(res.players);
+    //     });
+    // }, []);
+
+    const handleReset = () => {
+        setPlayers(null);
+        localStorage.removeItem('team');
+        window.location.reload();
+    }
     if(!players) {
         return <div>Loading...</div>
     }
+    console.log(players);
     return(
     <div>
         <Navbar />
@@ -89,6 +116,7 @@ const BuildSquad = () => {
             <PositionTable position="Midfielders" players={players.midfielders} maxNumber={5}/>
             <PositionTable position="Forwards" players={players.forwards} maxNumber={4}/>    
         </div>
+        <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleReset()}}>Reset</Button>
     </div>
     );
 }
