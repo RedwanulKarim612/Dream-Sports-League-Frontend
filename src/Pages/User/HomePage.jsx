@@ -7,7 +7,7 @@ const HomePage = () => {
     const [teams, setTeams] = useState(null);
     useEffect(() => {
         getHomePage().then(res => {
-            setTeams(res);
+            setTeams(res.top_teams);
         });
     },[]);
     console.log(teams);

@@ -11,3 +11,8 @@ export const getHomePage = async () => {
     const response = await axios.get(`${URL}`);
     return response.data;
 }
+
+export const getBuildSquad = async () => {
+    const response = await axios.get(`${URL}/squad`);
+    return response.data;
+}
