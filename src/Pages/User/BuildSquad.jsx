@@ -1,39 +1,41 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import _, { set, update } from "lodash";
-import { getBuildSquad } from "../../api/User";
 import { TeamContext } from "./TeamContext";
-
+import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const PositionTable = ({position, players, maxNumber}) => {
     const [team, updateTeam] = useContext(TeamContext);
     const [selectedPlayer, setSelectedPlayer] = useState(players);
+    const navigate = useNavigate();
     const handleRemovePlayer = (id) => {
         const newList = selectedPlayer.filter((player) => player.id !== id);
         setSelectedPlayer(newList);
         if(position === "Goalkeepers"){
-            team.goalkeepers = newList;
+            team.players.goalkeepers = newList;
             updateTeam(team);
         }
         else if(position === "Defenders"){
-            team.defenders = newList;
+            team.players.defenders = newList;
             updateTeam(team);
         }
         else if(position === "Midfielders"){
-            team.midfielders = newList;
+            team.players.midfielders = newList;
             updateTeam(team);
         }
         else if(position === "Forwards"){
-            team.forwards = newList;
+            team.players.forwards = newList;
             updateTeam(team);
         }
         console.log(team);
     }
     const handleAddPlayer = () => {
+        let pos = position.toLowerCase();
+        pos = pos.substring(0, pos.length-1);
+        navigate(`/squad/selectplayer/${pos}`);
         console.log(team);
     }
     return(
@@ -91,7 +93,7 @@ const PositionTable = ({position, players, maxNumber}) => {
 
 const BuildSquad = () => {
     // const msg = useContext(TeamContext);
-    const [players, setPlayers] = useContext(TeamContext);
+    const [team, setTeam] = useContext(TeamContext);
     // useEffect(() => {
     //     getBuildSquad().then(res => {
     //         setPlayers(res.players);
@@ -99,22 +101,22 @@ const BuildSquad = () => {
     // }, []);
 
     const handleReset = () => {
-        setPlayers(null);
+        setTeam(null)
         localStorage.removeItem('team');
         window.location.reload();
     }
-    if(!players) {
+    if(!team) {
         return <div>Loading...</div>
     }
-    console.log(players);
+    console.log(team);
     return(
     <div>
         <Navbar />
         <div style={{marginLeft: '20px'}}>
-            <PositionTable position="Goalkeepers" players={players.goalkeepers} maxNumber={2}/>
-            <PositionTable position="Defenders" players={players.defenders} maxNumber={5}/>
-            <PositionTable position="Midfielders" players={players.midfielders} maxNumber={5}/>
-            <PositionTable position="Forwards" players={players.forwards} maxNumber={4}/>    
+            <PositionTable position="Goalkeepers" players={team.players.goalkeepers} maxNumber={2}/>
+            <PositionTable position="Defenders" players={team.players.defenders} maxNumber={5}/>
+            <PositionTable position="Midfielders" players={team.players.midfielders} maxNumber={5}/>
+            <PositionTable position="Forwards" players={team.players.forwards} maxNumber={4}/>    
         </div>
         <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleReset()}}>Reset</Button>
     </div>

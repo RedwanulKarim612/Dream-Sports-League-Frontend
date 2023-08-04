@@ -13,7 +13,10 @@ const App = () => {
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/squad" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
-                <Route path="/squad/selectplayer" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
+                <Route path="/squad/selectplayer/goalkeeper" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
+                <Route path="/squad/selectplayer/defender" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
+                <Route path="/squad/selectplayer/midfielder" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
+                <Route path="/squad/selectplayer/forward" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
             </Routes>
         </div>
     );

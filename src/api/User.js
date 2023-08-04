@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'https://394c7c8d-7410-4a5e-9786-74676472ed4c.mock.pstmn.io/api'
+const URL = 'http://localhost:8080/api'
 
 export const getUserInfo = async () => {
     const response = await axios.get(`${URL}/profile`);
@@ -14,5 +14,10 @@ export const getHomePage = async () => {
 
 export const getBuildSquad = async () => {
     const response = await axios.get(`${URL}/squad`);
+    return response.data;
+}
+
+export const getPlayerList = async (pos) => {
+    const response = await axios.get(`${URL}/squad/selectplayer/goalkeeper`);
     return response.data;
 }
