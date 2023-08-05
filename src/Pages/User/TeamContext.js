@@ -21,7 +21,7 @@ export const calculateBudget = (team) => {
 }
 
 export const TeamProvider = ({ children }) => {
-    const [team, setTeam] = useState(null);
+    let [team, setTeam] = useState(null);
     useEffect(() => {
         const lt = localStorage.getItem("team");
         const localTeam = JSON.parse(lt);
@@ -30,13 +30,13 @@ export const TeamProvider = ({ children }) => {
                                         localTeam.players.midfielders.length + 
                                         localTeam.players.forwards.length > 0){
             console.log("fetching team players from local storage");
-            setTeam(localTeam);
+            updateTeam(localTeam);
         }
         else{
             getBuildSquad().then(res => {
                 console.log("fetching team players from server");
                 console.log(res);
-                setTeam(res);
+                updateTeam(res);
                 // console.log(team.budget);
                 localStorage.setItem("team", JSON.stringify(team));
             });

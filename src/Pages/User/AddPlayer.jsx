@@ -7,12 +7,15 @@ import _ from "lodash";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Navbar from "../../Components/Navbar";
+import { BudgetInfo } from "./BuildSquad";
 
 const AddPlayerPage = () => {
     const [team, updateTeam] = useContext(TeamContext);
     const navigate = useNavigate();
     const [players, setPlayers] = useState([]);
     const [selectedPlayers, setSelectedPlayers] = useState([]);
+    const [confirmDisabled, setConfirmDisabled] = useState(false);
+    const [remainingBudget, setRemainingBudget] = useState(team.budget);
     const qlink = window.location.href;
     const tokens = qlink.split('/');
 
@@ -25,8 +28,13 @@ const AddPlayerPage = () => {
     },[]);
     
     const handleSelectPlayer = (row) => {
-            const newPlayer = {
-            id: 1,
+        for(let i=0; i<selectedPlayers.length; i++){
+            if(selectedPlayers[i].id===row.id){
+                return;
+            }
+        }
+            let newPlayer = {
+            id: row.id,
             name: row.name,
             team: row.team,
             overall: row.overall,
@@ -36,35 +44,61 @@ const AddPlayerPage = () => {
         }
         selectedPlayers.push(newPlayer);
         setSelectedPlayers(selectedPlayers);
-        console.log(selectedPlayers)
+        setRemainingBudget(remainingBudget-row.price);
+        console.log(selectedPlayers);
+        if(pos==="goalkeeper"){
+            if(team.players.goalkeepers.length+selectedPlayers.length>2){
+                setConfirmDisabled(true);
+            }
+        }
+        else if(pos==="defender"){
+            if(team.players.defenders.length+selectedPlayers.length>5){
+                setConfirmDisabled(true);
+            }
+        }
+        else if(pos==="midfielder"){
+            if(team.players.midfielders.length+selectedPlayers.length>5){
+                setConfirmDisabled(true);
+            }
+        }
+        else if(pos==="forward"){
+            if(team.players.forwards.length+selectedPlayers.length>3){
+                setConfirmDisabled(true);
+            }
+        }
     }
-    console.log(pos);
-    console.log(players)
-    // console.log(team)
+
+    const handleCancel = () => {
+        navigate("/squad");
+    }
+
+    const handleConfirm = () => {
+        if(pos==="goalkeeper"){
+            team.players.goalkeepers = team.players.goalkeepers.concat(selectedPlayers);
+        }
+        else if(pos==="defender"){
+            team.players.defenders = team.players.defenders.concat(selectedPlayers);
+        }
+        else if(pos==="midfielder"){
+            team.players.midfielders = team.players.midfielders.concat(selectedPlayers);
+        }
+        else if(pos==="forward"){
+            team.players.forwards = team.players.forwards.concat(selectedPlayers);
+        }
+        updateTeam(team);
+        navigate("/squad");
+        console.log(team);
+    }
+   
     if(players.length===0 || !team) {
         return <div>Loading...</div>;
     }
     console.log(team)
-    // const addNewPlayer = () => {
-    //     const newPlayer = {
-    //         id: 1,
-    //         name: "test",
-    //         team: "test",
-    //         overall: 1,
-    //         price: 1,
-    //         totalPoints: 1,
-    //         position: "Goalkeeper"
-    //     }
-    //     if(newPlayer.position === "Goalkeeper"){
-    //         team.goalkeepers.push(newPlayer);
-    //         updateTeam(team);
-    //     }
-    //     navigate("/squad");
-    // }
-    // // console.log(team);
+    
     return (
         <div>
         <Navbar />
+        <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
         <TableContainer style={{ width: 800}}>
         <Table aria-label="simple table">
             <TableHead>
@@ -86,16 +120,19 @@ const AddPlayerPage = () => {
                         <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.totalPoints}</TableCell>
                         <TableCell>
-                            <IconButton color="success" disabled={row.available==0 || row.price>team.budget?true:false} onClick={()=>{handleSelectPlayer(row)}}>
+                            <IconButton color="success" disabled={row.available==0 || row.price>remainingBudget?true:false} onClick={()=>{handleSelectPlayer(row)}}>
                                 <AddCircleIcon />
                             </IconButton>
                         </TableCell>
-                        
                     </TableRow>
                 ))}
             </TableBody>
         </Table>
         </TableContainer>
+        <div>
+            <Button variant="contained" color="success" disabled={confirmDisabled} onClick={()=>{handleConfirm()}}>Confirm</Button>
+            <Button variant="contained" color="error" onClick={()=>{handleCancel()}}>Cancel</Button>
+        </div>
         </div>
     );
 }
