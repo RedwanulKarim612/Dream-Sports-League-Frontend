@@ -18,7 +18,7 @@ export const getBuildSquad = async () => {
 }
 
 export const getPlayerList = async (pos) => {
-    const response = await axios.get(`${URL}/squad/selectplayer/${pos}`);
+    const response = await axios.get(`${URL}/squad/all/selectplayer/${pos}`);
     return response.data;
 }
 

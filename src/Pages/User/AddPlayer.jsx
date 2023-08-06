@@ -22,8 +22,8 @@ const AddPlayerPage = () => {
     const pos = tokens[tokens.length-1];
     useEffect(() => {
         getPlayerList(pos).then(res => {
-            setPlayers(res.players);
-            console.log(res.players);
+            setPlayers(res);
+            console.log(res);
         });
     },[]);
     
