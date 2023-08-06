@@ -6,8 +6,15 @@ import BuildSquad from "./Pages/User/BuildSquad";
 import { Route, Routes } from "react-router-dom";
 import { TeamProvider } from "./Pages/User/TeamContext";
 import AddPlayerPage from "./Pages/User/AddPlayer";
+import { ThemeProvider, createTheme } from "@mui/material";
 const App = () => {
+    const darkTheme = createTheme({
+        palette: {
+            mode: "dark",
+        }
+    });
     return (
+        <ThemeProvider theme={darkTheme}>
         <div className="App">
             <Routes>
                 <Route path="/" element={<HomePage />}/>
@@ -19,6 +26,7 @@ const App = () => {
                 <Route path="/squad/selectplayer/forward" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/> */}
             </Routes>
         </div>
+        </ThemeProvider>
     );
 }
 

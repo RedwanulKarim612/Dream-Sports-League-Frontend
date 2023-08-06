@@ -10,7 +10,7 @@ const HomePage = () => {
             setTeams(res.top_teams);
         });
     },[]);
-    console.log(teams);
+    // console.log(teams);
     return (
         <div>
         <Navbar />

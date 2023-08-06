@@ -8,6 +8,23 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Navbar from "../../Components/Navbar";
 import { BudgetInfo } from "./BuildSquad";
+import Paper from "@mui/material/Paper";
+import TablePagination from "@mui/material/TablePagination";
+
+function isInPosition(newPlayer, position){
+    for(let i=0; i<position.length; i++){
+        if(position[i].id===newPlayer.id){
+            return true;
+        }
+    }
+}
+
+function isInTeam(newPlayer, team){
+    return isInPosition(newPlayer, team.players.goalkeepers) 
+            || isInPosition(newPlayer, team.players.defenders) 
+            || isInPosition(newPlayer, team.players.midfielders) 
+            || isInPosition(newPlayer, team.players.forwards);
+}
 
 const AddPlayerPage = () => {
     const [team, updateTeam] = useContext(TeamContext);
@@ -16,13 +33,17 @@ const AddPlayerPage = () => {
     const [selectedPlayers, setSelectedPlayers] = useState([]);
     const [confirmDisabled, setConfirmDisabled] = useState(false);
     const [remainingBudget, setRemainingBudget] = useState(100);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const qlink = window.location.href;
     const tokens = qlink.split('/');
 
     const pos = tokens[tokens.length-1];
     useEffect(() => {
         getPlayerList(pos).then(res => {
-            setPlayers(res);
+            let newPlayers = res;
+            if(team) newPlayers = newPlayers.filter((player) => !isInTeam(player, team));
+            setPlayers(newPlayers);
             console.log(players);
         });
     },[]);
@@ -62,7 +83,7 @@ const AddPlayerPage = () => {
             }
         }
         else if(pos==="forward"){
-            if(team.players.forwards.length+selectedPlayers.length>3){
+            if(team.players.forwards.length+selectedPlayers.length>4){
                 setConfirmDisabled(true);
             }
         }
@@ -93,12 +114,20 @@ const AddPlayerPage = () => {
     if(players.length===0 || !team) {
         return <div>Loading...</div>;
     }
-    console.log(team)
     
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    }
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    }
     return (
         <div>
         <Navbar />
         <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
+        <Paper sx={{ width: '60%', overflow: 'hidden' }}>
         <TableContainer style={{ width: 800}}>
         <Table aria-label="simple table">
             <TableHead>
@@ -129,6 +158,16 @@ const AddPlayerPage = () => {
             </TableBody>
         </Table>
         </TableContainer>
+        <TablePagination
+        rowsPerPageOptions={[10, 20]}
+        component="div"
+        count={players.length}
+        rowsPerPage={20}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+        </Paper>
         <div>
             <Button variant="contained" color="success" disabled={confirmDisabled} onClick={()=>{handleConfirm()}}>Confirm</Button>
             <Button variant="contained" color="error" onClick={()=>{handleCancel()}}>Cancel</Button>
