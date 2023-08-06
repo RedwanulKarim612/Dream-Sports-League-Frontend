@@ -15,7 +15,7 @@ const AddPlayerPage = () => {
     const [players, setPlayers] = useState([]);
     const [selectedPlayers, setSelectedPlayers] = useState([]);
     const [confirmDisabled, setConfirmDisabled] = useState(false);
-    const [remainingBudget, setRemainingBudget] = useState(team.budget);
+    const [remainingBudget, setRemainingBudget] = useState(100);
     const qlink = window.location.href;
     const tokens = qlink.split('/');
 
@@ -23,7 +23,7 @@ const AddPlayerPage = () => {
     useEffect(() => {
         getPlayerList(pos).then(res => {
             setPlayers(res);
-            console.log(res);
+            console.log(players);
         });
     },[]);
     

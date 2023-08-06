@@ -43,9 +43,9 @@ export const TeamProvider = ({ children }) => {
         }
     }, []);
 
-    const updateTeam = (team) => {
-        if(team) team.budget = calculateBudget(team.players);
-        setTeam(team);
+    const updateTeam = (newTeam) => {
+        if(newTeam) newTeam.budget = calculateBudget(newTeam.players);
+        setTeam(newTeam);
         localStorage.setItem("team", JSON.stringify(team));
     }
     return (

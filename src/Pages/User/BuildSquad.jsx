@@ -4,13 +4,29 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Button, IconButton, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
 import TeamProvider, { TeamContext, calculateBudget } from "./TeamContext";
-import _ from "lodash";
+import _, { updateWith } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { confirmSquad } from "../../api/User";
+import { confirmSquad, getAutoPick } from "../../api/User";
 
 const PositionTable = ({position, players, maxNumber}) => {
     let [team, updateTeam] = useContext(TeamContext);
     let [selectedPlayer, setSelectedPlayer] = useState(players);
+    useEffect(() => {
+        if(team){
+            if(position === "Goalkeepers"){
+                setSelectedPlayer(team.players.goalkeepers);
+            }
+            else if(position === "Defenders"){
+                setSelectedPlayer(team.players.defenders);
+            }
+            else if(position === "Midfielders"){
+                setSelectedPlayer(team.players.midfielders);
+            }
+            else if(position === "Forwards"){
+                setSelectedPlayer(team.players.forwards);
+            }
+        }
+    },[team]);
     const navigate = useNavigate();
     const handleRemovePlayer = (id) => {
         let newList = selectedPlayer.filter((player) => player.id !== id);
@@ -134,6 +150,13 @@ const BuildSquad = () => {
         }
     },[team]);
     const navigate = useNavigate();
+
+    const handleAutopick = () => {
+        getAutoPick().then(res => {
+            console.log(res);
+            setTeam(res);
+        })
+    }
     const handleConfirmation = () => {
         if(noPlayers !== 16) return;
         confirmSquad(team.players).then(res => {
@@ -159,6 +182,7 @@ const BuildSquad = () => {
         <Navbar />
         <div>
             <BudgetInfo budget={budget} noPlayers={noPlayers}/>
+            <Button variant="contained" sx={{color: 'white', backgroundColor: 'red', margin: '20px'}} onClick={()=>{handleAutopick()}}>Autopick</Button>
         </div>
         <div style={{marginLeft: '20px'}}>
             <PositionTable position="Goalkeepers" players={team.players.goalkeepers} maxNumber={2}/>

@@ -17,6 +17,11 @@ export const getBuildSquad = async () => {
     return response.data;
 }
 
+export const getAutoPick = async () => {
+    const response = await axios.get(`${URL}/squad/autopick`);
+    return response.data;
+}
+
 export const getPlayerList = async (pos) => {
     const response = await axios.get(`${URL}/squad/all/selectplayer/${pos}`);
     return response.data;
@@ -26,3 +31,4 @@ export const confirmSquad = async (team) => {
     const response = await axios.post(`${URL}/squad`, team);
     return response.data;
 }
+
