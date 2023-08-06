@@ -47,7 +47,9 @@ const AddPlayerPage = () => {
             console.log(players);
         });
     },[]);
-    
+    useEffect(() => {
+        setRemainingBudget(team.budget)
+    },[team])
     const handleSelectPlayer = (row) => {
         for(let i=0; i<selectedPlayers.length; i++){
             if(selectedPlayers[i].id===row.id){
@@ -60,7 +62,7 @@ const AddPlayerPage = () => {
             team: row.team,
             overall: row.overall,
             price: row.price,
-            totalPoints: row.totalPoints,
+            points: row.points,
             position: row.position
         }
         selectedPlayers.push(newPlayer);
@@ -141,13 +143,13 @@ const AddPlayerPage = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {players.map((row) => (
+                {players.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                     <TableRow >
                         <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
                         <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.totalPoints}</TableCell>
+                        <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
                         <TableCell>
                             <IconButton color="success" disabled={row.available==0 || row.price>remainingBudget?true:false} onClick={()=>{handleSelectPlayer(row)}}>
                                 <AddCircleIcon />
@@ -162,7 +164,7 @@ const AddPlayerPage = () => {
         rowsPerPageOptions={[10, 20]}
         component="div"
         count={players.length}
-        rowsPerPage={20}
+        rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}

@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Button, IconButton, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
-import TeamProvider, { TeamContext, calculateBudget } from "./TeamContext";
-import _, { updateWith } from "lodash";
+import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
+import TeamProvider, { TeamContext} from "./TeamContext";
+import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 import { confirmSquad, getAutoPick } from "../../api/User";
 
@@ -75,7 +75,7 @@ const PositionTable = ({position, players, maxNumber}) => {
                         <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.totalPoints}</TableCell>
+                        <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
                         <TableCell>
                             <IconButton color="warning" onClick={()=>handleRemovePlayer(row.id)}>
                                 <CancelIcon />
@@ -159,7 +159,25 @@ const BuildSquad = () => {
     }
     const handleConfirmation = () => {
         if(noPlayers !== 16) return;
-        confirmSquad(team.players).then(res => {
+        let newTeam = {
+            goalkeepers: [],
+            defenders: [],
+            midfielders: [],
+            forwards: []
+        };
+        for(let i=0;i<team.players.goalkeepers.length;i++){
+            newTeam.goalkeepers.push(team.players.goalkeepers[i].id);
+        }
+        for(let i=0;i<team.players.defenders.length;i++){
+            newTeam.defenders.push(team.players.defenders[i].id);
+        }
+        for(let i=0;i<team.players.midfielders.length;i++){
+            newTeam.midfielders.push(team.players.midfielders[i].id);
+        }
+        for(let i=0;i<team.players.forwards.length;i++){
+            newTeam.forwards.push(team.players.forwards[i].id);
+        }
+        confirmSquad(newTeam).then(res => {
             console.log(res);
             localStorage.clear('team');
             navigate('/');

@@ -5,16 +5,16 @@ import { getHomePage } from "../../api/User";
 
 const HomePage = () => {
     const [teams, setTeams] = useState(null);
-    useEffect(() => {
-        getHomePage().then(res => {
-            setTeams(res.top_teams);
-        });
-    },[]);
+    // useEffect(() => {
+    //     getHomePage().then(res => {
+    //         setTeams(res.top_teams);
+    //     });
+    // },[]);
     // console.log(teams);
     return (
         <div>
         <Navbar />
-        <div style={{marginLeft: '20px'}}>
+        {/* <div style={{marginLeft: '20px'}}>
             <TableContainer style={{ width: 400}}>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -33,7 +33,7 @@ const HomePage = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </div>
+        </div> */}
         </div>
     );
 }

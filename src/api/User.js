@@ -28,7 +28,7 @@ export const getPlayerList = async (pos) => {
 }
 
 export const confirmSquad = async (team) => {
-    const response = await axios.post(`${URL}/squad`, team);
+    const response = await axios.post(`${URL}/squad/build`, team);
     return response.data;
 }
 
