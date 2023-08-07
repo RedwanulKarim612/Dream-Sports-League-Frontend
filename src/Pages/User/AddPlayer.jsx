@@ -48,7 +48,7 @@ const AddPlayerPage = () => {
         });
     },[]);
     useEffect(() => {
-        setRemainingBudget(team.budget)
+        if(team) setRemainingBudget(team.budget)
     },[team])
     const handleSelectPlayer = (row) => {
         for(let i=0; i<selectedPlayers.length; i++){

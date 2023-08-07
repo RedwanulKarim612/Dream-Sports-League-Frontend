@@ -119,7 +119,7 @@ export const BudgetInfo = ({budget, noPlayers}) => {
                                 color: 'white',
                                 padding: '10px 20px',
                                 margin: '20px'
-                                }}>Budget: {budget}</Typography>
+                                }}>Budget: {budget.toFixed(2)}</Typography>
             
             {noPlayers!=-1 && <Typography variant="h5" sx={{
                                 display: "flex",
