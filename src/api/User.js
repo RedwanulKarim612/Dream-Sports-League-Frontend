@@ -33,6 +33,11 @@ export const confirmSquad = async (team) => {
 }
 
 export const getPlayingXI = async (matchId) => {
-    const response = await axios.get(`${URL}/playingXI/${matchId}`);
+    const response = await axios.get(`${URL}/playingxi/${matchId}`);
+    return response.data;
+}
+
+export const confirmPlayingXI = async (team, matchId) => {
+    const response = await axios.post(`${URL}/playingxi/${matchId}`, team);
     return response.data;
 }

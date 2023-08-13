@@ -1,9 +1,9 @@
 import {React, useState, useEffect} from "react";
-import { getPlayingXI } from "../../api/User";
-import { get, isNull } from "lodash";
+import { confirmPlayingXI, getPlayingXI } from "../../api/User";
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import { useNavigate } from "react-router-dom";
 function getFormation(formationString){
     const formation = formationString.split('-');
     return formation;
@@ -138,6 +138,7 @@ const SelectPlayingXI = () => {
     const qlink = window.location.href;
     const tokens = qlink.split('/');
     const matchId = tokens[tokens.length-1];
+    const navigate = useNavigate();
     useEffect(() => {
         getPlayingXI(matchId).then(res => {
             const newTeam = {...res};
@@ -194,6 +195,35 @@ const SelectPlayingXI = () => {
         setCaptain(newCaptain);
         // setFormation(newTeam.formation)
     }
+
+    const handleConfirmation = () => {
+        let finalTeam = null;
+        finalTeam = {
+            formation: team.formation,
+            captain: team.captain,
+            playingxi: []
+        }
+        for(let i=0;i<team.playingxi.goalkeepers.length;i++){
+            finalTeam.playingxi.push(team.playingxi.goalkeepers[i].id)
+        }
+        for(let i=0;i<team.playingxi.defenders.length;i++){
+            finalTeam.playingxi.push(team.playingxi.defenders[i].id)
+        }
+        for(let i=0;i<team.playingxi.midfielders.length;i++){
+            finalTeam.playingxi.push(team.playingxi.midfielders[i].id)
+        }
+        for(let i=0;i<team.playingxi.forwards.length;i++){
+            finalTeam.playingxi.push(team.playingxi.forwards[i].id)
+        }
+        console.log(finalTeam);
+        confirmPlayingXI(finalTeam, matchId).then(res =>{
+            console.log(res);
+            navigate('/');
+        });
+    }
+    const handleCancel = () =>{
+        navigate('/');
+    }
     return(
         <div>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
@@ -249,7 +279,11 @@ const SelectPlayingXI = () => {
                     <PlayingXIposition players={team.bench.midfielders} position="Midfielders" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
                     <PlayingXIposition players={team.bench.forwards} position="Forwards" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
                 </div>
-
+            </div>
+            <div>
+            <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>
+            <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleCancel()}}>Cancel</Button>
+    
             </div>
         </div>
     )
