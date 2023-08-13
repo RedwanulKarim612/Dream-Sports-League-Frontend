@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from "react";
 import { getPlayingXI } from "../../api/User";
-import { get } from "lodash";
+import { get, isNull } from "lodash";
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
@@ -45,6 +45,32 @@ function updatePlayingXI(team, formationDetails){
     updatePosition(team.playingxi.forwards, team.bench.forwards, formationDetails[2]);
 }
 
+function getPlayer(players, id){
+    let player = null
+    for (let i = 0; i < players.length; i++) {
+        if(players[i].id === id) {
+            player = {...players[i]}
+            players.splice(i,1);
+            break;
+        }
+    }
+    return player;
+}
+
+function swapPlayers(team, fromXI, fromBench){
+    let newTeam = {...team};
+    let playerInTeam = null;
+    let playerInBench = null;
+    playerInTeam = getPlayer(team.playingxi[fromXI.position.toLowerCase()], fromXI.id);
+    playerInBench = getPlayer(team.bench[fromXI.position.toLowerCase()], fromBench.id);
+    if(playerInBench === null || playerInTeam === null) return;
+    
+    newTeam.playingxi[fromXI.position.toLowerCase()].push(playerInBench);
+    newTeam.bench[fromXI.position.toLowerCase()].push(playerInTeam);
+    console.log(newTeam);
+    return newTeam;
+}
+
 const availableFormations = ['4-3-3', '3-4-3', '5-3-2', '4-4-2', '3-5-2', '5-4-1', '4-5-1']
 
 const PlayingXIposition = (props) => {
@@ -53,29 +79,43 @@ const PlayingXIposition = (props) => {
         setPlayers(props.players);
     },[props.players]);
     // console.log(props.players.length)
+
+    const handleSelectForChange = (player) => {
+        let newPlayer = {
+            id: player.id,
+            position: player.position
+        }
+        if(!props.selectedPlayer || props.selectedPlayer.id!==player.id){
+            newPlayer.id = player.id;
+            newPlayer.position = props.position;
+        }
+        else newPlayer.id = -1;
+        
+        props.setSelected(newPlayer);
+    }
     return (
         <div>
         <Typography variant="h6">{props.position}</Typography>
-        <TableContainer style={{ width: 800}}>
+        <TableContainer style={{ width: 600}}>
         <Table aria-label="simple table">
             <TableHead>
                 <TableRow sx={{width: '10px'}}>
-                    <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Total Points </TableCell>
+                    <TableCell align="center"> Name </TableCell>
+                    <TableCell align="center"> Team </TableCell>
+                    <TableCell align="center"> Overall </TableCell>
+                    <TableCell align="center"> Total Points </TableCell>
                     <TableCell></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {players.map((row) => (
-                    <TableRow>
-                        <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
-                        <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
+                    <TableRow sx={{background: props.selectedPlayer && props.selectedPlayer.id===row.id ?"#2e7d32":'black'}}>
+                        <TableCell align="center">{row.name}</TableCell>      
+                        <TableCell align="center">{row.team}</TableCell>
+                        <TableCell align="center">{row.overall}</TableCell>
+                        <TableCell align="center">{row.points}</TableCell>
                         <TableCell>
-                            <IconButton color="warning" onClick={()=>{}}>
+                            <IconButton color="warning" onClick={()=>{handleSelectForChange(row)}}>
                                 <ChangeCircleIcon />
                             </IconButton>
                         </TableCell>
@@ -93,6 +133,8 @@ const SelectPlayingXI = () => {
     const [team, setTeam] = useState(null);
     const [captain, setCaptain] = useState(null);
     const [formation, setFormation] = useState([]);
+    const [selectedFromXI, setSelectedFromXI] = useState(null);
+    const [selectedFromBench, setSelectedFromBench] = useState(null);
     const qlink = window.location.href;
     const tokens = qlink.split('/');
     const matchId = tokens[tokens.length-1];
@@ -111,6 +153,22 @@ const SelectPlayingXI = () => {
         });
     }, []);
 
+    useEffect(() => {
+        if(selectedFromXI===null || selectedFromBench===null) return;
+        if(selectedFromXI.id !== -1 && selectedFromBench.id !== -1){
+            console.log(selectedFromBench)
+            console.log(selectedFromXI)
+            if(selectedFromXI.position!==selectedFromBench.position){
+                setSelectedFromBench(null);
+                return;
+            }
+            let newTeam = swapPlayers(team, selectedFromXI, selectedFromBench);
+            setTeam(newTeam);
+        
+            setSelectedFromXI(null);
+            setSelectedFromBench(null);
+        }
+    },[selectedFromXI, selectedFromBench]);
 
     if(!team || !captain) {
         return <div>Loading...</div>
@@ -178,11 +236,20 @@ const SelectPlayingXI = () => {
                 </Select>
                 <FormHelperText>Captain</FormHelperText>
             </FormControl>
-            <div>
-                <PlayingXIposition players={team.playingxi.goalkeepers} position="Goalkeeper"/>
-                <PlayingXIposition players={team.playingxi.defenders} position="Defenders"/>
-                <PlayingXIposition players={team.playingxi.midfielders} position="Midfielders"/>
-                <PlayingXIposition players={team.playingxi.forwards} position="Forwards"/>
+            <div style={{display:"flex",flexDirection:"row", justifyContent: "space-between", margin: "50px 60px 0px 60px"}}>
+                <div>
+                    <PlayingXIposition players={team.playingxi.goalkeepers} position="Goalkeepers" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
+                    <PlayingXIposition players={team.playingxi.defenders} position="Defenders" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
+                    <PlayingXIposition players={team.playingxi.midfielders} position="Midfielders" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
+                    <PlayingXIposition players={team.playingxi.forwards} position="Forwards" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
+                </div>
+                <div>
+                    <PlayingXIposition players={team.bench.goalkeepers} position="Goalkeepers" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
+                    <PlayingXIposition players={team.bench.defenders} position="Defenders" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
+                    <PlayingXIposition players={team.bench.midfielders} position="Midfielders" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
+                    <PlayingXIposition players={team.bench.forwards} position="Forwards" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
+                </div>
+
             </div>
         </div>
     )
