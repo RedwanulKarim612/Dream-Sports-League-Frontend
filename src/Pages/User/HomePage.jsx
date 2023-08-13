@@ -13,7 +13,6 @@ const HomePage = () => {
     // console.log(teams);
     return (
         <div>
-        <Navbar />
         {/* <div style={{marginLeft: '20px'}}>
             <TableContainer style={{ width: 400}}>
                 <Table aria-label="simple table">

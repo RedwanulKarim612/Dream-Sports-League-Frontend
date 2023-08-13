@@ -197,7 +197,6 @@ const BuildSquad = () => {
     return(
         
     <div>
-        <Navbar />
         <div>
             <BudgetInfo budget={budget} noPlayers={noPlayers}/>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'red', margin: '20px'}} onClick={()=>{handleAutopick()}}>Autopick</Button>

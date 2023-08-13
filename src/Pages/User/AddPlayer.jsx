@@ -127,7 +127,6 @@ const AddPlayerPage = () => {
     }
     return (
         <div>
-        <Navbar />
         <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
         <Paper sx={{ width: '60%', overflow: 'hidden' }}>
         <TableContainer style={{ width: 800}}>
