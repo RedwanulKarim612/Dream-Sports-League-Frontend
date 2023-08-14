@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://localhost:8080/api'
+const URL = 'https://dream-sports-league.onrender.com/api'
 
 export const getUserInfo = async () => {
     const response = await axios.get(`${URL}/profile`);
@@ -32,6 +32,10 @@ export const confirmSquad = async (team) => {
     return response.data;
 }
 
+export const confirmLogin = async (credentials) => {
+    const response = await axios.post(`${URL}/auth/login`, credentials);
+    return response.data;
+}
 export const getPlayingXI = async (matchId) => {
     const response = await axios.get(`${URL}/playingxi/${matchId}`);
     return response.data;
