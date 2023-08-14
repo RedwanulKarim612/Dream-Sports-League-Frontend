@@ -4,6 +4,7 @@ import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../Components/Navbar";
 function getFormation(formationString){
     const formation = formationString.split('-');
     return formation;
@@ -95,6 +96,7 @@ const PlayingXIposition = (props) => {
     }
     return (
         <div>
+            <Navbar />
         <Typography variant="h6">{props.position}</Typography>
         <TableContainer style={{ width: 600}}>
         <Table aria-label="simple table">

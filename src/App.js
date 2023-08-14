@@ -19,7 +19,6 @@ const App = () => {
     return (
         <ThemeProvider theme={darkTheme}>
         <div className="App">
-            <Navbar />
             <Routes>
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/login" element={<LoginPage />}/>
