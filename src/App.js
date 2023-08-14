@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import { TeamProvider } from "./Pages/User/TeamContext";
 import AddPlayerPage from "./Pages/User/AddPlayer";
 import { ThemeProvider, createTheme } from "@mui/material";
+import LoginPage from "./Pages/User/LoginPage";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -18,6 +19,7 @@ const App = () => {
         <div className="App">
             <Routes>
                 <Route path="/" element={<HomePage />}/>
+                <Route path="/login" element={<LoginPage />}/>
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/squad" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
