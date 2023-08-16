@@ -2,6 +2,8 @@ import axios from "axios";
 
 const URL = 'https://dream-sports-league.onrender.com/api'
 
+axios.defaults.withCredentials = true;
+
 export const getUserInfo = async () => {
     const response = await axios.get(`${URL}/profile`);
     return response.data
