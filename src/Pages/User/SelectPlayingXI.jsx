@@ -96,7 +96,6 @@ const PlayingXIposition = (props) => {
     }
     return (
         <div>
-            <Navbar />
         <Typography variant="h6">{props.position}</Typography>
         <TableContainer style={{ width: 600}}>
         <Table aria-label="simple table">
@@ -228,6 +227,7 @@ const SelectPlayingXI = () => {
     }
     return(
         <div>
+            <Navbar />
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>
                 <Select

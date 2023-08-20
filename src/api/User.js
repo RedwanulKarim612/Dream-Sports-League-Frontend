@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const URL = 'https://dream-sports-league.onrender.com/api'
+// const URL = 'https://dream-sports-league.onrender.com/api'
+const URL = 'http://localhost:8080/api'
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 export const getUserInfo = async () => {
     const response = await axios.get(`${URL}/profile`);
@@ -45,5 +46,10 @@ export const getPlayingXI = async (matchId) => {
 
 export const confirmPlayingXI = async (team, matchId) => {
     const response = await axios.post(`${URL}/playingxi/${matchId}`, team);
+    return response.data;
+}
+
+export const getMatchDetails = async(matchId) => {
+    const response = await axios.get(`${URL}/matches/${matchId}`);
     return response.data;
 }

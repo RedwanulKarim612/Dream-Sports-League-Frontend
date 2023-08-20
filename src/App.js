@@ -10,6 +10,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import SelectPlayingXI from "./Pages/User/SelectPlayingXI";
 import Navbar from "./Components/Navbar";
 import LoginPage from "./Pages/User/LoginPage";
+import MatchDetails from "./Pages/MatchDetails";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/squad" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
                 <Route path="/playingxi/:matchId" element={<SelectPlayingXI/>}/>
+                <Route path="/matches/:matchId" element={<MatchDetails/>}/>
             </Routes>
         </div>
         </ThemeProvider>
