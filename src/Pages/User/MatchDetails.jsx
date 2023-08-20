@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getMatchDetails } from "../api/User";
-import Navbar from "../Components/Navbar";
+import { getMatchDetails } from "../../api/User";
+import Navbar from "../../Components/Navbar";
 import { Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SquareIcon from '@mui/icons-material/Square';
@@ -26,12 +26,12 @@ const EventIcon = ({category}) => {
 
 const PlayerPointsTable = ({players}) => {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{margin: '15px'}}>
         <Table  size="small" aria-label="a dense table">
             <TableHead>
             <TableRow>
                 <TableCell align="center">Player</TableCell>
-                <TableCell align="center">Points</TableCell>|
+                <TableCell align="center">Points</TableCell>
             </TableRow>
             </TableHead>
             <TableBody>

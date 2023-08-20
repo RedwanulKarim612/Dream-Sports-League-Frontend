@@ -10,7 +10,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import SelectPlayingXI from "./Pages/User/SelectPlayingXI";
 import Navbar from "./Components/Navbar";
 import LoginPage from "./Pages/User/LoginPage";
-import MatchDetails from "./Pages/MatchDetails";
+import MatchDetails from "./Pages/User/MatchDetails";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
