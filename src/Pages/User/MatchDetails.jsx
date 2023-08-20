@@ -69,23 +69,37 @@ const MatchDetails = () => {
             <Navbar/>
             <div style={{ display:'flex', justifyContent:'center', marginTop: '20px'}}>
                 <Card size="lg" sx={{width: '50%'}}>
+                    <div style={{display: "flex", justifyContent:"center", margin: "10px auto"}}>
+                        <Typography variant="h6">{matchDetails.time}</Typography>
+                    </div>
                     <div style={{display:"flex", justifyContent: "center", margin: "20px auto", alignItems: "center"}}>
                         <div style={{margin: 'auto'}}>
                             <Typography variant="h5" >
                                 {matchDetails.home.name}
                             </Typography>
                         </div>
-                        <div style={{margin: 'auto'}}>
-                            <Typography variant="h3">
-                                {matchDetails.home.score}
-                            </Typography>
-                        </div>
-                        
-                        <div style={{margin: 'auto'}}>
-                            <Typography variant="h3">
-                                {matchDetails.away.score}
-                            </Typography>
-                        </div>
+                        {matchDetails.finished &&
+                            <>
+                            <div style={{margin: 'auto'}}>
+                                <Typography variant="h3">
+                                    {matchDetails.home.score}
+                                </Typography>
+                            </div>
+                            <div style={{margin: 'auto'}}>
+                                <Typography variant="h3">
+                                    {matchDetails.away.score}
+                                </Typography>
+                            </div>
+                            </>
+                        }
+                        {!matchDetails.finished && 
+                            <div style={{margin: 'auto'}}>
+                                <Typography variant="h3">
+                                    -
+                                </Typography>
+                            </div>
+
+                        }
                         <div style={{margin: 'auto'}}>
                             <Typography variant="h5">
                                 {matchDetails.away.name}
@@ -94,6 +108,8 @@ const MatchDetails = () => {
                     </div>
                 </Card>
             </div>
+            { matchDetails.finished &&
+            <>
             <div style={{display:'flex', justifyContent:'space-between', width: '25%', margin: '20px auto'}}>
                 <div>
                     {matchDetails.events.home.map((event, index)=>{
@@ -122,6 +138,8 @@ const MatchDetails = () => {
                 <PlayerPointsTable players={matchDetails.points.home}/>
                 <PlayerPointsTable players={matchDetails.points.away}/>
             </div>
+            </>
+            }
         </div>
     );
 }

@@ -53,3 +53,8 @@ export const getMatchDetails = async(matchId) => {
     const response = await axios.get(`${URL}/matches/${matchId}`);
     return response.data;
 }
+
+export const getFixtureDetails = async(gameWeek) => {
+    const response = await axios.get(`${URL}/fixture/${gameWeek}`);
+    return response.data;
+}
