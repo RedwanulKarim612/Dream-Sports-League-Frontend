@@ -53,3 +53,13 @@ export const getMatchDetails = async(matchId) => {
     const response = await axios.get(`${URL}/matches/${matchId}`);
     return response.data;
 }
+
+export const getWeekMatches = async() => {
+    const response = await axios.get(`${URL}/admin`);
+    return response.data;
+}
+
+export const postMatchToBeSimulated = async(matchId) => {
+    const response = await axios.post(`${URL}/admin/${matchId}`);
+    return response.data;
+}

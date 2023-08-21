@@ -11,6 +11,7 @@ import SelectPlayingXI from "./Pages/User/SelectPlayingXI";
 import Navbar from "./Components/Navbar";
 import LoginPage from "./Pages/User/LoginPage";
 import MatchDetails from "./Pages/User/MatchDetails";
+import Admin from "./Pages/User/Admin";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
                 <Route path="/playingxi/:matchId" element={<SelectPlayingXI/>}/>
                 <Route path="/matches/:matchId" element={<MatchDetails/>}/>
+                <Route path="/admin" element={<Admin/>}/>
             </Routes>
         </div>
         </ThemeProvider>
