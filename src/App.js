@@ -30,7 +30,7 @@ const App = () => {
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
                 <Route path="/playingxi/:matchId" element={<SelectPlayingXI/>}/>
                 <Route path="/matches/:matchId" element={<MatchDetails/>}/>
-                <Route path="/admin" element={<Admin/>}/>
+                <Route path="/admin/:gameweek" element={<Admin/>}/>
                 <Route path="/fixture/:gameweek" element={<FixturePage/>}/>
             </Routes>
         </div>

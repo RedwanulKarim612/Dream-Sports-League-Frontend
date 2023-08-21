@@ -21,6 +21,7 @@ const LoginPage = () => {
             user_id: username,
             password: password,
         };
+        console.log(credentials);
         confirmLogin(credentials).then(res => {
             console.log(res);
             if(res==='User Logged In')navigate('/');
@@ -39,7 +40,7 @@ const LoginPage = () => {
                         <form>
                             <TextField label="Username" variant="outlined" fullWidth margin="normal" onChange={handleUsernameChange}/>
                             <TextField label="Password" type="password" variant="outlined" fullWidth marhin="normal" onChange={handlePasswordChange}/>
-                            <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '8px' }} onClick={()=>{handleSubmit();}}>Login</Button>
+                            <Button variant="contained" color="primary" fullWidth style={{ marginTop: '8px' }} onClick={()=>{handleSubmit();}}>Login</Button>
                         </form>
                     </CardContent>
                 </Card>

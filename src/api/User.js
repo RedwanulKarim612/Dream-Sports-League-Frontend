@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// const URL = 'https://dream-sports-league.onrender.com/api'
-const URL = 'http://localhost:8080/api'
+const URL = 'https://dream-sports-league.onrender.com/api'
+// const URL = 'http://localhost:8080/api'
 
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 export const getUserInfo = async () => {
     const response = await axios.get(`${URL}/profile`);
@@ -36,7 +36,9 @@ export const confirmSquad = async (team) => {
 }
 
 export const confirmLogin = async (credentials) => {
+    console.log(credentials)
     const response = await axios.post(`${URL}/auth/login`, credentials);
+    console.log(response);
     return response.data;
 }
 export const getPlayingXI = async (matchId) => {
@@ -50,20 +52,20 @@ export const confirmPlayingXI = async (team, matchId) => {
 }
 
 export const getMatchDetails = async(matchId) => {
-    const response = await axios.get(`${URL}/matches/${matchId}`);
+    const response = await axios.get(`${URL}/fixtures/match/${matchId}`);
     return response.data;
 }
 
-export const getWeekMatches = async() => {
-    const response = await axios.get(`${URL}/admin`);
+export const getWeekMatches = async(gw) => {
+    const response = await axios.get(`${URL}/admin/matchweek/${gw}`);
     return response.data;
 }
 
 export const postMatchToBeSimulated = async(matchId) => {
-    const response = await axios.post(`${URL}/admin/${matchId}`);
+    const response = await axios.post(`${URL}/admin/matchweek/${matchId}`);
 }
 
 export const getFixtureDetails = async(gameWeek) => {
-    const response = await axios.get(`${URL}/fixture/${gameWeek}`);
+    const response = await axios.get(`${URL}/fixtures/${gameWeek}`);
     return response.data;
 }

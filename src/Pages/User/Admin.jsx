@@ -3,28 +3,36 @@ import { getWeekMatches } from "../../api/User";
 import { Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import Navbar from '../../Components/Navbar';
 import { postMatchToBeSimulated } from "../../api/User";
+import { useNavigate } from "react-router-dom";
 
 const WeekMatchesTable = () => {
-    const [matches, setMatches] = useState(null);
+    const qlink = window.location.href;
+    const tokens = qlink.split('/');
+    const gw = tokens[tokens.length-1];
+    const [matches, setMatches] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
-        getWeekMatches().then((res) => {
-            setMatches(res);
+        getWeekMatches(gw).then((res) => {
             console.log(res)
+            setMatches(res);
         });
     })
 
-    const handleSimulation = (event) => {
-        postMatchToBeSimulated(event.match_id).then(res => {
+    const handleSimulation = (matchId) => {
+        console.log(   matchId);
+        postMatchToBeSimulated(matchId).then(res => {
+        
             console.log(res);
-            if(res==='Match simulated'){
-                const updatedMatches = matches.map(match => {
-                    if (match.match_id === event.match_id) {
-                        return { ...match, flag: !match.flag };
-                    }
-                    return match;
-                });
-                setMatches(updatedMatches);
-            }
+            navigate(0);
+            // if(res==='Match simulated'){
+            //     const updatedMatches = matches.map(match => {
+            //         if (match.id === event.id) {
+            //             return { ...match, flag: !match.flag };
+            //         }
+            //         return match;
+            //     });
+            //     setMatches(updatedMatches);
+            // }
         });
     };
 
@@ -49,7 +57,7 @@ const WeekMatchesTable = () => {
                                 <TableBody>
                                     {matches.map((row) => (
                                         <TableRow
-                                            key={row.match_id}
+                                            key={row.id}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell align="center">{row.home}</TableCell>
@@ -58,7 +66,7 @@ const WeekMatchesTable = () => {
                                             <TableCell align="center">{row.time}</TableCell>
                                             <TableCell align="center">{row.finished}</TableCell>
                                             <TableCell align="Center">
-                                                <Button onClick={()=>{handleSimulation(row.match_id);}}>Simulate</Button>    
+                                                {!row.finished && <Button variant="contained" onClick={()=>{handleSimulation(row.id);}}>Simulate</Button>}   
                                             </TableCell>
                                         </TableRow>
                                     ))}
