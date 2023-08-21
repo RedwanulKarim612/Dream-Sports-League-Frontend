@@ -5,6 +5,9 @@ import { Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SquareIcon from '@mui/icons-material/Square';
 import AssistantIcon from '@mui/icons-material/Assistant';
+import { getDateAndTime } from "../../util";
+
+let validEvents = ["GOAL", "YELLOW_CARD", "RED_CARD", "OWN_GOAL"];
 
 const EventIcon = ({category}) => {
     if(category==='GOAL'){
@@ -22,6 +25,26 @@ const EventIcon = ({category}) => {
     else if(category==='ASSIST'){
         return <AssistantIcon color="success"/>
     }
+}
+
+const EventInfo = ({event, team}) => {
+    if(validEvents.includes(event.category)){
+        if(team==='home'){
+            return (
+                <Typography variant="h6" style={{float: 'right'}}>
+                    {event.player_name.split(' ').slice(0,2).join(' ')} {event.time}' <EventIcon category={event.category}/>
+                </Typography>
+            )
+        }
+        else if(team==='away'){
+            return (
+                <Typography variant="h6" style={{float: 'left'}}>
+                    <EventIcon category={event.category}/> {event.time}' {event.player_name.split(' ').slice(0,2).join(' ')} 
+                </Typography>
+            )
+        }
+    }
+    else return null;
 }
 
 const PlayerPointsTable = ({players}) => {
@@ -70,7 +93,7 @@ const MatchDetails = () => {
             <div style={{ display:'flex', justifyContent:'center', marginTop: '20px'}}>
                 <Card size="lg" sx={{width: '50%'}}>
                     <div style={{display: "flex", justifyContent:"center", margin: "10px auto"}}>
-                        <Typography variant="h6">{matchDetails.time}</Typography>
+                        <Typography variant="h6">{getDateAndTime(matchDetails.time)}</Typography>
                     </div>
                     <div style={{display:"flex", justifyContent: "center", margin: "20px auto", alignItems: "center"}}>
                         <div style={{margin: 'auto'}}>
@@ -110,25 +133,21 @@ const MatchDetails = () => {
             </div>
             { matchDetails.finished &&
             <>
-            <div style={{display:'flex', justifyContent:'space-between', width: '25%', margin: '20px auto'}}>
-                <div>
+            <div style={{display:'flex', justifyContent:'center', width: '40%', margin: '20px auto'}}>
+                <div style={{margin: '0px 15px'}}>
                     {matchDetails.events.home.map((event, index)=>{
                         return (
                             <div key={index} >
-                                <Typography variant="h6" style={{float: 'right'}}>
-                                    {event.player_name} {event.time}' <EventIcon category={event.category}/>
-                                </Typography>
+                                <EventInfo event={event} team = "home"/>
                             </div>
                         )
                     })}
                 </div>
-                <div>
+                <div style={{margin: '0px 15px'}}>
                     {matchDetails.events.away.map((event, index)=>{
                         return (
                             <div key={index} >
-                                <Typography variant="h6" style={{float: 'left'}}>
-                                    <EventIcon category={event.category}/>{event.time}' {event.player_name}
-                                </Typography>
+                                <EventInfo event={event} team="away"/>
                             </div>
                         )
                     })}

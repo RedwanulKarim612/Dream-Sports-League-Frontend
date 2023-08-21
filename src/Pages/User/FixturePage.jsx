@@ -4,6 +4,7 @@ import { Card, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, 
 import { getFixtureDetails } from "../../api/User";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
+import { getDateAndTime } from "../../util";
 const FixturePage = () =>{
     const qlink = window.location.href;
     const tokens = qlink.split('/');
@@ -32,7 +33,7 @@ const FixturePage = () =>{
             <Navbar/>
             <div style={{width: '70%', margin: '30px auto'}}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                    <Typography variant="h6">
+                    <Typography variant="h4">
                         Gameweek
                     </Typography>
                 <FormControl variant="standard" sx={{ m: 1}}>
@@ -46,7 +47,7 @@ const FixturePage = () =>{
                     >{
                         _.range(1,39).map((gw)=>{
                             return <MenuItem value={gw}>
-                                <Typography variant="h6">{gw}</Typography>
+                                <Typography variant="h4">{gw}</Typography>
                                 {/* {gw} */}
                             </MenuItem>
                         })
@@ -60,7 +61,7 @@ const FixturePage = () =>{
                 <Grid item xs={2} sm={4}key={index}>
                 <Card size="lg" onClick={()=>{navigate("/matches/"+row.match_id)}} sx={{cursor: "pointer"}}>
                     <div style={{display: "flex", justifyContent:"center", margin: "10px auto"}}>
-                        <Typography variant="h6">{row.time}</Typography>
+                        <Typography variant="h6">{getDateAndTime(row.time)}</Typography>
                     </div>
                     
                     <div style={{display:"flex", justifyContent: "center", margin: "20px auto", alignItems: "center"}}>

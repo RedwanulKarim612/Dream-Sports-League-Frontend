@@ -21,7 +21,7 @@ const pages = Array(
     },
     {
         'text': 'Fixture',
-        'link': '/fixture'
+        'link': '/fixture/1'
     },
     {
         'text': 'Your Squad',

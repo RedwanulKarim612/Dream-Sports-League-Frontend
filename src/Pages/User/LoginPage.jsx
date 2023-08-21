@@ -25,7 +25,6 @@ const LoginPage = () => {
         confirmLogin(credentials).then(res => {
             console.log(res);
             if(res==='User Logged In')navigate('/');
-            else if(res==='Admin logged in')navigate('/admin');
         });
     }
 
