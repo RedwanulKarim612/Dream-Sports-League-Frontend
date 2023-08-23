@@ -56,15 +56,6 @@ export const getMatchDetails = async(matchId) => {
     return response.data;
 }
 
-export const getWeekMatches = async(gw) => {
-    const response = await axios.get(`${URL}/admin/matchweek/${gw}`);
-    return response.data;
-}
-
-export const postMatchToBeSimulated = async(matchId) => {
-    const response = await axios.post(`${URL}/admin/matchweek/${matchId}`);
-}
-
 export const getFixtureDetails = async(gameWeek) => {
     const response = await axios.get(`${URL}/fixtures/${gameWeek}`);
     return response.data;
