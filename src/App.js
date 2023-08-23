@@ -11,7 +11,7 @@ import SelectPlayingXI from "./Pages/User/SelectPlayingXI";
 import Navbar from "./Components/Navbar";
 import LoginPage from "./Pages/User/LoginPage";
 import MatchDetails from "./Pages/User/MatchDetails";
-import Admin from "./Pages/User/Admin";
+import Admin from "./Pages/User/Admin/Admin";
 import FixturePage from "./Pages/User/FixturePage";
 const App = () => {
     const darkTheme = createTheme({

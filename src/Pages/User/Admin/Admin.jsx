@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getWeekMatches } from "../../api/User";
+import { getWeekMatches } from "../../../api/Admin";
 import { Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-import Navbar from '../../Components/Navbar';
-import { postMatchToBeSimulated } from "../../api/User";
+import Navbar from '../../../Components/Navbar';
+import { postMatchToBeSimulated } from "../../../api/Admin";
 import { useNavigate } from "react-router-dom";
 
 const WeekMatchesTable = () => {
