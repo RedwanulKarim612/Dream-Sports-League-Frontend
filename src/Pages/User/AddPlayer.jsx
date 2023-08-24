@@ -10,6 +10,14 @@ import Navbar from "../../Components/Navbar";
 import { BudgetInfo } from "./BuildSquad";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
+import { CancelRounded } from "@mui/icons-material";
+
+const maxPlayers = {
+    "goalkeepers": 2,
+    "defenders": 5,
+    "midfielders": 5,
+    "forwards": 4
+}
 
 function isInPosition(newPlayer, position){
     for(let i=0; i<position.length; i++){
@@ -44,7 +52,7 @@ const AddPlayerPage = () => {
             let newPlayers = res;
             if(team) newPlayers = newPlayers.filter((player) => !isInTeam(player, team));
             setPlayers(newPlayers);
-            console.log(players);
+            console.log(newPlayers);
         });
     },[]);
     useEffect(() => {
@@ -69,25 +77,8 @@ const AddPlayerPage = () => {
         setSelectedPlayers(selectedPlayers);
         setRemainingBudget(remainingBudget-row.price);
         console.log(selectedPlayers);
-        if(pos==="goalkeeper"){
-            if(team.players.goalkeepers.length+selectedPlayers.length>2){
-                setConfirmDisabled(true);
-            }
-        }
-        else if(pos==="defender"){
-            if(team.players.defenders.length+selectedPlayers.length>5){
-                setConfirmDisabled(true);
-            }
-        }
-        else if(pos==="midfielder"){
-            if(team.players.midfielders.length+selectedPlayers.length>5){
-                setConfirmDisabled(true);
-            }
-        }
-        else if(pos==="forward"){
-            if(team.players.forwards.length+selectedPlayers.length>4){
-                setConfirmDisabled(true);
-            }
+        if(team.players[pos+"s"].length+selectedPlayers.length>maxPlayers[pos+"s"]){
+            setConfirmDisabled(true);
         }
     }
 
@@ -96,19 +87,9 @@ const AddPlayerPage = () => {
     }
 
     const handleConfirm = () => {
-        if(pos==="goalkeeper"){
-            team.players.goalkeepers = team.players.goalkeepers.concat(selectedPlayers);
-        }
-        else if(pos==="defender"){
-            team.players.defenders = team.players.defenders.concat(selectedPlayers);
-        }
-        else if(pos==="midfielder"){
-            team.players.midfielders = team.players.midfielders.concat(selectedPlayers);
-        }
-        else if(pos==="forward"){
-            team.players.forwards = team.players.forwards.concat(selectedPlayers);
-        }
-        updateTeam(team);
+        let newTeam = {...team};
+        newTeam.players[pos+"s"] = newTeam.players[pos+"s"].concat(selectedPlayers);
+        updateTeam(newTeam);
         navigate("/squad");
         console.log(team);
     }
@@ -125,51 +106,92 @@ const AddPlayerPage = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     }
+
+    const handleRemovePlayerFromSelected = (row) => {
+        let newSelectedPlayers = selectedPlayers.filter((player) => player.id!==row.id);
+        setSelectedPlayers(newSelectedPlayers);
+        setRemainingBudget(remainingBudget+row.price);
+        if(team.players[pos+"s"].length+newSelectedPlayers.length<=maxPlayers[pos+"s"]){
+            setConfirmDisabled(false);
+        }
+    }
     return (
         <div>
             <Navbar />
         <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
-        <Paper sx={{ width: '60%', overflow: 'hidden' }}>
-        <TableContainer style={{ width: 800}}>
-        <Table aria-label="simple table">
-            <TableHead>
-                <TableRow sx={{width: '10px'}}>
-                    <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Price </TableCell>
-                    <TableCell sx={{color: 'white'}} align="center"> Total Points </TableCell>
-                    <TableCell></TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {players.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <TableRow >
-                        <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
-                        <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
-                        <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
-                        <TableCell>
-                            <IconButton color="success" disabled={row.available==0 || row.price>remainingBudget?true:false} onClick={()=>{handleSelectPlayer(row)}}>
-                                <AddCircleIcon />
-                            </IconButton>
-                        </TableCell>
+        <div style={{display: "flex", justifyContent: "space-around"}}>
+            <Paper sx={{ width: '50%', overflow: 'hidden' }}>
+            <TableContainer >
+            <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow sx={{width: '10px'}}>
+                        <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Price </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Total Points </TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-        </TableContainer>
-        <TablePagination
-        rowsPerPageOptions={[10, 20]}
-        component="div"
-        count={players.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-        </Paper>
+                </TableHead>
+                <TableBody>
+                    {players.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                        <TableRow >
+                            <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
+                            <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
+                            <TableCell>
+                                <IconButton color="success" disabled={row.locked || row.price>remainingBudget?true:false} onClick={()=>{handleSelectPlayer(row)}}>
+                                    <AddCircleIcon />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            </TableContainer>
+            <TablePagination
+            rowsPerPageOptions={[10, 20]}
+            component="div"
+            count={players.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+            </Paper>
+            <TableContainer style={{ width: '45%'}}>
+            <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow sx={{width: '10px'}}>
+                        <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Price </TableCell>
+                        <TableCell sx={{color: 'white'}} align="center"> Total Points </TableCell>
+                        <TableCell></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {selectedPlayers.map((row) => (
+                        <TableRow >
+                            <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
+                            <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
+                            <TableCell>
+                                <IconButton color="warning" onClick={()=>{handleRemovePlayerFromSelected(row)}}>
+                                    <CancelRounded />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            </TableContainer>
+        </div>
         <div>
             <Button variant="contained" color="success" disabled={confirmDisabled} onClick={()=>{handleConfirm()}}>Confirm</Button>
             <Button variant="contained" color="error" onClick={()=>{handleCancel()}}>Cancel</Button>
