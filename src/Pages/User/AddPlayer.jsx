@@ -143,17 +143,18 @@ const AddPlayerPage = () => {
             <input type="checkbox" name="person" checked={showOnlyAvailable} 
                    onChange={(event)=>{handleToggleAvailableOnly(event)}}
                     /> Show Available Players Only
-            <Paper sx={{ overflow: 'hidden' }}>
-            <TableContainer >
-            <Table aria-label="simple table">
+            <Paper sx={{ overflow: 'hidden' , width: "100%"}}>
+                
+            <TableContainer sx={{maxHeight:"600px"}}>
+            <Table stickyHeader aria-label="sticky table" >
                 <TableHead>
-                    <TableRow sx={{width: '10px'}}>
-                        <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Price </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Total Points </TableCell>
-                        <TableCell></TableCell>
+                    <TableRow >
+                        <TableCell sx={{ width: '175px',background: '#1f1a26', color: 'white'}} align="center"> Name </TableCell>
+                        <TableCell sx={{ width: '175px',background: '#1f1a26', color: 'white'}} align="center"> Team </TableCell>
+                        <TableCell sx={{ width: '50px',background: '#1f1a26',color: 'white'}} align="center"> Overall </TableCell>
+                        <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Price </TableCell>
+                        <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Total Points </TableCell>
+                        <TableCell sx={{ background: '#1f1a26'}}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -195,12 +196,14 @@ const AddPlayerPage = () => {
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow sx={{width: '10px'}}>
-                        <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Price </TableCell>
-                        <TableCell sx={{color: 'white'}} align="center"> Total Points </TableCell>
-                        <TableCell></TableCell>
+                    <TableRow >
+                        <TableCell sx={{ width: '175px',background: '#1f1a26', color: 'white'}} align="center"> Name </TableCell>
+                        <TableCell sx={{ width: '175px',background: '#1f1a26', color: 'white'}} align="center"> Team </TableCell>
+                        <TableCell sx={{ width: '50px',background: '#1f1a26',color: 'white'}} align="center"> Overall </TableCell>
+                        <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Price </TableCell>
+                        <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Total Points </TableCell>
+                        <TableCell sx={{ background: '#1f1a26'}}></TableCell>
+                    </TableRow>
                     </TableRow>
                 </TableHead>
                 <TableBody>
