@@ -145,7 +145,7 @@ const AddPlayerPage = () => {
                     /> Show Available Players Only
             <Paper sx={{ overflow: 'hidden' , width: "100%"}}>
                 
-            <TableContainer sx={{maxHeight:"600px"}}>
+            <TableContainer sx={{height:"600px"}}>
             <Table stickyHeader aria-label="sticky table" >
                 <TableHead>
                     <TableRow >
@@ -154,7 +154,7 @@ const AddPlayerPage = () => {
                         <TableCell sx={{ width: '50px',background: '#1f1a26',color: 'white'}} align="center"> Overall </TableCell>
                         <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Price </TableCell>
                         <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Total Points </TableCell>
-                        <TableCell sx={{ background: '#1f1a26'}}></TableCell>
+                        <TableCell sx={{ width: '30px', background: '#1f1a26'}}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -192,18 +192,17 @@ const AddPlayerPage = () => {
             </Paper>
             </div>
             <div>
+            <Paper sx={{ overflow: 'hidden' , width: "100%"}}>           
             <TableContainer>
-            <Table aria-label="simple table">
+            <Table stickyHeader>
                 <TableHead>
-                    <TableRow sx={{width: '10px'}}>
                     <TableRow >
                         <TableCell sx={{ width: '175px',background: '#1f1a26', color: 'white'}} align="center"> Name </TableCell>
                         <TableCell sx={{ width: '175px',background: '#1f1a26', color: 'white'}} align="center"> Team </TableCell>
                         <TableCell sx={{ width: '50px',background: '#1f1a26',color: 'white'}} align="center"> Overall </TableCell>
                         <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Price </TableCell>
                         <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Total Points </TableCell>
-                        <TableCell sx={{ background: '#1f1a26'}}></TableCell>
-                    </TableRow>
+                        <TableCell sx={{ width: '30px', background: '#1f1a26'}}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -223,7 +222,8 @@ const AddPlayerPage = () => {
                     ))}
                 </TableBody>
             </Table>
-            </TableContainer>
+            </TableContainer> 
+            </Paper> 
             </div>
         </div>
         <div>
