@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useParams } from "react";
 import { TeamContext } from "./TeamContext";
 import { useNavigate } from "react-router-dom";
 import { getPlayerList } from "../../api/User";
-import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, FormControl, FormControlLabel, FormGroup, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
 import _ from "lodash";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -10,7 +10,7 @@ import Navbar from "../../Components/Navbar";
 import { BudgetInfo } from "./BuildSquad";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { CancelRounded } from "@mui/icons-material";
+import { CancelRounded, CheckBox } from "@mui/icons-material";
 
 const maxPlayers = {
     "goalkeepers": 2,
@@ -43,6 +43,8 @@ const AddPlayerPage = () => {
     const [remainingBudget, setRemainingBudget] = useState(100);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [showOnlyAvailable, setShowOnlyAvailable] = useState(false);
+    const [fetchedList, setFetchedList] = useState([]);
     const qlink = window.location.href;
     const tokens = qlink.split('/');
 
@@ -50,14 +52,17 @@ const AddPlayerPage = () => {
     useEffect(() => {
         getPlayerList(pos).then(res => {
             let newPlayers = res;
-            if(team) newPlayers = newPlayers.filter((player) => !isInTeam(player, team));
+            if(team) {
+                newPlayers = newPlayers.filter((player) => !isInTeam(player, team));
+            }
+            if(newPlayers.length!==0)setFetchedList(newPlayers);
             setPlayers(newPlayers);
-            console.log(newPlayers);
+            console.log(fetchedList)
         });
-    },[]);
+    },[team]);
     useEffect(() => {
         if(team) setRemainingBudget(team.budget)
-    },[team])
+    },[])
     const handleSelectPlayer = (row) => {
         for(let i=0; i<selectedPlayers.length; i++){
             if(selectedPlayers[i].id===row.id){
@@ -82,6 +87,19 @@ const AddPlayerPage = () => {
         }
     }
 
+    const handleToggleAvailableOnly = (event) => {
+        let newPlayers = [...fetchedList];
+        if(event.target.checked){
+            newPlayers = newPlayers.filter((player) => !player.locked);
+            setPlayers(newPlayers);
+        }
+        else{
+            setPlayers(fetchedList);
+        }
+        setShowOnlyAvailable(event.target.checked);
+                    
+    }
+
     const handleCancel = () => {
         navigate("/squad");
     }
@@ -94,7 +112,7 @@ const AddPlayerPage = () => {
         console.log(team);
     }
    
-    if(players.length===0 || !team) {
+    if(!team) {
         return <div>Loading...</div>;
     }
     
@@ -119,8 +137,13 @@ const AddPlayerPage = () => {
         <div>
             <Navbar />
         <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
-        <div style={{display: "flex", justifyContent: "space-around"}}>
-            <Paper sx={{ width: '50%', overflow: 'hidden' }}>
+        
+        <div style={{display: "flex", justifyContent: "space-between", width: "90%", margin: "auto"}}>
+            <div>
+            <input type="checkbox" name="person" checked={showOnlyAvailable} 
+                   onChange={(event)=>{handleToggleAvailableOnly(event)}}
+                    /> Show Available Players Only
+            <Paper sx={{ overflow: 'hidden' }}>
             <TableContainer >
             <Table aria-label="simple table">
                 <TableHead>
@@ -135,6 +158,7 @@ const AddPlayerPage = () => {
                 </TableHead>
                 <TableBody>
                     {players.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                        
                         <TableRow >
                             <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
                             <TableCell sx={{color: 'white'}} align="center">{row.team}</TableCell>
@@ -142,9 +166,13 @@ const AddPlayerPage = () => {
                             <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
                             <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
                             <TableCell>
+                                <Tooltip title={row.locked ? "You cannot add this player" : row.price>remainingBudget? "Youdo not have enough budget":"Add to squad"}>
+                                <span>
                                 <IconButton color="success" disabled={row.locked || row.price>remainingBudget?true:false} onClick={()=>{handleSelectPlayer(row)}}>
                                     <AddCircleIcon />
                                 </IconButton>
+                                </span>
+                                </Tooltip>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -161,7 +189,9 @@ const AddPlayerPage = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
             />
             </Paper>
-            <TableContainer style={{ width: '45%'}}>
+            </div>
+            <div>
+            <TableContainer>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow sx={{width: '10px'}}>
@@ -191,6 +221,7 @@ const AddPlayerPage = () => {
                 </TableBody>
             </Table>
             </TableContainer>
+            </div>
         </div>
         <div>
             <Button variant="contained" color="success" disabled={confirmDisabled} onClick={()=>{handleConfirm()}}>Confirm</Button>
