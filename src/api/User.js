@@ -41,6 +41,7 @@ export const confirmLogin = async (credentials) => {
     console.log(response);
     return response.data;
 }
+
 export const getPlayingXI = async (matchId) => {
     const response = await axios.get(`${URL}/playingxi/${matchId}`);
     return response.data;

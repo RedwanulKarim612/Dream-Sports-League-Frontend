@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { confirmLogin } from "../../api/User";
+import { confirmAdminLogin } from "../../../api/Admin";
 import { Button, Typography, Container, CardContent, Card, TextField} from "@mui/material";
 
 const LoginPage = () => {
@@ -22,9 +22,9 @@ const LoginPage = () => {
             password: password,
         };
         console.log(credentials);
-        confirmLogin(credentials).then(res => {
+        confirmAdminLogin(credentials).then(res => {
             console.log(res);
-            if(res==='User Logged In')navigate('/');
+            if(res==='Admin Logged In')navigate('/admin/1');
         });
     }
     // maxWidth="sm"

@@ -13,6 +13,8 @@ import LoginPage from "./Pages/User/LoginPage";
 import MatchDetails from "./Pages/User/MatchDetails";
 import Admin from "./Pages/User/Admin/Admin";
 import FixturePage from "./Pages/User/FixturePage";
+import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
+import Delete from "./Pages/User/Admin/Delete";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -32,6 +34,8 @@ const App = () => {
                 <Route path="/matches/:matchId" element={<MatchDetails/>}/>
                 <Route path="/admin/:gameweek" element={<Admin/>}/>
                 <Route path="/fixture/:gameweek" element={<FixturePage/>}/>
+                <Route path="/adminlogin" element={<AdminLoginPage/>}/>
+                <Route path="/delete" element={<Delete/>}/>
             </Routes>
         </div>
         </ThemeProvider>
