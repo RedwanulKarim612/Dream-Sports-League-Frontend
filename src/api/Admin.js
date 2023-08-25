@@ -5,6 +5,13 @@ const URL = 'https://dream-sports-league.onrender.com/api'
 
 axios.defaults.withCredentials = true;
 
+export const confirmAdminLogin = async (credentials) => {
+    console.log(credentials)
+    const response = await axios.post(`${URL}/auth/login`, credentials);
+    console.log(response);
+    return response.data;
+}
+
 export const getWeekMatches = async(gw) => {
     const response = await axios.get(`${URL}/admin/matchweek/${gw}`);
     return response.data;
