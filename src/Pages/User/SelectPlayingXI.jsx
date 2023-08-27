@@ -10,6 +10,14 @@ function getFormation(formationString){
     return formation;
 }
 
+function extractFormation(team){
+    let formation = [];
+    formation.push(team.playingxi.defenders.length);
+    formation.push(team.playingxi.midfielders.length);
+    formation.push(team.playingxi.forwards.length);
+    return formation;       
+}
+
 function getFormationString(formationArray){
     return formationArray.join('-');
 }
@@ -63,10 +71,10 @@ function swapPlayers(team, fromXI, fromBench){
     let playerInTeam = null;
     let playerInBench = null;
     playerInTeam = getPlayer(team.playingxi[fromXI.position.toLowerCase()], fromXI.id);
-    playerInBench = getPlayer(team.bench[fromXI.position.toLowerCase()], fromBench.id);
+    playerInBench = getPlayer(team.bench[fromBench.position.toLowerCase()], fromBench.id);
     if(playerInBench === null || playerInTeam === null) return;
     
-    newTeam.playingxi[fromXI.position.toLowerCase()].push(playerInBench);
+    newTeam.playingxi[fromBench.position.toLowerCase()].push(playerInBench);
     newTeam.bench[fromXI.position.toLowerCase()].push(playerInTeam);
     console.log(newTeam);
     return newTeam;
@@ -146,7 +154,7 @@ const SelectPlayingXI = () => {
             console.log(res);
             setTeam(newTeam);
                 // console.log(team);
-            setFormation(getFormation(newTeam.formation));
+            setFormation(extractFormation(newTeam));
             const newCaptain = getCaptainDetails(newTeam, newTeam.captain);
             setCaptain(newCaptain);
             // console.log('captain selected');
@@ -160,13 +168,24 @@ const SelectPlayingXI = () => {
         if(selectedFromXI.id !== -1 && selectedFromBench.id !== -1){
             console.log(selectedFromBench)
             console.log(selectedFromXI)
-            if(selectedFromXI.position!==selectedFromBench.position){
+            if(selectedFromXI.position==='Goalkeepers' && 
+                    selectedFromXI.position!==selectedFromBench.position){
+                console.log('goalkeepers cant be swapped');
+                setSelectedFromBench(null);
+                return;
+            }
+            else if(selectedFromBench.position==='Goalkeepers' &&
+                selectedFromXI.position!==selectedFromBench.position){
+                console.log('goalkeepers cant be swapped');
                 setSelectedFromBench(null);
                 return;
             }
             let newTeam = swapPlayers(team, selectedFromXI, selectedFromBench);
+            let newFormation = extractFormation(newTeam);
+            newTeam.formation = getFormationString(newFormation);
             setTeam(newTeam);
-        
+            if(!availableFormations.includes(newFormation)) availableFormations.push(getFormationString(newFormation));
+            setFormation(newFormation);
             setSelectedFromXI(null);
             setSelectedFromBench(null);
         }
@@ -175,17 +194,15 @@ const SelectPlayingXI = () => {
     if(!team || !captain) {
         return <div>Loading...</div>
     }
-    // console.log(team);
-    // console.log(captain.name);
+    console.log(formation);
+
     const handleChangeFormation = (event) => {
         let newTeam = {...team};
         newTeam.formation = event.target.value;
-        // const formationDetails = getFormationString(event.target.value);
         updatePlayingXI(newTeam, getFormation(event.target.value));
         console.log(newTeam.formation);
         setTeam(newTeam);
         setFormation(getFormation(event.target.value));
-        console.log(formation);
     }
     const handleChangeCaptain = (event) => {
         let newTeam = {...team};
