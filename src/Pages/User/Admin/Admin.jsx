@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { getWeekMatches } from "../../../api/Admin";
 import { Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 import Navbar from '../../../Components/Navbar';
 import { postMatchToBeSimulated } from "../../../api/Admin";
 import { postMatchToBeUnsimulated } from "../../../api/Admin";
 import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 const WeekMatchesTable = () => {
     const qlink = window.location.href;
     const tokens = qlink.split('/');
     const gw = tokens[tokens.length-1];
     const [matches, setMatches] = useState([]);
+    const [gameweek, setGameweek] = useState(1);
     const navigate = useNavigate();
     useEffect(() => {
         getWeekMatches(gw).then((res) => {
             console.log(res)
             setMatches(res);
+            setGameweek(gw);
         });
     })
 
@@ -44,11 +48,40 @@ const WeekMatchesTable = () => {
             navigate(0);
         });
     };
-
+    
+    const handleChangeGameWeek = (event) => {
+        console.log(event.target.value);
+        navigate("/admin/"+event.target.value);
+        navigate(0)
+    }
     return (
         <div>
             <Navbar />
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <Typography variant="h4">
+                        Gameweek
+                    </Typography>
+                <FormControl variant="standard" sx={{ m: 1}}>
+                    {/* <InputLabel id="demo-simple-select-required-label">Gameweek</InputLabel> */}
+                    <Select
+                    labelId="demo-simple-select-required-label"
+                    id="demo-simple-select-required"
+                    value={gameweek}
+                    label="Gameweek"
+                    onChange={handleChangeGameWeek}
+                    >{
+                        _.range(1,39).map((gw)=>{
+                            return <MenuItem value={gw}>
+                                <Typography variant="h4">{gw}</Typography>
+                                {/* {gw} */}
+                            </MenuItem>
+                        })
+                    }
+                    </Select>
+                </FormControl>
+                </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+                
                 <Card style={{ backgroundColor: 'lightgray' }} size="lg" sx={{ width: '60%' }}>
                     <CardContent>
                         <TableContainer component={Paper}>

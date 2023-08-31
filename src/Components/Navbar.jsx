@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { KeyboardArrowDownSharp, KeyboardArrowDownTwoTone } from '@mui/icons-material';
+import { userLogout } from "../api/User";
 
 const pages = Array(
     {
@@ -42,7 +43,7 @@ const pages = Array(
         'link': '/stats'        
     }
 );
-const settings = ['Profile', 'Logout'];
+const settings = ['Profile', 'Login', 'Logout'];
 
 
 function Navbar() {
@@ -87,6 +88,11 @@ function Navbar() {
   const handleSquadOption = (str) => {
     setAnchorEl(null);
     navigate("/"+str);
+  }
+  const handleLogout = () => {
+    userLogout().then(res => {
+      if(res === "User logged out")navigate('/');
+    })
   }
   const navigate = useNavigate();
   return (
@@ -191,7 +197,7 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{setting === 'Profile'? navigate('/profile') : handleOpenUserMenu()}}>
+                <MenuItem key={setting} onClick={()=>{setting === 'Profile'? navigate('/profile') : setting === 'Login' ? navigate('/login') : setting === 'Logout' ? handleLogout() : handleOpenUserMenu()}}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

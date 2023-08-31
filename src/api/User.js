@@ -42,6 +42,13 @@ export const confirmLogin = async (credentials) => {
     return response.data;
 }
 
+export const userLogout = async () => {
+    const response = await axios.post(`${URL}/auth/logout`);
+    console.log(response);
+    return response.data;
+}
+
+
 export const getPlayingXI = async (matchId) => {
     const response = await axios.get(`${URL}/playingxi/${matchId}`);
     return response.data;
