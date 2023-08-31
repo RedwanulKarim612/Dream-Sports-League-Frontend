@@ -50,10 +50,11 @@ const Profile = () => {
                     noValidate
                     autoComplete="off"
                 >
-                    <InfoField title="Username" value={user.username}/>
+                    <InfoField title="Username" value={user.user_id}/>
                     <InfoField title="Name" value={user.name}/>
                     <InfoField title="Email" value={user.email}/>
-                    <InfoField title="Favorite Team" value={user.favoriteTeam}/>   
+                    <InfoField title="Favorite Team" value={user.favorite_team}/>   
+                    <InfoField title="Points" value={user.point}/>  
                 </Box>
             </div>
         </div>

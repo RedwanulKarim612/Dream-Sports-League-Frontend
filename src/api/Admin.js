@@ -20,3 +20,6 @@ export const getWeekMatches = async(gw) => {
 export const postMatchToBeSimulated = async(matchId) => {
     const response = await axios.post(`${URL}/admin/matchweek/${matchId}`);
 }
+export const postMatchToBeUnsimulated = async(matchId) => {
+    const response = await axios.post(`${URL}/admin/matchweek/unsimulate/${matchId}`);
+}

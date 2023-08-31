@@ -3,6 +3,7 @@ import { getWeekMatches } from "../../../api/Admin";
 import { Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import Navbar from '../../../Components/Navbar';
 import { postMatchToBeSimulated } from "../../../api/Admin";
+import { postMatchToBeUnsimulated } from "../../../api/Admin";
 import { useNavigate } from "react-router-dom";
 
 const WeekMatchesTable = () => {
@@ -33,6 +34,14 @@ const WeekMatchesTable = () => {
             //     });
             //     setMatches(updatedMatches);
             // }
+        });
+    };
+    const handleUnsimulation = (matchId) => {
+        console.log(   matchId);
+        postMatchToBeUnsimulated(matchId).then(res => {
+        
+            console.log(res);
+            navigate(0);
         });
     };
 
@@ -67,6 +76,7 @@ const WeekMatchesTable = () => {
                                             <TableCell align="center">{row.finished}</TableCell>
                                             <TableCell align="Center">
                                                 {!row.finished && <Button variant="contained" onClick={()=>{handleSimulation(row.id);}}>Simulate</Button>}   
+                                                {row.finished && <Button variant="contained" onClick={()=>{handleUnsimulation(row.id);}}>Unsimulate</Button>}   
                                             </TableCell>
                                         </TableRow>
                                     ))}
