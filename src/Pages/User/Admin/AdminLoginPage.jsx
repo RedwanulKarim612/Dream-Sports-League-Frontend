@@ -24,7 +24,7 @@ const LoginPage = () => {
         console.log(credentials);
         confirmAdminLogin(credentials).then(res => {
             console.log(res);
-            if(res==='Admin Logged In')navigate('/admin/1');
+            if(res==='Admin logged in')navigate('/admin/1');
         });
     }
     // maxWidth="sm"
