@@ -10,9 +10,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { CssBaseline, Menu, ThemeProvider, createTheme } from '@mui/material';
+import { ClickAwayListener, CssBaseline, Grow, Menu, MenuList, Paper, Popper, ThemeProvider, createTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { KeyboardArrowDownSharp, KeyboardArrowDownTwoTone } from '@mui/icons-material';
 
 const pages = Array(
     {
@@ -42,9 +44,10 @@ const pages = Array(
 );
 const settings = ['Profile', 'Logout'];
 
+
 function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -67,6 +70,24 @@ function Navbar() {
     },
   });
 
+  const handleNavBarClick = (event, page) => {
+    if(page.text === 'Your Squad') {
+      setAnchorEl(event.currentTarget);
+    } 
+    else navigate(page.link);
+  }
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSquadOption = (str) => {
+    setAnchorEl(null);
+    navigate("/"+str);
+  }
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={darkTheme}>
@@ -112,14 +133,38 @@ function Navbar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page,index) => (
+            {pages.map((page,index) => (<>
               <Button
                 key={index}
-                onClick={()=>{navigate(page.link)}}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={(event)=>handleNavBarClick(event, page)}
+                sx={{ my: 1, color: 'white', display: 'flex' }}
+                
+                endIcon={page.text==="Your Squad"? <KeyboardArrowDownSharp /> : undefined}
               >
                 {page.text}
               </Button>
+                {page.text==='Your Squad' && <>
+                <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+              >
+                <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
+                <MenuItem onClick={()=>{navigate("/squad")}}>Transfer Window</MenuItem>
+              </Menu>
+            </>
+            }
+              </>
             ))}
           </Box>
 
@@ -146,7 +191,7 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{setting == 'Profile'? navigate('/profile') : handleOpenUserMenu()}}>
+                <MenuItem key={setting} onClick={()=>{setting === 'Profile'? navigate('/profile') : handleOpenUserMenu()}}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const URL = 'https://dream-sports-league.onrender.com/api'
-// const URL = 'http://localhost:8080/api'
+// const URL = 'https://dream-sports-league.onrender.com/api'
+const URL = 'http://localhost:8080/api'
 
 axios.defaults.withCredentials = true;
 
