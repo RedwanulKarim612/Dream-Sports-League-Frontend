@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { confirmRegister } from "../../api/User";
 import { Button, Typography, Container, CardContent, Card, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText} from "@mui/material";
 import { getEPLTeams } from "../../api/User";
+import NavBar from "../../Components/Navbar";
+import TopBar from "../../Components/TopBar";
 const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
@@ -81,6 +83,8 @@ const RegisterPage = () => {
     // maxWidth="sm"
     return (
         <div style={{backgroundColor:'#171717', width:'100vw', height:'200vh'}}>
+        <TopBar/>
+        <NavBar/>
             <Container style={{display:'flex',flexDirection:'row'}}>
                 <Card style={{ marginTop: '150px', marginLeft: '300px', width: '300px', height: '800px', backgroundColor: 'black' }}>
                     <CardContent>

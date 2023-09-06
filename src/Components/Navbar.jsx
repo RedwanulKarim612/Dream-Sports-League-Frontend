@@ -73,6 +73,11 @@ function Navbar() {
 
   const handleNavBarClick = (event, page) => {
     if(page.text === 'Your Squad') {
+      console.log(event.currentTarget);
+      setAnchorEl(event.currentTarget);
+    } 
+    else if(page.text === 'Stats') {
+      console.log(event.currentTarget);
       setAnchorEl(event.currentTarget);
     } 
     else navigate(page.link);
@@ -149,31 +154,52 @@ function Navbar() {
                 onClick={(event)=>handleNavBarClick(event, page)}
                 sx={{ my: 1, color: 'white', display: 'flex' }}
                 
-                endIcon={page.text==="Your Squad"? <KeyboardArrowDownSharp /> : undefined}
+                endIcon={page.text==="Your Squad" || page.text === "Stats"? <KeyboardArrowDownSharp /> : undefined}
               >
                 {page.text}
               </Button>
                 {page.text==='Your Squad' && <>
-                <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-              >
-                <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
-                <MenuItem onClick={()=>{navigate("/squad/view")}}>Transfer Window</MenuItem>
-              </Menu>
-            </>
-            }
+                    <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={anchorEl !== null && anchorEl.innerText === 'YOUR SQUAD'}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
+                    <MenuItem onClick={()=>{navigate("/squad/view")}}>Transfer Window</MenuItem>
+                  </Menu>
+                </>
+                }
+                {page.text==='Stats' && <>
+                    <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={anchorEl !== null && anchorEl.innerText === 'STATS'}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <MenuItem onClick={()=>{navigate("/stats/teams")}}>Team Stat</MenuItem>
+                  </Menu>
+                </>
+                }
+
               </>
             ))}
           </Box>

@@ -16,6 +16,7 @@ import FixturePage from "./Pages/User/FixturePage";
 import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
 import Delete from "./Pages/User/Admin/Delete";
 import RegisterPage from "./Pages/User/RegisterPage";
+import TeamStats from "./Pages/User/TeamStats";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -39,6 +40,7 @@ const App = () => {
                 <Route path="/fixture/:gameweek" element={<FixturePage/>}/>
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
                 <Route path="/delete" element={<Delete/>}/>
+                <Route path="/stats/teams" element={<TeamStats/>}/>
             </Routes>
         </div>
         </ThemeProvider>
