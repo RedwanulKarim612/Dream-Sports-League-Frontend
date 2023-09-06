@@ -12,6 +12,15 @@ const PlayerStats = () => {
         getPlayerStats().then((res) => {
             console.log(res)
             res.sort((a, b) => {
+                if(a.points === b.points){
+                    if(a.overall === b.overall){
+                        if(a.goals === b.goals){
+                            return b.price - a.price;
+                        }
+                        return b.goals - a.goals;
+                    }
+                    return b.overall - a.overall;
+                }
                 return b.points - a.points;
             });
             for(let i=0; i<res.length; i++){
