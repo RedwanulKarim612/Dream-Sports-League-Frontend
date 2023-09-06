@@ -17,6 +17,7 @@ import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
 import Delete from "./Pages/User/Admin/Delete";
 import RegisterPage from "./Pages/User/RegisterPage";
 import TeamStats from "./Pages/User/TeamStats";
+import PlayerStats from "./Pages/User/PlayerStats";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -41,6 +42,7 @@ const App = () => {
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
                 <Route path="/delete" element={<Delete/>}/>
                 <Route path="/stats/teams" element={<TeamStats/>}/>
+                <Route path="/stats/players" element={<PlayerStats/>}/>
             </Routes>
         </div>
         </ThemeProvider>

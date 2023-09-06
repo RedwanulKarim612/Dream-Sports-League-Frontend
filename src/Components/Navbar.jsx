@@ -196,6 +196,7 @@ function Navbar() {
                     }}
                   >
                     <MenuItem onClick={()=>{navigate("/stats/teams")}}>Team Stat</MenuItem>
+                    <MenuItem onClick={()=>{navigate("/stats/players")}}>Player Stat</MenuItem>
                   </Menu>
                 </>
                 }

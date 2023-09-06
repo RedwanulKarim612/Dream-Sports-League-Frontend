@@ -87,3 +87,8 @@ export const getTeamStats = async() => {
     const response = await axios.get(`${URL}/stats/teams`);
     return response.data;
 }
+
+export const getPlayerStats = async() => {
+    const response = await axios.get(`${URL}/stats/players`);
+    return response.data;
+}
