@@ -5,6 +5,7 @@ import { getFixtureDetails } from "../../api/User";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 import { getDateAndTime } from "../../util";
+import TopBar from "../../Components/TopBar";
 const FixturePage = () =>{
     const qlink = window.location.href;
     const tokens = qlink.split('/');
@@ -30,6 +31,7 @@ const FixturePage = () =>{
     }
     return(
         <div>
+            <TopBar/>
             <Navbar/>
             <div style={{width: '70%', margin: '30px auto'}}>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>

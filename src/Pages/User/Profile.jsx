@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
 import { Box, CircularProgress, TextField, Typography } from "@mui/material";
 import { getUserInfo } from "../../api/User";
+import TopBar from "../../Components/TopBar";
 
 
 export const InfoField = (props)=>{
@@ -40,6 +41,7 @@ const Profile = () => {
 
     return (
         <div>
+        <TopBar />
         <Navbar />
             <div style={{width: '30%', margin: 'auto'}}>
                 <Box

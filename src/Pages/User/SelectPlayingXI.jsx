@@ -5,6 +5,7 @@ import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableH
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
+import TopBar from "../../Components/TopBar";
 function getFormation(formationString){
     const formation = formationString.split('-');
     return formation;
@@ -244,6 +245,7 @@ const SelectPlayingXI = () => {
     }
     return(
         <div>
+            <TopBar />
             <Navbar />
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>

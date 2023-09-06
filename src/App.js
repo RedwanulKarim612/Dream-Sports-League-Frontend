@@ -18,6 +18,7 @@ import Delete from "./Pages/User/Admin/Delete";
 import RegisterPage from "./Pages/User/RegisterPage";
 import TeamStats from "./Pages/User/TeamStats";
 import PlayerStats from "./Pages/User/PlayerStats";
+import DPLStandings from "./Pages/User/DPLStandings";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path="/delete" element={<Delete/>}/>
                 <Route path="/stats/teams" element={<TeamStats/>}/>
                 <Route path="/stats/players" element={<PlayerStats/>}/>
+                <Route path="/standings" element={<DPLStandings/>}/>
             </Routes>
         </div>
         </ThemeProvider>

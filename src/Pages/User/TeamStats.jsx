@@ -9,10 +9,10 @@ const TeamStats = () => {
         getTeamStats().then((res) => {
             console.log(res)
             res.sort((a, b) => {
-                if(a.points == b.points){
-                    if(a.goal_difference == b.goal_difference){
-                        if(a.win == b.win){
-                            if(a.loss == b.loss){
+                if(a.points === b.points){
+                    if(a.goal_difference === b.goal_difference){
+                        if(a.win === b.win){
+                            if(a.loss === b.loss){
                                 return a.name.localeCompare(b.name);
                             }
                             return a.loss - b.loss;
@@ -22,7 +22,9 @@ const TeamStats = () => {
                 }
                 return b.points - a.points;
             });
-
+            for(let i=0; i<res.length; i++){
+                res[i].rank = i+1;
+            }
             setTeamStats(res);
         });
     }, []);
@@ -40,6 +42,7 @@ const TeamStats = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
+                            <TableCell align="center">Rank</TableCell>
                             <TableCell align="center">Team Name</TableCell>
                             <TableCell align="center">Matches Played</TableCell>
                             <TableCell align="center">Wins</TableCell>
@@ -55,6 +58,7 @@ const TeamStats = () => {
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
+                                <TableCell align="center">{row.rank}</TableCell>
                                 <TableCell component="th" scope="row" align="center">{row.name}</TableCell>
                                 <TableCell align="center">{row.played}</TableCell>
                                 <TableCell align="center">{row.win}</TableCell>

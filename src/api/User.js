@@ -92,3 +92,8 @@ export const getPlayerStats = async() => {
     const response = await axios.get(`${URL}/stats/players`);
     return response.data;
 }
+
+export const getDPLStandings = async() => {
+    const response = await axios.get(`${URL}/stats/standings`);
+    return response.data;
+}

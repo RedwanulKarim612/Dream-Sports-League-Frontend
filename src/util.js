@@ -12,6 +12,6 @@ export function getDateAndTime(dateString){
 }
 
 export function getImage(filename){
-    console.log(filename);
+    // console.log(filename);
     return require(`./assets/images/${filename}.png`);
 }
