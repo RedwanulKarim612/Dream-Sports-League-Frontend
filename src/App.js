@@ -15,6 +15,7 @@ import Admin from "./Pages/User/Admin/Admin";
 import FixturePage from "./Pages/User/FixturePage";
 import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
 import Delete from "./Pages/User/Admin/Delete";
+import FLHome from "./Pages/User/FLHome";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -36,6 +37,7 @@ const App = () => {
                 <Route path="/fixture/:gameweek" element={<FixturePage/>}/>
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
                 <Route path="/delete" element={<Delete/>}/>
+                <Route path="/friends-league" element={<FLHome/>}/>
             </Routes>
         </div>
         </ThemeProvider>

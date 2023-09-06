@@ -68,3 +68,8 @@ export const getFixtureDetails = async(gameWeek) => {
     const response = await axios.get(`${URL}/fixtures/${gameWeek}`);
     return response.data;
 }
+
+export const getFLHome = async() => {
+    const response = await axios.get(`${URL}/friends-league`);
+    return response.data;
+}
