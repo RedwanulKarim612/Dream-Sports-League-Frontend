@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getMatchDetails } from "../../api/User";
 import Navbar from "../../Components/Navbar";
-import { Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Card, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SquareIcon from '@mui/icons-material/Square';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import { getDateAndTime } from "../../util";
+import { useNavigate } from "react-router-dom";
 
 let validEvents = ["GOAL", "YELLOW_CARD", "RED_CARD", "OWN_GOAL"];
 
@@ -78,12 +79,17 @@ const MatchDetails = () => {
     const tokens = qlink.split('/');
     const matchId = tokens[tokens.length-1];
     const [matchDetails, setMatchDetails] = useState(null);
+    const navigate = useNavigate();
     useEffect(()=>{
         getMatchDetails(matchId).then((res)=>{
             setMatchDetails(res);
             console.log(res)
         });
     }, [])
+
+    const handleChangeXI = () => {
+        navigate("/playingXI/"+matchId);
+    }
     if(!matchDetails){
         return <div>Loading...</div>
     }
@@ -157,6 +163,13 @@ const MatchDetails = () => {
                 <PlayerPointsTable players={matchDetails.points.home}/>
                 <PlayerPointsTable players={matchDetails.points.away}/>
             </div>
+            </>
+            }
+            { !matchDetails.finished &&
+            <>
+                <Button variant="contained" color="primary" sx={{margin: '20px auto', display: 'block'}} onClick={()=>{handleChangeXI()}}>
+                    Change Playing XI
+                </Button>
             </>
             }
         </div>
