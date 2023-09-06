@@ -8,7 +8,7 @@ function TopBar() {
            
            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                 <img src = {getImage('left')} alt = 'None' width={Height * 625 / 117} height={Height}></img>
-                <img src = {getImage('logo')} alt = 'None' width={Height * 207 / 172} height={Height}></img>
+                <img src = {getImage('logo')} alt = 'None' width={Height * 207 / 119} height={Height}></img>
                 <img src = {getImage('right')} alt = 'None' width={Height * 625 / 117} height={Height}></img>
             </div>
         </div>
