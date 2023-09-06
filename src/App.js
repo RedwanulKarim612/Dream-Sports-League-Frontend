@@ -15,6 +15,7 @@ import Admin from "./Pages/User/Admin/Admin";
 import FixturePage from "./Pages/User/FixturePage";
 import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
 import Delete from "./Pages/User/Admin/Delete";
+import RegisterPage from "./Pages/User/RegisterPage";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -27,8 +28,10 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/login" element={<LoginPage />}/>
+                <Route path="/register" element={<RegisterPage />}/>
                 <Route path="/profile" element={<Profile />}/>
-                <Route path="/squad" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
+                <Route path="/squad/build" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
+                <Route path="/squad/view" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
                 <Route path="/playingxi/:matchId" element={<SelectPlayingXI/>}/>
                 <Route path="/matches/:matchId" element={<MatchDetails/>}/>

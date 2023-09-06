@@ -28,7 +28,7 @@ const pages = Array(
     },
     {
         'text': 'Your Squad',
-        'link': '/squad'
+        'link': '/squad/view'
     },
     {
         'text': 'Friends\' League',
@@ -43,7 +43,7 @@ const pages = Array(
         'link': '/stats'        
     }
 );
-const settings = ['Profile', 'Login', 'Logout'];
+const settings = ['Profile', 'Register', 'Login', 'Logout'];
 
 
 function Navbar() {
@@ -93,6 +93,10 @@ function Navbar() {
     userLogout().then(res => {
       if(res === "User logged out")navigate('/');
     })
+  }
+
+  const handleRegister = () => {
+    navigate('/register');
   }
   const navigate = useNavigate();
   return (
@@ -166,7 +170,7 @@ function Navbar() {
                 }}
               >
                 <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
-                <MenuItem onClick={()=>{navigate("/squad")}}>Transfer Window</MenuItem>
+                <MenuItem onClick={()=>{navigate("/squad/view")}}>Transfer Window</MenuItem>
               </Menu>
             </>
             }
@@ -197,7 +201,12 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{setting === 'Profile'? navigate('/profile') : setting === 'Login' ? navigate('/login') : setting === 'Logout' ? handleLogout() : handleOpenUserMenu()}}>
+                <MenuItem key={setting} onClick={
+                  ()=>{
+                    setting === 'Profile'? navigate('/profile') : 
+                    setting === 'Login' ? navigate('/login') : 
+                    setting === 'Logout' ? handleLogout() : 
+                    setting === 'Register' ? handleRegister() : handleOpenUserMenu()}}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
