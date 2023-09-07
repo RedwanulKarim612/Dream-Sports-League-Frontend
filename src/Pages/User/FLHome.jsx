@@ -1,10 +1,12 @@
 import {React, useEffect, useState} from 'react';
 import Navbar from '../../Components/Navbar';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { getFLHome } from '../../api/User';
+import { useNavigate } from 'react-router-dom';
 
 const FLHome = () => {
     const [leagues, setLeagues] = useState(null);
+    const navigate = useNavigate();
     useEffect(() => {
         getFLHome().then(res => {
             setLeagues(res.leagues);
@@ -13,6 +15,14 @@ const FLHome = () => {
 
     if(!leagues){
         return <div>Loading...</div>
+    }
+
+    const handleCreateleague = () => {
+        navigate('/friends-league/create')
+    }
+
+    const handleJoinLeague = () => {
+
     }
     return (
 
@@ -32,9 +42,6 @@ const FLHome = () => {
                         <TableCell align="center"> Name </TableCell>
                         <TableCell align="center"> Team </TableCell>
                         <TableCell align="center"> Overall </TableCell>
-                        {/* <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Price </TableCell>
-                        <TableCell sx={{ width: '50px',background: '#1f1a26', color: 'white'}} align="center"> Total Points </TableCell> */}
-                        {/* <TableCell sx={{ width: '30px', background: '#1f1a26'}}></TableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -42,16 +49,19 @@ const FLHome = () => {
                         <TableRow >
                             <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
                             <TableCell sx={{color: 'white'}} align="center">{row.matches_finished}</TableCell>
-                            <TableCell sx={{color: 'white'}} align="center">{row.your_rank}/{row.teams}</TableCell>
-                            {/* <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
-                            <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell> */}
-                           
+                            <TableCell sx={{color: 'white'}} align="center">{row.your_rank}/{row.teams}</TableCell>  
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
             </TableContainer> 
             </div>
+            </div>
+            <div style={{display: 'flex', margin: 'auto'}}>
+                <Button variant='contained' style={{background: '#1f7a04', width: '250px', color: 'white', margin: 'auto', marginTop: '20px', marginBottom: '10px'}} onClick={()=>{handleCreateleague()}}>Create League</Button>
+            </div>
+            <div style={{display: 'flex', margin: 'auto'}}>
+                <Button variant='contained' style={{background: '#1f7a04', width: '250px', color: 'white', margin: 'auto', marginTop: '10px', marginBottom: '10px'}} onClick={()=>{handleJoinLeague()}}>Join League </Button>
             </div>
         </div>
     )
