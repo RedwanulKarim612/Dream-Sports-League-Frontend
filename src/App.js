@@ -16,6 +16,7 @@ import FixturePage from "./Pages/User/FixturePage";
 import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
 import Delete from "./Pages/User/Admin/Delete";
 import FLHome from "./Pages/User/FLHome";
+import FLCreate from "./Pages/User/FLCreate";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -38,6 +39,7 @@ const App = () => {
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
                 <Route path="/delete" element={<Delete/>}/>
                 <Route path="/friends-league" element={<FLHome/>}/>
+                <Route path="/friends-league/create" element={<FLCreate/>}/>
             </Routes>
         </div>
         </ThemeProvider>
