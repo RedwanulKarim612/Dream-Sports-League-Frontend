@@ -42,6 +42,20 @@ export const confirmLogin = async (credentials) => {
     return response.data;
 }
 
+export const confirmRegister = async (credentials) => {
+    console.log(credentials)
+    const response = await axios.post(`${URL}/auth/register`, credentials);
+    console.log(response);
+    return response.data;
+}
+
+export const getEPLTeams = async () => {
+    console.log("getEPLTeams")
+    const response = await axios.get(`${URL}/epl/teams`);
+    console.log(response);
+    return response.data;
+}
+
 export const userLogout = async () => {
     const response = await axios.post(`${URL}/auth/logout`);
     console.log(response);
@@ -86,5 +100,17 @@ export const getFLList = async() => {
 
 export const requestJoinFL = async(leagueId) => {
     const response = await axios.post(`${URL}/friendsleague/join`, leagueId);
+export const getTeamStats = async() => {
+    const response = await axios.get(`${URL}/stats/teams`);
+    return response.data;
+}
+
+export const getPlayerStats = async() => {
+    const response = await axios.get(`${URL}/stats/players`);
+    return response.data;
+}
+
+export const getDPLStandings = async() => {
+    const response = await axios.get(`${URL}/stats/standings`);
     return response.data;
 }

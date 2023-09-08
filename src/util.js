@@ -17,3 +17,8 @@ export function getDateAndTime(dateString){
     return `${dateOnly} ${hour}:${min}`;
 }
 
+export function getImage(filename){
+    // console.log(filename);
+    return require(`./assets/images/${filename}.png`);
+}
+

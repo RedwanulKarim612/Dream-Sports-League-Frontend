@@ -7,6 +7,7 @@ import SquareIcon from '@mui/icons-material/Square';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import { getDateAndTime } from "../../util";
 import { useNavigate } from "react-router-dom";
+import TopBar from "../../Components/TopBar";
 
 let validEvents = ["GOAL", "YELLOW_CARD", "RED_CARD", "OWN_GOAL"];
 
@@ -95,6 +96,7 @@ const MatchDetails = () => {
     }
     return (
         <div>
+            <TopBar/>
             <Navbar/>
             <div style={{ display:'flex', justifyContent:'center', marginTop: '20px'}}>
                 <Card size="lg" sx={{width: '50%'}}>

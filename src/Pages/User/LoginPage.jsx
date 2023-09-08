@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { confirmLogin } from "../../api/User";
 import { Button, Typography, Container, CardContent, Card, TextField} from "@mui/material";
-
+import NavBar from "../../Components/Navbar";
+import TopBar from "../../Components/TopBar";
 const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -30,6 +31,8 @@ const LoginPage = () => {
     // maxWidth="sm"
     return (
         <div style={{backgroundColor:'#171717', width:'100vw', height:'100vh'}}>
+        <TopBar/>
+        <NavBar/>
             <Container style={{display:'flex',flexDirection:'row'}}>
                 <Card style={{ marginTop: '150px', marginLeft: '300px', width: '300px', height: '500px', backgroundColor: 'black' }}>
                     <CardContent>

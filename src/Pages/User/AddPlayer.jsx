@@ -9,7 +9,8 @@ import Navbar from "../../Components/Navbar";
 import { BudgetInfo } from "./BuildSquad";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { CancelRounded } from "@mui/icons-material";
+import { CancelRounded, CheckBox } from "@mui/icons-material";
+import TopBar from "../../Components/TopBar";
 
 const maxPlayers = {
     "goalkeepers": 2,
@@ -134,7 +135,9 @@ const AddPlayerPage = () => {
     }
     return (
         <div>
+            <TopBar />
             <Navbar />
+            
         <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
         
         <div style={{display: "flex", justifyContent: "space-between", width: "90%", margin: "auto"}}>
