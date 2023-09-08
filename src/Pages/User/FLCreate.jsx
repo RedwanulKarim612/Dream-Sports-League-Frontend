@@ -41,7 +41,7 @@ const FLCreate = () => {
             min_teams: min_teams,
             max_teams: max_teams,
             team_player_count: team_player_count,
-            start_date: dayjs(start_date).format('DD-MM-YYYY'),
+            start_date: dayjs(start_date).format('YYYY-MM-DD'),
             match_time: dayjs(match_time).format('HH:mm'),
             auto_join: allow_auto_join,
             timezone: timeZone,
@@ -49,7 +49,8 @@ const FLCreate = () => {
         }
         console.log(league);
         createFL(league).then(res => {
-            if(res==='Friends League Created'){
+            console.log(res);
+            if(res==='Friends League created'){
                 navigate('/friends-league');   
             }
         });
