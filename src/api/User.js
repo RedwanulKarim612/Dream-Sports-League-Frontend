@@ -83,3 +83,8 @@ export const getFLList = async() => {
     const response = await axios.get(`${URL}/friendsleague/all`);
     return response.data;
 }
+
+export const requestJoinFL = async(leagueId) => {
+    const response = await axios.post(`${URL}/friendsleague/join`, leagueId);
+    return response.data;
+}

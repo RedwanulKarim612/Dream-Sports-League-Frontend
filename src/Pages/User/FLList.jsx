@@ -3,7 +3,7 @@ import Navbar from '../../Components/Navbar';
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { getFLList } from '../../api/User';
+import { getFLList, requestJoinFL } from '../../api/User';
 import { getDate, getDateAndTime } from '../../util';
 
 const FLList = () => {
@@ -25,6 +25,13 @@ const FLList = () => {
         setPage(0);
     }
 
+    const handleRequestJoin = (id) => {
+        requestJoinFL(id).then((res) => {
+            console.log(id);
+            console.log(res);            
+        });
+    }
+
     return (
         <div>
             <Navbar/>
@@ -39,7 +46,7 @@ const FLList = () => {
                         <TableCell align="center"> Start Date </TableCell>
                         <TableCell  align="center"> Match Time </TableCell>
                         <TableCell  align="center"> Teams </TableCell>
-                        <TableCell  align="center"> Players int starting</TableCell>
+                        <TableCell  align="center"> Players in Starting</TableCell>
                         <TableCell ></TableCell>
                     </TableRow>
                 </TableHead>
@@ -52,7 +59,7 @@ const FLList = () => {
                             <TableCell  align="center">{row.min_teams}/{row.max_teams}</TableCell>
                             <TableCell  align="center">{row.team_player_count}</TableCell>
                             <TableCell>
-                                <Button variant="contained">Join</Button>
+                                <Button variant="contained" onClick={()=>{handleRequestJoin(row.id)}}>Join</Button>
                             </TableCell>
                         </TableRow>
                     ))}
