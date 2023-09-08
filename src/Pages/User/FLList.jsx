@@ -26,7 +26,10 @@ const FLList = () => {
     }
 
     const handleRequestJoin = (id) => {
-        requestJoinFL(id).then((res) => {
+        let req = {
+            id: id
+        }
+        requestJoinFL(req).then((res) => {
             console.log(id);
             console.log(res);            
         });

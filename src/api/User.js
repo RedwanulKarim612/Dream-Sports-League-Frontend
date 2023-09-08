@@ -100,6 +100,9 @@ export const getFLList = async() => {
 
 export const requestJoinFL = async(leagueId) => {
     const response = await axios.post(`${URL}/friendsleague/join`, leagueId);
+    return response.data;
+}
+
 export const getTeamStats = async() => {
     const response = await axios.get(`${URL}/stats/teams`);
     return response.data;
