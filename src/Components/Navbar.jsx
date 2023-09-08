@@ -16,6 +16,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { KeyboardArrowDownSharp, KeyboardArrowDownTwoTone } from '@mui/icons-material';
 import { userLogout } from "../api/User";
+import TopBar from './TopBar';
 
 const pages = Array(
     {
@@ -105,10 +106,12 @@ function Navbar() {
   }
   const navigate = useNavigate();
   return (
+    <div style={{marginBottom: '100px'}}>
     <ThemeProvider theme={darkTheme}>
-    <AppBar position="static">
+    <AppBar position="absolute" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
     <CssBaseline/>
       <Container maxWidth="xl">
+        <TopBar/>
         <Toolbar disableGutters>
            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -243,6 +246,7 @@ function Navbar() {
       </Container>
     </AppBar>
     </ThemeProvider>
+    </div>
   );
 }
 export default Navbar;
