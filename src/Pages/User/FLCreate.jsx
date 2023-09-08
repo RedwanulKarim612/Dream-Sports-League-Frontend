@@ -7,6 +7,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
+import { createFL } from "../../api/User";
+import { useNavigate } from "react-router-dom";
 
 const FieldHeader = (props)=>{
     return(
@@ -29,7 +31,9 @@ const FLCreate = () => {
     const [start_date, setStartDate] = useState("");
     const [match_time, setMatchTime] = useState("");
     const [allow_auto_join, setAllowAutoJoin] = useState(false);
-    const [timeZone, setTimeZone] = useState("");    
+    const [timeZone, setTimeZone] = useState("GMT+6");    
+    const [matchDays, setMatchDays] = useState(['Saturday']);
+    const navigate = useNavigate();
     const handleCreate = () => {
         console.log(dayjs(start_date).format('DD-MM-YYYY'))
         let league = {
@@ -39,10 +43,16 @@ const FLCreate = () => {
             team_player_count: team_player_count,
             start_date: dayjs(start_date).format('DD-MM-YYYY'),
             match_time: dayjs(match_time).format('HH:mm'),
-            allow_auto_join: allow_auto_join,
-            time_zone: timeZone
+            auto_join: allow_auto_join,
+            timezone: timeZone,
+            matchdays: matchDays
         }
         console.log(league);
+        createFL(league).then(res => {
+            if(res==='Friends League Created'){
+                navigate('/friends-league');   
+            }
+        });
     }
     return (
         <div>

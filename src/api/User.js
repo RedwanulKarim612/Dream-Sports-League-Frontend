@@ -70,6 +70,11 @@ export const getFixtureDetails = async(gameWeek) => {
 }
 
 export const getFLHome = async() => {
-    const response = await axios.get(`${URL}/friends-league`);
+    const response = await axios.get(`${URL}/friendsleague`);
+    return response.data;
+}
+
+export const createFL = async(league) => {
+    const response = await axios.post(`${URL}/friendsleague/create`, league);
     return response.data;
 }
