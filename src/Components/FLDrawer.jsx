@@ -33,6 +33,7 @@ const drawerOptions = Array(
 const FLDrawer = () => {
     const drawerWidth = 240;
     return(
+    
       <Drawer position="relative"
         sx={{
           width: drawerWidth,
@@ -48,7 +49,9 @@ const FLDrawer = () => {
         <div className='classes.toolbar'/>
         <Toolbar />
         <Divider />
-
+        <Toolbar />
+        <Divider /><Toolbar />
+        <Divider />
         <Toolbar> 
             <Typography variant="h6" noWrap component="div">League Name</Typography>
         </Toolbar>
