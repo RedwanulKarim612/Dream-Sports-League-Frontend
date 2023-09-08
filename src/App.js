@@ -8,7 +8,6 @@ import { TeamProvider } from "./Pages/User/TeamContext";
 import AddPlayerPage from "./Pages/User/AddPlayer";
 import { ThemeProvider, createTheme } from "@mui/material";
 import SelectPlayingXI from "./Pages/User/SelectPlayingXI";
-import Navbar from "./Components/Navbar";
 import LoginPage from "./Pages/User/LoginPage";
 import MatchDetails from "./Pages/User/MatchDetails";
 import Admin from "./Pages/User/Admin/Admin";
@@ -17,6 +16,7 @@ import AdminLoginPage from "./Pages/User/Admin/AdminLoginPage"
 import Delete from "./Pages/User/Admin/Delete";
 import FLHome from "./Pages/User/FLHome";
 import FLCreate from "./Pages/User/FLCreate";
+import FLList from "./Pages/User/FLList";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -40,6 +40,7 @@ const App = () => {
                 <Route path="/delete" element={<Delete/>}/>
                 <Route path="/friends-league" element={<FLHome/>}/>
                 <Route path="/friends-league/create" element={<FLCreate/>}/>
+                <Route path="/friends-league/all" element={<FLList/>}/>
             </Routes>
         </div>
         </ThemeProvider>

@@ -9,7 +9,7 @@ const FLHome = () => {
     const navigate = useNavigate();
     useEffect(() => {
         getFLHome().then(res => {
-            setLeagues(res.leagues);
+            setLeagues(res.friendsLeagues);
         });
     }, []);
 
@@ -22,7 +22,7 @@ const FLHome = () => {
     }
 
     const handleJoinLeague = () => {
-
+        navigate('/friends-league/all')
     }
     return (
 
