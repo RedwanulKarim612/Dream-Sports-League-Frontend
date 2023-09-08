@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Navbar";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import { getHomePage } from "../../api/User";
+import TopBar from "../../Components/TopBar";
 
 const HomePage = () => {
     const [teams, setTeams] = useState(null);
@@ -13,6 +14,7 @@ const HomePage = () => {
     // console.log(teams);
     return (
         <div>
+            <TopBar />
             <Navbar />
         {/* <div style={{marginLeft: '20px'}}>
             <TableContainer style={{ width: 400}}>

@@ -10,3 +10,8 @@ export function getDateAndTime(dateString){
     if(min===0) min='00';
     return `${month} ${day}, ${year} ${hour}:${min}`;
 }
+
+export function getImage(filename){
+    // console.log(filename);
+    return require(`./assets/images/${filename}.png`);
+}

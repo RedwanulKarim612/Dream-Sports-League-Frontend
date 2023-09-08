@@ -7,6 +7,9 @@ import TeamProvider, { TeamContext} from "./TeamContext";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 import { confirmSquad, getAutoPick } from "../../api/User";
+import TopBar from "../../Components/TopBar";
+
+let lastToken;
 
 const PositionTable = ({position, players, maxNumber}) => {
     let [team, updateTeam] = useContext(TeamContext);
@@ -76,11 +79,11 @@ const PositionTable = ({position, players, maxNumber}) => {
                         <TableCell sx={{color: 'white'}} align="center">{row.overall}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.price}</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">{row.points}</TableCell>
-                        <TableCell>
+                        {lastToken === 'build' && <TableCell>
                             <IconButton color="warning" onClick={()=>handleRemovePlayer(row.id)}>
                                 <CancelIcon />
                             </IconButton>
-                        </TableCell>
+                        </TableCell>}
                         
                     </TableRow>
                 ))}
@@ -91,11 +94,11 @@ const PositionTable = ({position, players, maxNumber}) => {
                         <TableCell sx={{color: 'white'}} align="center">-</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">-</TableCell>
                         <TableCell sx={{color: 'white'}} align="center">-</TableCell>
-                        <TableCell>
+                        {lastToken === 'build' && <TableCell>
                             <IconButton color="success" onClick={()=>{handleAddPlayer()}}>
                                 <AddCircleIcon />
                             </IconButton>
-                        </TableCell>
+                        </TableCell>}
                     </TableRow>
                 ))}
             </TableBody>
@@ -139,6 +142,10 @@ const BuildSquad = () => {
     const [team, setTeam] = useContext(TeamContext);
     const [budget, setBudget] = useState(0);
     const [noPlayers, setNoPlayers] = useState(0);
+
+    const qlink = window.location.href;
+    const tokens = qlink.split('/');
+    lastToken = tokens[tokens.length-1];
 
     useEffect(() => {
         if(team){
@@ -197,10 +204,11 @@ const BuildSquad = () => {
     return(
         
     <div>
+        <TopBar />
         <Navbar />
         <div>
             <BudgetInfo budget={budget} noPlayers={noPlayers}/>
-            <Button variant="contained" sx={{color: 'white', backgroundColor: 'red', margin: '20px'}} onClick={()=>{handleAutopick()}}>Autopick</Button>
+            {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'red', margin: '20px'}} onClick={()=>{handleAutopick()}}>Autopick</Button>} 
         </div>
         <div style={{marginLeft: '20px'}}>
             <PositionTable position="Goalkeepers" players={team.players.goalkeepers} maxNumber={2}/>
@@ -208,8 +216,9 @@ const BuildSquad = () => {
             <PositionTable position="Midfielders" players={team.players.midfielders} maxNumber={5}/>
             <PositionTable position="Forwards" players={team.players.forwards} maxNumber={4}/>    
         </div>
-        <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>
-        <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleReset()}}>Reset</Button>
+        {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>}
+        {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleReset()}}>Reset</Button>}
+        <div style={{height: '100px'}}></div>
     </div>
     );
 }
