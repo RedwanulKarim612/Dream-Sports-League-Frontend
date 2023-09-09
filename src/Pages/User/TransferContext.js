@@ -1,9 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getTransferWindow } from "../../api/User";
+
 export const TransferContext = createContext();
 
 export const calculateBudget = (transfer) => {
-    let budget = 100 - transfer.balance;
+    let budget = transfer.balance;
     if(transfer.my_player != null){
         budget += transfer.my_player.price;
     }
@@ -17,8 +18,10 @@ export const calculateBudget = (transfer) => {
 export const TransferProvider = ({ children }) => {
     let [transfer, setTransfer] = useState(null);
     useEffect(() => {
+        console.log("transfer provider");
         const lt = localStorage.getItem("transfer");
         const localTransfer = JSON.parse(lt);
+        // console.log(localTransfer);
         if(localTransfer && localTransfer!=null){
             console.log("fetching team players from local storage");
             updateTransfer(localTransfer);
@@ -32,7 +35,9 @@ export const TransferProvider = ({ children }) => {
                     transfer_count: res.transfer_count,
                     transfer_limit: res.transfer_limit,
                     my_player: null,
-                    new_player: null
+                    new_player: null,
+                    position: "goalkeepers",
+                    budget: res.balance
                 }
                 updateTransfer(temp);
                 // console.log(team.budget);
@@ -42,9 +47,12 @@ export const TransferProvider = ({ children }) => {
     }, []);
 
     const updateTransfer = (newTransfer) => {
+        // console.log("update transfer");
+        // console.log(newTransfer);
         if(newTransfer) newTransfer.budget = calculateBudget(newTransfer);
         setTransfer(newTransfer);
-        localStorage.setItem("transfer", JSON.stringify(newTransfer));
+        // console.log("HERE", transfer);
+        localStorage.setItem("transfer", JSON.stringify(transfer));
     }
     return (
         <TransferContext.Provider value={[ transfer, updateTransfer ]}>

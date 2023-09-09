@@ -26,6 +26,9 @@ import FLAdmin from "./Pages/User/FLAdmin";
 import TransferWindow from "./Pages/User/TransferWindow"
 import TransferProvider from "./Pages/User/TransferContext";
 import FLStandings from "./Pages/User/FLStandings";
+import SelectMyPlayer from "./Pages/User/SelectMyPlayer";
+import SelectNewPlayer from "./Pages/User/SelectNewPlayer";
+
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -62,6 +65,8 @@ const App = () => {
                 <Route path="/stats/players" element={<PlayerStats/>}/>
                 <Route path="/standings" element={<DPLStandings/>}/>
                 <Route path="/transfer-window" element={<TransferProvider><TransferWindow/></TransferProvider>}/>
+                <Route path="/transfer-window/selectmyplayer/:position" element={<TransferProvider><SelectMyPlayer/></TransferProvider>}/>
+                <Route path="/transfer-window/selectNewplayer/:position" element={<TransferProvider><SelectNewPlayer/></TransferProvider>}/>
             </Routes>
         </div>
         </ThemeProvider>
