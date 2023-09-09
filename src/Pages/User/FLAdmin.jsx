@@ -13,7 +13,7 @@ const FLAdmin = () => {
     useEffect(() => {
         getJoinRequests(flId).then((res) => {
             console.log(res);
-            setRequests(res);
+            setRequests(res.requests);
         });
     }, []);
 
@@ -27,7 +27,7 @@ const FLAdmin = () => {
             // console.log(res);
             getJoinRequests(flId).then((res) => {
                 // console.log(res);
-                setRequests(res);
+                setRequests(res.requests);
             });
         });
     }
