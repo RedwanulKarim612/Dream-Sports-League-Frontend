@@ -127,3 +127,13 @@ export const handleRequest = async(flId, req) => {
     const response = await axios.post(`${URL}/friendsleague/${flId}/requests`, req);
     return response.data;
 }
+
+export const getTransferWindow = async() => {
+    const response = await axios.get(`${URL}/transferwindow`);
+    return response.data;
+}
+
+export const confirmTransfer = async(transfer) => {
+    const response = await axios.post(`${URL}/transferwindow`, transfer);
+    return response.data;
+}

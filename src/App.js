@@ -23,6 +23,8 @@ import PlayerStats from "./Pages/User/PlayerStats";
 import DPLStandings from "./Pages/User/DPLStandings";
 import FLFixtures from "./Pages/User/FLFixtures";
 import FLAdmin from "./Pages/User/FLAdmin";
+import TransferWindow from "./Pages/User/TransferWindow"
+import TransferProvider from "./Pages/User/TransferContext";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -57,6 +59,7 @@ const App = () => {
                 <Route path="/stats/teams" element={<TeamStats/>}/>
                 <Route path="/stats/players" element={<PlayerStats/>}/>
                 <Route path="/standings" element={<DPLStandings/>}/>
+                <Route path="/transfer-window" element={<TransferProvider><TransferWindow/></TransferProvider>}/>
             </Routes>
         </div>
         </ThemeProvider>
