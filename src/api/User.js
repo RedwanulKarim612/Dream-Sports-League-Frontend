@@ -35,6 +35,10 @@ export const confirmSquad = async (team) => {
     return response.data;
 }
 
+export const getTransferInfo = async () => {
+    const response = await axios.get(`${URL}/transferwindow`);
+    return response.data;
+}
 export const confirmLogin = async (credentials) => {
     console.log(credentials)
     const response = await axios.post(`${URL}/auth/login`, credentials);
@@ -125,5 +129,10 @@ export const getJoinRequests = async(id) => {
 
 export const handleRequest = async(flId, req) => {
     const response = await axios.post(`${URL}/friendsleague/${flId}/requests`, req);
+    return response.data;
+}
+
+export const getFLFixture = async(id) => {
+    const response = await axios.get(`${URL}/friendsleague/${id}/fixture`);
     return response.data;
 }

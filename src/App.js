@@ -23,6 +23,7 @@ import PlayerStats from "./Pages/User/PlayerStats";
 import DPLStandings from "./Pages/User/DPLStandings";
 import FLFixtures from "./Pages/User/FLFixtures";
 import FLAdmin from "./Pages/User/FLAdmin";
+import TransferWindow from "./Pages/User/TransferWindow";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path="/squad/build" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
                 <Route path="/squad/view" element={<TeamProvider><BuildSquad /></TeamProvider>}/>
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
+                <Route path="/transfer-window" element={<TransferWindow/>}/>
                 <Route path="/playingxi/:matchId" element={<SelectPlayingXI/>}/>
                 <Route path="/matches/:matchId" element={<MatchDetails/>}/>
                 <Route path="/admin/:gameweek" element={<Admin/>}/>
