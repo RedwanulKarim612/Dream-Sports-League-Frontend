@@ -136,3 +136,13 @@ export const getFLFixture = async(id) => {
     const response = await axios.get(`${URL}/friendsleague/${id}/fixture`);
     return response.data;
 }
+
+export const getFLStandings = async(id) => {
+    const response = await axios.get(`${URL}/friendsleague/${id}/standings`);
+    return response.data;
+}
+
+export const getFLInfo = async(id) => {
+    const response = await axios.get(`${URL}/friendsleague/${id}`);
+    return response.data;
+}

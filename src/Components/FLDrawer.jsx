@@ -1,4 +1,4 @@
-import {React} from 'react';
+import {React, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +12,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router-dom';
+import { getFLInfo } from '../api/User';
 
 const URLPrefix = '/friends-league/';
 const drawerOptions = Array(
@@ -40,7 +41,12 @@ const FLDrawer = () => {
     const flId = tokens[4];
     const drawerWidth = 240;
     const navigate = useNavigate();
-    console.log(flId);
+    const [leagueName, setLeagueName] = useState('');
+    useEffect(()=>{
+      getFLInfo(flId).then((res)=>{
+        setLeagueName(res.name);
+      })
+    },[]);
     const handleDrawerClick = (option)=>{
         // console.log('Drawer Clicked');
         // console.log('/friends-league/' + flId + option.link);
@@ -65,7 +71,7 @@ const FLDrawer = () => {
       >
         <div/>
         <Toolbar> 
-            <Typography variant="h6" noWrap component="div">League Name</Typography>
+            <Typography variant="h6" noWrap component="div">{leagueName}</Typography>
         </Toolbar>
         <Divider />
         <List>
