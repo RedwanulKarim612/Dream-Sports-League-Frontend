@@ -1,5 +1,5 @@
-import {React, useState, useEffect, useContext} from "react";
-import TransferProvider, { TransferContext } from "./TransferContext";
+import {React, useEffect, useContext} from "react";
+import { TransferContext } from "./TransferContext";
 import { confirmTransfer } from "../../api/User";
 import TopBar from "../../Components/TopBar";
 import Navbar from "../../Components/Navbar";
@@ -7,16 +7,17 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { FormControl, InputLabel, MenuItem, Select, Button, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+const invertMapping = {
+    "GK": "goalkeepers",
+    "DEF": "defenders",
+    "MID": "midfielders",
+    "FWD": "forwards"
+};
 
 const TransferWindow = () => {
     const [transfer, updateTransfer] = useContext(TransferContext);
     const navigate = useNavigate();
-    const invertMapping = {
-        "GK": "goalkeepers",
-        "DEF": "defenders",
-        "MID": "midfielders",
-        "FWD": "forwards"
-    }
+   
     useEffect(() => {
         if(transfer){
             if(transfer.my_player !== null && invertMapping[transfer.my_player.position] !== transfer.position){
