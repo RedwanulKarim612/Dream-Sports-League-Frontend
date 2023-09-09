@@ -17,7 +17,7 @@ const FLFixtures = () => {
     const [matchesOnDate, setMatchesOnDate] = useState([]);
     useEffect(() => {
         getFLFixture(flId).then((res) => {
-            console.log(res.matches[0].matches);
+            // console.log(res.matches[0].matches);
             setAllMatches(res.matches);
             setMatchDate(res.matches[0].time);
             setMatchesOnDate(res.matches[0].matches);
@@ -26,7 +26,6 @@ const FLFixtures = () => {
     }, []);
 
     useEffect(() => {
-        console.log("here");
         for(let i=0; i<allMatches.length; i++){
             if(allMatches[i].time === matchDate){
                 setMatchesOnDate(allMatches[i].matches);
@@ -37,7 +36,6 @@ const FLFixtures = () => {
 
     const handleChangeDate = (event) => {
         setMatchDate(event.target.value);
-        console.log(event.target.value);
     }
     return (
         <>

@@ -21,7 +21,7 @@ const drawerOptions = Array(
     },  
     {
         'text': 'Fixtures',
-        'link': '/'
+        'link': '/fixtures'
     },
     {
         'text': 'Standings',
