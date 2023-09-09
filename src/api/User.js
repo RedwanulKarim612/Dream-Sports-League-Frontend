@@ -117,3 +117,8 @@ export const getDPLStandings = async() => {
     const response = await axios.get(`${URL}/stats/standings`);
     return response.data;
 }
+
+export const getJoinRequests = async(id) => {
+    const response = await axios.get(`${URL}/friendsleague/${id}/requests`);
+    return response.data;
+}

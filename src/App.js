@@ -21,11 +21,16 @@ import RegisterPage from "./Pages/User/RegisterPage";
 import TeamStats from "./Pages/User/TeamStats";
 import PlayerStats from "./Pages/User/PlayerStats";
 import DPLStandings from "./Pages/User/DPLStandings";
+import FLFixtures from "./Pages/User/FLFixtures";
+import FLAdmin from "./Pages/User/FLAdmin";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
             mode: "dark",
-        }
+        },
+    });
+    const styles = darkTheme => ({
+        toolbar: darkTheme.mixins.toolbar,
     });
     return (
         <ThemeProvider theme={darkTheme}>
@@ -47,6 +52,8 @@ const App = () => {
                 <Route path="/friends-league" element={<FLHome/>}/>
                 <Route path="/friends-league/create" element={<FLCreate/>}/>
                 <Route path="/friends-league/all" element={<FLList/>}/>
+                <Route path="/friends-league/:id/fixtures" element={<FLFixtures/>}/>
+                <Route path="/friends-league/:id/admin" element={<FLAdmin/>}/>
                 <Route path="/stats/teams" element={<TeamStats/>}/>
                 <Route path="/stats/players" element={<PlayerStats/>}/>
                 <Route path="/standings" element={<DPLStandings/>}/>
