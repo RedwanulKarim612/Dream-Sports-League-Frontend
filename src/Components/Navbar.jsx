@@ -16,6 +16,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { KeyboardArrowDownSharp, KeyboardArrowDownTwoTone } from '@mui/icons-material';
 import { userLogout } from "../api/User";
+import TopBar from './TopBar';
+import { useEffect } from 'react';
 
 const pages = Array(
     {
@@ -28,7 +30,7 @@ const pages = Array(
     },
     {
         'text': 'Your Squad',
-        'link': '/squad'
+        'link': '/squad/view'
     },
     {
         'text': 'Friends\' League',
@@ -43,12 +45,33 @@ const pages = Array(
         'link': '/stats'        
     }
 );
-const settings = ['Profile', 'Login', 'Logout'];
+const settings = ['Profile', 'Register', 'Login', 'Logout'];
 
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [active, setActive] = useState(pages[0]);
+  const qlink = window.location.href;
+  const tokens = qlink.split('/');
+  const link = tokens[3];
+  useEffect(() => {
+    if(link === 'fixture') {
+      setActive(pages[1]);
+    }
+    else if(link === 'squad' || link === 'playingxi') {
+      setActive(pages[2]);
+    }
+    else if(link === 'friends-league') {
+      setActive(pages[3]);
+    }
+    else if(link === 'standings') {
+      setActive(pages[4]);
+    }
+    else if(link === 'stats') {
+      setActive(pages[5]);
+    }
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -73,9 +96,17 @@ function Navbar() {
 
   const handleNavBarClick = (event, page) => {
     if(page.text === 'Your Squad') {
+      console.log(event.currentTarget);
       setAnchorEl(event.currentTarget);
     } 
-    else navigate(page.link);
+    else if(page.text === 'Stats') {
+      console.log(event.currentTarget);
+      setAnchorEl(event.currentTarget);
+    } 
+    else {
+      setActive(page)
+      navigate(page.link);
+    }
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -94,12 +125,19 @@ function Navbar() {
       if(res === "User logged out")navigate('/');
     })
   }
+
+  const handleRegister = () => {
+    navigate('/register');
+  }
   const navigate = useNavigate();
+  const activeStyle = { my: 1, color: 'white', background: '#0630bf', display: 'flex' }
   return (
+    <div style={{marginBottom: '100px'}}>
     <ThemeProvider theme={darkTheme}>
-    <AppBar position="static">
     <CssBaseline/>
+    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Container maxWidth="xl">
+        <TopBar/>
         <Toolbar disableGutters>
            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -143,33 +181,55 @@ function Navbar() {
               <Button
                 key={index}
                 onClick={(event)=>handleNavBarClick(event, page)}
-                sx={{ my: 1, color: 'white', display: 'flex' }}
+                sx={active===page ? activeStyle :{ my: 1, color: 'white', display: 'flex' }}
                 
-                endIcon={page.text==="Your Squad"? <KeyboardArrowDownSharp /> : undefined}
+                endIcon={page.text==="Your Squad" || page.text === "Stats"? <KeyboardArrowDownSharp /> : undefined}
               >
                 {page.text}
               </Button>
                 {page.text==='Your Squad' && <>
-                <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-              >
-                <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
-                <MenuItem onClick={()=>{navigate("/squad")}}>Transfer Window</MenuItem>
-              </Menu>
-            </>
-            }
+                    <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={anchorEl !== null && anchorEl.innerText === 'YOUR SQUAD'}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
+                    <MenuItem onClick={()=>{navigate("/squad/view")}}>Transfer Window</MenuItem>
+                  </Menu>
+                </>
+                }
+                {page.text==='Stats' && <>
+                    <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={anchorEl !== null && anchorEl.innerText === 'STATS'}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <MenuItem onClick={()=>{navigate("/stats/teams")}}>Team Stat</MenuItem>
+                    <MenuItem onClick={()=>{navigate("/stats/players")}}>Player Stat</MenuItem>
+                  </Menu>
+                </>
+                }
+
               </>
             ))}
           </Box>
@@ -197,7 +257,12 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>{setting === 'Profile'? navigate('/profile') : setting === 'Login' ? navigate('/login') : setting === 'Logout' ? handleLogout() : handleOpenUserMenu()}}>
+                <MenuItem key={setting} onClick={
+                  ()=>{
+                    setting === 'Profile'? navigate('/profile') : 
+                    setting === 'Login' ? navigate('/login') : 
+                    setting === 'Logout' ? handleLogout() : 
+                    setting === 'Register' ? handleRegister() : handleOpenUserMenu()}}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -207,6 +272,7 @@ function Navbar() {
       </Container>
     </AppBar>
     </ThemeProvider>
+    </div>
   );
 }
 export default Navbar;

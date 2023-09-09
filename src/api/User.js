@@ -42,6 +42,20 @@ export const confirmLogin = async (credentials) => {
     return response.data;
 }
 
+export const confirmRegister = async (credentials) => {
+    console.log(credentials)
+    const response = await axios.post(`${URL}/auth/register`, credentials);
+    console.log(response);
+    return response.data;
+}
+
+export const getEPLTeams = async () => {
+    console.log("getEPLTeams")
+    const response = await axios.get(`${URL}/epl/teams`);
+    console.log(response);
+    return response.data;
+}
+
 export const userLogout = async () => {
     const response = await axios.post(`${URL}/auth/logout`);
     console.log(response);
@@ -66,5 +80,50 @@ export const getMatchDetails = async(matchId) => {
 
 export const getFixtureDetails = async(gameWeek) => {
     const response = await axios.get(`${URL}/fixtures/${gameWeek}`);
+    return response.data;
+}
+
+export const getFLHome = async() => {
+    const response = await axios.get(`${URL}/friendsleague`);
+    return response.data;
+}
+
+export const createFL = async(league) => {
+    const response = await axios.post(`${URL}/friendsleague/create`, league);
+    return response.data;
+}
+
+export const getFLList = async() => {
+    const response = await axios.get(`${URL}/friendsleague/all`);
+    return response.data;
+}
+
+export const requestJoinFL = async(leagueId) => {
+    const response = await axios.post(`${URL}/friendsleague/join`, leagueId);
+    return response.data;
+}
+
+export const getTeamStats = async() => {
+    const response = await axios.get(`${URL}/stats/teams`);
+    return response.data;
+}
+
+export const getPlayerStats = async() => {
+    const response = await axios.get(`${URL}/stats/players`);
+    return response.data;
+}
+
+export const getDPLStandings = async() => {
+    const response = await axios.get(`${URL}/stats/standings`);
+    return response.data;
+}
+
+export const getJoinRequests = async(id) => {
+    const response = await axios.get(`${URL}/friendsleague/${id}/requests`);
+    return response.data;
+}
+
+export const handleRequest = async(flId, req) => {
+    const response = await axios.post(`${URL}/friendsleague/${flId}/requests`, req);
     return response.data;
 }

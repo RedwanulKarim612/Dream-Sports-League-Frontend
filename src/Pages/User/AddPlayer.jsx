@@ -2,15 +2,15 @@ import React, { useContext, useState, useEffect, useParams } from "react";
 import { TeamContext } from "./TeamContext";
 import { useNavigate } from "react-router-dom";
 import { getPlayerList } from "../../api/User";
-import { Button, FormControl, FormControlLabel, FormGroup, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
+import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
 import _ from "lodash";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Navbar from "../../Components/Navbar";
 import { BudgetInfo } from "./BuildSquad";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { CancelRounded, CheckBox } from "@mui/icons-material";
+import TopBar from "../../Components/TopBar";
 
 const maxPlayers = {
     "goalkeepers": 2,
@@ -135,7 +135,9 @@ const AddPlayerPage = () => {
     }
     return (
         <div>
+            <TopBar />
             <Navbar />
+            
         <BudgetInfo budget={remainingBudget} noPlayers={-1}/>
         
         <div style={{display: "flex", justifyContent: "space-between", width: "90%", margin: "auto"}}>
