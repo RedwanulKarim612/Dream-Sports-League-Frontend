@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { KeyboardArrowDownSharp, KeyboardArrowDownTwoTone } from '@mui/icons-material';
 import { userLogout } from "../api/User";
 import TopBar from './TopBar';
+import { useEffect } from 'react';
 
 const pages = Array(
     {
@@ -50,6 +51,27 @@ const settings = ['Profile', 'Register', 'Login', 'Logout'];
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [active, setActive] = useState(pages[0]);
+  const qlink = window.location.href;
+  const tokens = qlink.split('/');
+  const link = tokens[3];
+  useEffect(() => {
+    if(link === 'fixture') {
+      setActive(pages[1]);
+    }
+    else if(link === 'squad' || link === 'playingxi') {
+      setActive(pages[2]);
+    }
+    else if(link === 'friends-league') {
+      setActive(pages[3]);
+    }
+    else if(link === 'standings') {
+      setActive(pages[4]);
+    }
+    else if(link === 'stats') {
+      setActive(pages[5]);
+    }
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -81,7 +103,10 @@ function Navbar() {
       console.log(event.currentTarget);
       setAnchorEl(event.currentTarget);
     } 
-    else navigate(page.link);
+    else {
+      setActive(page)
+      navigate(page.link);
+    }
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -105,6 +130,7 @@ function Navbar() {
     navigate('/register');
   }
   const navigate = useNavigate();
+  const activeStyle = { my: 1, color: 'white', background: '#0630bf', display: 'flex' }
   return (
     <div style={{marginBottom: '100px'}}>
     <ThemeProvider theme={darkTheme}>
@@ -155,7 +181,7 @@ function Navbar() {
               <Button
                 key={index}
                 onClick={(event)=>handleNavBarClick(event, page)}
-                sx={{ my: 1, color: 'white', display: 'flex' }}
+                sx={active===page ? activeStyle :{ my: 1, color: 'white', display: 'flex' }}
                 
                 endIcon={page.text==="Your Squad" || page.text === "Stats"? <KeyboardArrowDownSharp /> : undefined}
               >
