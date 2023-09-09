@@ -122,3 +122,8 @@ export const getJoinRequests = async(id) => {
     const response = await axios.get(`${URL}/friendsleague/${id}/requests`);
     return response.data;
 }
+
+export const handleRequest = async(flId, req) => {
+    const response = await axios.post(`${URL}/friendsleague/${flId}/requests`, req);
+    return response.data;
+}
