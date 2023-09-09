@@ -108,8 +108,8 @@ function Navbar() {
   return (
     <div style={{marginBottom: '100px'}}>
     <ThemeProvider theme={darkTheme}>
-    <AppBar position="absolute" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
     <CssBaseline/>
+    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Container maxWidth="xl">
         <TopBar/>
         <Toolbar disableGutters>

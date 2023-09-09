@@ -11,11 +11,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
+const URLPrefix = '/friends-league/';
 const drawerOptions = Array(
+    {
+        'text': 'Admin',
+        'link': '/admin'
+    },  
     {
         'text': 'Fixtures',
         'link': '/'
@@ -30,28 +33,37 @@ const drawerOptions = Array(
     }
 )
 
+
 const FLDrawer = () => {
+    const qlink = window.location.href;
+    const tokens = qlink.split('/');
+    const flId = tokens[4];
     const drawerWidth = 240;
+    const navigate = useNavigate();
+    console.log(flId);
+    const handleDrawerClick = (option)=>{
+        // console.log('Drawer Clicked');
+        // console.log('/friends-league/' + flId + option.link);
+        navigate('/friends-league/' + flId + option.link);
+    }
     return(
     
-      <Drawer position="relative"
+      <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
+            position: 'absolute',
             width: drawerWidth,
+            marginTop: '180px',
           },
-          variant: 'persistent'
+        //   variant: 'persistent',
+        //   marginTop: '200px',
         }}
         variant="permanent"
-        // anchor="left"
+        anchor="left"
       >
-        <div className='classes.toolbar'/>
-        <Toolbar />
-        <Divider />
-        <Toolbar />
-        <Divider /><Toolbar />
-        <Divider />
+        <div/>
         <Toolbar> 
             <Typography variant="h6" noWrap component="div">League Name</Typography>
         </Toolbar>
@@ -59,7 +71,7 @@ const FLDrawer = () => {
         <List>
           {drawerOptions.map((option, index) => (
             <ListItem key={option.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={()=>{handleDrawerClick(option)}}>
                 <ListItemText primary={option.text} />
               </ListItemButton>
             </ListItem>
