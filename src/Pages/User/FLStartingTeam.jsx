@@ -157,10 +157,12 @@ const FLStartingTeam = () => {
             >
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
                 <Typography variant="h4">
-                    League Standings
+                    Select Starting Lineup
                 </Typography>
             </div>
             <div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
+
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Match</InputLabel>
                 <Select
@@ -216,8 +218,9 @@ const FLStartingTeam = () => {
                 </Select>
                 <FormHelperText>Captain</FormHelperText>
             </FormControl>
+            </div>
             <div style={{display:"flex",flexDirection:"row", justifyContent: "space-between", margin: "50px 60px 0px 60px"}}>
-                <div>
+                <div style={{width: "50%"}}>
                     <PlayingXIposition players={team.playingxi.goalkeepers} position="Goalkeepers" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
                     <PlayingXIposition players={team.playingxi.defenders} position="Defenders" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
                     <PlayingXIposition players={team.playingxi.midfielders} position="Midfielders" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>

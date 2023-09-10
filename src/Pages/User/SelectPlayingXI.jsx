@@ -105,9 +105,9 @@ export const PlayingXIposition = (props) => {
         props.setSelected(newPlayer);
     }
     return (
-        <div>
+        <div style={{marginBottom: '30px'}}>
         <Typography variant="h6">{props.position}</Typography>
-        <TableContainer style={{ width: 600}}>
+        <TableContainer style={{ width: '100%'}}>
         <Table aria-label="simple table">
             <TableHead>
                 <TableRow sx={{width: '10px'}}>
@@ -248,6 +248,8 @@ const SelectPlayingXI = () => {
         <div>
             <TopBar />
             <Navbar />
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
+
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>
                 <Select
@@ -288,7 +290,8 @@ const SelectPlayingXI = () => {
                 </Select>
                 <FormHelperText>Captain</FormHelperText>
             </FormControl>
-            <div style={{display:"flex",flexDirection:"row", justifyContent: "space-between", margin: "50px 60px 0px 60px"}}>
+            </div>
+            <div style={{display:"flex",flexDirection:"row", justifyContent: "space-evenly", margin: "50px 60px 0px 60px"}}>
                 <div>
                     <PlayingXIposition players={team.playingxi.goalkeepers} position="Goalkeepers" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
                     <PlayingXIposition players={team.playingxi.defenders} position="Defenders" selectedPlayer={selectedFromXI} setSelected={setSelectedFromXI}/>
@@ -302,7 +305,7 @@ const SelectPlayingXI = () => {
                     <PlayingXIposition players={team.bench.forwards} position="Forwards" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
                 </div>
             </div>
-            <div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleCancel()}}>Cancel</Button>
     
