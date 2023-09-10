@@ -146,3 +146,19 @@ export const getFLInfo = async(id) => {
     const response = await axios.get(`${URL}/friendsleague/${id}`);
     return response.data;
 }
+
+export const getFLStartingTeam = async(id, req) => {
+    console.log(req)
+    const response = await axios.post(`${URL}/friendsleague/${id}/playingxi`, req);
+    return response.data;
+}
+
+export const setFLStartingTeam = async(id, req) => {
+    const response = await axios.post(`${URL}/friendsleague/${id}/playingxi/edit`, req);
+    return response.data;
+}
+
+export const getMyFLMatches = async(id) =>{
+    const response = await axios.get(`${URL}/friendsleague/${id}/mymatches`);
+    return response.data;
+}

@@ -30,7 +30,7 @@ const drawerOptions = Array(
     },
     {
         'text': 'Your Starting Team',
-        'link': '/squad/view'
+        'link': '/starting-team'
     }
 )
 

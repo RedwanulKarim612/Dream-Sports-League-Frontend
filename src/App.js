@@ -24,6 +24,7 @@ import DPLStandings from "./Pages/User/DPLStandings";
 import FLFixtures from "./Pages/User/FLFixtures";
 import FLAdmin from "./Pages/User/FLAdmin";
 import FLStandings from "./Pages/User/FLStandings";
+import FLStartingTeam from "./Pages/User/FLStartingTeam";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -56,6 +57,7 @@ const App = () => {
                 <Route path="/friends-league/:id/fixtures" element={<FLFixtures/>}/>
                 <Route path="/friends-league/:id/admin" element={<FLAdmin/>}/>
                 <Route path="/friends-league/:id/standings" element={<FLStandings/>}/>    
+                <Route path="/friends-league/:id/starting-team" element={<FLStartingTeam/>}/>
                 <Route path="/stats/teams" element={<TeamStats/>}/>
                 <Route path="/stats/players" element={<PlayerStats/>}/>
                 <Route path="/standings" element={<DPLStandings/>}/>

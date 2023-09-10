@@ -1,168 +1,50 @@
-import {React, useState, useEffect} from "react";
-import { confirmPlayingXI, getPlayingXI } from "../../api/User";
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
-import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, rgbToHex } from "@mui/material";
+import {React, useEffect} from 'react';
+import Navbar from '../../Components/Navbar';
+import FLDrawer from '../../Components/FLDrawer';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select, Box, Typography, Button } from "@mui/material";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../Components/Navbar";
+import { useState } from 'react';
+import { PlayingXIposition, extractFormation, swapPlayers, getFormationString,getCaptainDetails, getFormation, updatePlayingXI,availableFormations } from './SelectPlayingXI';
 import TopBar from "../../Components/TopBar";
+import { getFLStartingTeam, getMyFLMatches, setFLStartingTeam } from '../../api/User';
+import { getDateAndTime } from '../../util';
 
-export function getFormation(formationString){
-    const formation = formationString.split('-');
-    return formation;
-}
-
-export function extractFormation(team){
-    let formation = [];
-    formation.push(team.playingxi.defenders.length);
-    formation.push(team.playingxi.midfielders.length);
-    formation.push(team.playingxi.forwards.length);
-    return formation;       
-}
-
-export function getFormationString(formationArray){
-    return formationArray.join('-');
-}
-
-export function getCaptainDetails(team, id){
-    var captain = null;
-    console.log('finding captain ', id)
-    const players = [...team.playingxi.goalkeepers, 
-                        ...team.playingxi.defenders, 
-                        ...team.playingxi.midfielders, 
-                        ...team.playingxi.forwards]
-    players.forEach(player => {
-            if(player.id === id){
-                console.log("found captain")
-                console.log(player)
-                captain = {...player};
-            }
-        });
-    return captain;
-}
-
-function updatePosition(playingXI, bench, onField){
-    while(playingXI.length < onField){
-        playingXI.push(bench.pop());
-    }
-    while(playingXI.length > onField){
-        bench.push(playingXI.pop());
-    }
-}
-
-export function updatePlayingXI(team, formationDetails){
-    updatePosition(team.playingxi.defenders, team.bench.defenders, formationDetails[0]);
-    updatePosition(team.playingxi.midfielders, team.bench.midfielders, formationDetails[1]);
-    updatePosition(team.playingxi.forwards, team.bench.forwards, formationDetails[2]);
-}
-
-export function getPlayer(players, id){
-    let player = null
-    for (let i = 0; i < players.length; i++) {
-        if(players[i].id === id) {
-            player = {...players[i]}
-            players.splice(i,1);
-            break;
-        }
-    }
-    return player;
-}
-
-export function swapPlayers(team, fromXI, fromBench){
-    let newTeam = {...team};
-    let playerInTeam = null;
-    let playerInBench = null;
-    playerInTeam = getPlayer(team.playingxi[fromXI.position.toLowerCase()], fromXI.id);
-    playerInBench = getPlayer(team.bench[fromBench.position.toLowerCase()], fromBench.id);
-    if(playerInBench === null || playerInTeam === null) return;
-    
-    newTeam.playingxi[fromBench.position.toLowerCase()].push(playerInBench);
-    newTeam.bench[fromXI.position.toLowerCase()].push(playerInTeam);
-    console.log(newTeam);
-    return newTeam;
-}
-
-export const availableFormations = ['4-3-3', '3-4-3', '5-3-2', '4-4-2', '3-5-2', '5-4-1', '4-5-1']
-
-export const PlayingXIposition = (props) => {
-    let [players, setPlayers] = useState(props.players);
-    useEffect(() => {
-        setPlayers(props.players);
-    },[props.players]);
-    // console.log(props.players.length)
-
-    const handleSelectForChange = (player) => {
-        let newPlayer = {
-            id: player.id,
-            position: player.position
-        }
-        if(!props.selectedPlayer || props.selectedPlayer.id!==player.id){
-            newPlayer.id = player.id;
-            newPlayer.position = props.position;
-        }
-        else newPlayer.id = -1;
-        
-        props.setSelected(newPlayer);
-    }
-    return (
-        <div>
-        <Typography variant="h6">{props.position}</Typography>
-        <TableContainer style={{ width: 600}}>
-        <Table aria-label="simple table">
-            <TableHead>
-                <TableRow sx={{width: '10px'}}>
-                    <TableCell align="center"> Name </TableCell>
-                    <TableCell align="center"> Team </TableCell>
-                    <TableCell align="center"> Overall </TableCell>
-                    <TableCell align="center"> Total Points </TableCell>
-                    <TableCell></TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {players.map((row) => (
-                    <TableRow sx={{background: props.selectedPlayer && props.selectedPlayer.id===row.id ?"#2e7d32":'black'}}>
-                        <TableCell align="center">{row.name}</TableCell>      
-                        <TableCell align="center">{row.team}</TableCell>
-                        <TableCell align="center">{row.overall}</TableCell>
-                        <TableCell align="center">{row.points}</TableCell>
-                        <TableCell>
-                            <IconButton color="warning" onClick={()=>{handleSelectForChange(row)}}>
-                                <ChangeCircleIcon />
-                            </IconButton>
-                        </TableCell>
-                        
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-        </TableContainer>
-        </div>
-        );
-}
-
-const SelectPlayingXI = () => {
+const FLStartingTeam = () => {
     const qlink = window.location.href;
     const tokens = qlink.split('/');
-    const matchId = tokens[tokens.length-1];
+    const flId = tokens[4];
+    const [matches, setMatches] = useState([]);
+    const [matchId, setMatchId] = useState();
     const [team, setTeam] = useState(null);
     const [captain, setCaptain] = useState(null);
     const [formation, setFormation] = useState([]);
     const [selectedFromXI, setSelectedFromXI] = useState(null);
     const [selectedFromBench, setSelectedFromBench] = useState(null);
+    const [selectedMatch, setSelectedMatch] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
-        getPlayingXI(matchId).then(res => {
-            const newTeam = {...res};
-            console.log(res);
-            setTeam(newTeam);
-                // console.log(team);
-            setFormation(extractFormation(newTeam));
-            const newCaptain = getCaptainDetails(newTeam, newTeam.captain);
-            setCaptain(newCaptain);
-            // console.log('captain selected');
-            console.log(newCaptain)
-               
+        let newMatch = 0;
+        getMyFLMatches(flId).then(res => {
+            setMatches(res.matches);
+            newMatch = res.matches[0].id;
+            setSelectedMatch(res.matches[0]);
+            console.log(res)       
+            console.log(newMatch)
+            getFLStartingTeam(flId, {match_id: newMatch}).then(res => {
+                console.log(res)
+                const newTeam = {...res};
+                setTeam(newTeam);
+                    // console.log(team);
+                setFormation(extractFormation(newTeam));
+                const newCaptain = getCaptainDetails(newTeam, newTeam.captain);
+                setCaptain(newCaptain);
+                // console.log('captain selected');
+                console.log(newCaptain)
+                setMatchId(res.match_id);
+            });     
         });
+        
     }, []);
 
     useEffect(() => {
@@ -197,7 +79,26 @@ const SelectPlayingXI = () => {
         return <div>Loading...</div>
     }
     console.log(formation);
-
+    const handleChangeMatch = (event) => {
+        getFLStartingTeam(flId, {match_id: event.target.value}).then(res => {
+            const newTeam = {...res};
+            console.log(res);
+            setTeam(newTeam);
+                // console.log(team);
+            setFormation(extractFormation(newTeam));
+            const newCaptain = getCaptainDetails(newTeam, newTeam.captain);
+            setCaptain(newCaptain);
+            // console.log('captain selected');
+            console.log(newCaptain)
+            setMatchId(res.match_id);
+        });
+        for(let i=0;i<matches.length;i++){
+            if(matches[i].id===event.target.value){
+                setSelectedMatch(matches[i]);
+                break;
+            }
+        }
+    }
     const handleChangeFormation = (event) => {
         let newTeam = {...team};
         newTeam.formation = event.target.value;
@@ -219,24 +120,25 @@ const SelectPlayingXI = () => {
     const handleConfirmation = () => {
         let finalTeam = null;
         finalTeam = {
+            match_id: selectedMatch.id,
             formation: team.formation,
             captain: team.captain,
-            playingxi: []
+            players: []
         }
         for(let i=0;i<team.playingxi.goalkeepers.length;i++){
-            finalTeam.playingxi.push(team.playingxi.goalkeepers[i].id)
+            finalTeam.players.push(team.playingxi.goalkeepers[i].id)
         }
         for(let i=0;i<team.playingxi.defenders.length;i++){
-            finalTeam.playingxi.push(team.playingxi.defenders[i].id)
+            finalTeam.players.push(team.playingxi.defenders[i].id)
         }
         for(let i=0;i<team.playingxi.midfielders.length;i++){
-            finalTeam.playingxi.push(team.playingxi.midfielders[i].id)
+            finalTeam.players.push(team.playingxi.midfielders[i].id)
         }
         for(let i=0;i<team.playingxi.forwards.length;i++){
-            finalTeam.playingxi.push(team.playingxi.forwards[i].id)
+            finalTeam.players.push(team.playingxi.forwards[i].id)
         }
         console.log(finalTeam);
-        confirmPlayingXI(finalTeam, matchId).then(res =>{
+        setFLStartingTeam(flId, finalTeam).then(res =>{
             console.log(res);
             navigate('/');
         });
@@ -244,10 +146,36 @@ const SelectPlayingXI = () => {
     const handleCancel = () =>{
         navigate('/');
     }
-    return(
+    return (
+        <>
         <div>
-            <TopBar />
-            <Navbar />
+            <Box sx={{display: 'flex'}}>
+            <Navbar/>
+            <FLDrawer/>
+            <Box component="main"
+                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginTop: '200px' }}
+            >
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
+                <Typography variant="h4">
+                    League Standings
+                </Typography>
+            </div>
+            <div>
+            <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-required-label">Match</InputLabel>
+                <Select
+                labelId="demo-simple-select-required-label"
+                id="demo-simple-select-required"
+                value={selectedMatch.id}
+                label="Formation"
+                onChange={handleChangeMatch}
+                >
+                {matches.map((match) => {
+                    return <MenuItem value={match.id}>{match.home}-{match.away} {getDateAndTime(match.time)}</MenuItem>
+                })}
+                </Select>
+                <FormHelperText>Formation</FormHelperText>
+            </FormControl>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>
                 <Select
@@ -308,7 +236,13 @@ const SelectPlayingXI = () => {
     
             </div>
         </div>
+            
+      </Box>
+      </Box>
+
+        </div>
+        </>
     )
 }
 
-export default SelectPlayingXI;
+export default FLStartingTeam;
