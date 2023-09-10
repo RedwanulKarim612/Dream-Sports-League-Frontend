@@ -38,7 +38,7 @@ const FLList = () => {
     return (
         <div>
             <Navbar/>
-            <div style={{display: "flex", justifyContent: "space-between", width: "60%", margin: "auto"}}>
+            <div style={{display: "flex", justifyContent: "space-between", width: "60%", margin: "auto", marginTop: '200px'}}>
             <Paper sx={{ overflow: 'hidden' , width: "100%"}}>
                 
             <TableContainer sx={{maxHeight:"600px"}}>
@@ -59,7 +59,7 @@ const FLList = () => {
                             <TableCell  align="center">{row.name}</TableCell>      
                             <TableCell  align="center">{getDate(row.start_date)}</TableCell>
                             <TableCell  align="center">{row.match_time}</TableCell>
-                            <TableCell  align="center">{row.min_teams}/{row.max_teams}</TableCell>
+                            <TableCell  align="center">{row.member_count}/{row.max_teams}</TableCell>
                             <TableCell  align="center">{row.team_player_count}</TableCell>
                             <TableCell>
                                 <Button variant="contained" onClick={()=>{handleRequestJoin(row.id)}}>Join</Button>

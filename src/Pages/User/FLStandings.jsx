@@ -11,10 +11,12 @@ const FLStandings = () => {
     const tokens = qlink.split('/');
     const flId = tokens[4];
     const [standings, setStandings] = useState([]);
+    const [role, setRole] = useState('');
     useEffect(() => {
         getFLStandings(flId).then((res) => {
             console.log(res);
             setStandings(res.standings);
+            setRole(res.role);
         });
     }, []);
     return (
@@ -22,7 +24,7 @@ const FLStandings = () => {
         <div>
             <Box sx={{display: 'flex'}}>
             <Navbar/>
-            <FLDrawer/>
+            <FLDrawer role = {role}/>
             <Box component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginTop: '200px' }}
             >

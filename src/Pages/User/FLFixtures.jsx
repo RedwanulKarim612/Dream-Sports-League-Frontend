@@ -15,6 +15,7 @@ const FLFixtures = () => {
     const [allDates, setAllDates] = useState([]);
     const [matchDate, setMatchDate] = useState();
     const [matchesOnDate, setMatchesOnDate] = useState([]);
+    const [role, setRole] = useState('');
     useEffect(() => {
         getFLFixture(flId).then((res) => {
             // console.log(res.matches[0].matches);
@@ -22,6 +23,7 @@ const FLFixtures = () => {
             setMatchDate(res.matches[0].time);
             setMatchesOnDate(res.matches[0].matches);
             setAllDates(res.matches.map((match) => match.time));
+            setRole(res.role);
         });
     }, []);
 
@@ -42,7 +44,7 @@ const FLFixtures = () => {
         <div>
             <Box sx={{display: 'flex'}}>
             <Navbar/>
-            <FLDrawer/>
+            <FLDrawer role = {role}/>
             <Box component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginTop: '200px' }}
             >

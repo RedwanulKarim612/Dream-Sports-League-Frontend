@@ -28,7 +28,7 @@ const FLHome = () => {
 
         <div>
             <Navbar/>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems:'center', padding: '20px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems:'center', padding: '20px', marginTop: '200px'}}>
             <div>
             <Typography variant='h5'>Your Leagues</Typography>
             </div>
@@ -40,16 +40,18 @@ const FLHome = () => {
                 <TableHead>
                     <TableRow >
                         <TableCell align="center"> Name </TableCell>
-                        <TableCell align="center"> Team </TableCell>
-                        <TableCell align="center"> Overall </TableCell>
+                        <TableCell align="center"> Your Rank </TableCell>
+                        <TableCell align="center"> Players in Starting Lineup </TableCell>
+                        <TableCell align="center"> Your Role</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {leagues.map((row) => (
-                        <TableRow >
+                        <TableRow onClick={()=>{navigate('/friends-league/'+row.id+'/fixtures')}} sx={{cursor: 'pointer'}}>
                             <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
-                            <TableCell sx={{color: 'white'}} align="center">{row.matches_finished}</TableCell>
-                            <TableCell sx={{color: 'white'}} align="center">{row.your_rank}/{row.teams}</TableCell>  
+                            <TableCell sx={{color: 'white'}} align="center">{row.rank}</TableCell>
+                            <TableCell sx={{color: 'white'}} align="center">{row.team_player_count}</TableCell>  
+                            <TableCell sx={{color: 'white'}} align="center">{row.role}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

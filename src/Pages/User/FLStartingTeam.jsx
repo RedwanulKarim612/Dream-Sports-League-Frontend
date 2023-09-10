@@ -22,10 +22,12 @@ const FLStartingTeam = () => {
     const [selectedFromXI, setSelectedFromXI] = useState(null);
     const [selectedFromBench, setSelectedFromBench] = useState(null);
     const [selectedMatch, setSelectedMatch] = useState(null);
+    const [role, setRole] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         let newMatch = 0;
         getMyFLMatches(flId).then(res => {
+            setRole(res.role);
             setMatches(res.matches);
             newMatch = res.matches[0].id;
             setSelectedMatch(res.matches[0]);
@@ -151,7 +153,7 @@ const FLStartingTeam = () => {
         <div>
             <Box sx={{display: 'flex'}}>
             <Navbar/>
-            <FLDrawer/>
+            <FLDrawer role = {role}/>
             <Box component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginTop: '200px' }}
             >

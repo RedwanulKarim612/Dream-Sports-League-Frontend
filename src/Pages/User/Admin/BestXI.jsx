@@ -7,6 +7,7 @@ import { InfoField } from "../Profile";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { useNavigate } from "react-router-dom";
 import { setBestxi, setBestxiAuto } from "../../../api/Admin";
+import AdminNavbar from "../../../Components/AdminNavbar";
 
 const BestXI = () => {
     const [bestxi, updateBestxi] = useContext(BestXIContext);
@@ -90,7 +91,7 @@ const BestXI = () => {
 
     return (
         <div>
-            <Navbar />
+            <AdminNavbar/>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingTop: 100}}>
                     <Typography variant="h4">
                         Best Playing XI
