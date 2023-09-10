@@ -6,6 +6,10 @@ import TopBar from "../../Components/TopBar";
 
 
 export const InfoField = (props)=>{
+    let disabled;
+    if(props.title==="Username" || props.title==="Points"){
+        disabled=true;
+    }
     return(
         <div style={{display:"flex",flexDirection:"row", justifyContent: "space-between"}}>
             <Typography variant="h6" sx={{
@@ -20,7 +24,8 @@ export const InfoField = (props)=>{
                 // label="Required"
                 defaultValue={props.value}
                 sx={{ input: { color: 'white' } }}
-                />
+                disabled={disabled}
+            />
         </div>       
     );
 }
