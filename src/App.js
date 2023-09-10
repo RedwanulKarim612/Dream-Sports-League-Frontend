@@ -23,7 +23,16 @@ import PlayerStats from "./Pages/User/PlayerStats";
 import DPLStandings from "./Pages/User/DPLStandings";
 import FLFixtures from "./Pages/User/FLFixtures";
 import FLAdmin from "./Pages/User/FLAdmin";
+import TransferWindow from "./Pages/User/TransferWindow"
+import TransferProvider from "./Pages/User/TransferContext";
 import FLStandings from "./Pages/User/FLStandings";
+import SelectMyPlayer from "./Pages/User/SelectMyPlayer";
+import SelectNewPlayer from "./Pages/User/SelectNewPlayer";
+import BestXI from "./Pages/User/Admin/BestXI";
+import BestXIProvider from "./Pages/User/Admin/BestXIContext";
+import SelectGoalKeeper from "./Pages/User/Admin/SelectGoalKeeper";
+import SelectPlayer from "./Pages/User/Admin/SelectPlayer";
+import FLStartingTeam from "./Pages/User/FLStartingTeam";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -46,6 +55,9 @@ const App = () => {
                 <Route path="/squad/selectplayer/:position" element={<TeamProvider><AddPlayerPage /></TeamProvider>}/>
                 <Route path="/playingxi/:matchId" element={<SelectPlayingXI/>}/>
                 <Route path="/matches/:matchId" element={<MatchDetails/>}/>
+                <Route path="/admin/bestxi" element={<BestXIProvider><BestXI/></BestXIProvider>}/>
+                <Route path="/admin/bestxi/select-player/goalkeepers" element={<BestXIProvider><SelectGoalKeeper/></BestXIProvider>}/>
+                <Route path="/admin/bestxi/select-player" element={<BestXIProvider><SelectPlayer/></BestXIProvider>}/>
                 <Route path="/admin/:gameweek" element={<Admin/>}/>
                 <Route path="/fixture/:gameweek" element={<FixturePage/>}/>
                 <Route path="/admin/login" element={<AdminLoginPage/>}/>
@@ -56,9 +68,14 @@ const App = () => {
                 <Route path="/friends-league/:id/fixtures" element={<FLFixtures/>}/>
                 <Route path="/friends-league/:id/admin" element={<FLAdmin/>}/>
                 <Route path="/friends-league/:id/standings" element={<FLStandings/>}/>    
+                <Route path="/friends-league/:id/starting-team" element={<FLStartingTeam/>}/>
                 <Route path="/stats/teams" element={<TeamStats/>}/>
                 <Route path="/stats/players" element={<PlayerStats/>}/>
                 <Route path="/standings" element={<DPLStandings/>}/>
+                <Route path="/transfer-window" element={<TransferProvider><TransferWindow/></TransferProvider>}/>
+                <Route path="/transfer-window/selectmyplayer/:position" element={<TransferProvider><SelectMyPlayer/></TransferProvider>}/>
+                <Route path="/transfer-window/selectnewplayer/:position" element={<TransferProvider><SelectNewPlayer/></TransferProvider>}/>
+                
             </Routes>
         </div>
         </ThemeProvider>
