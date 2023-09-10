@@ -35,7 +35,7 @@ const drawerOptions = Array(
 )
 
 
-const FLDrawer = () => {
+const FLDrawer = (props) => {
     const qlink = window.location.href;
     const tokens = qlink.split('/');
     const flId = tokens[4];
@@ -92,6 +92,7 @@ const FLDrawer = () => {
         <Divider />
         <List>
           {drawerOptions.map((option, index) => (
+            (option.text!=='Admin' || props.role==='admin') &&
             <ListItem key={option.text} sx={active===option ? {borderLeft: 1, borderColor: 'green', borderWidth: '3px'}:{}}disablePadding>
               <ListItemButton onClick={()=>{handleDrawerClick(option)}}>
                 <ListItemText primary={option.text} />

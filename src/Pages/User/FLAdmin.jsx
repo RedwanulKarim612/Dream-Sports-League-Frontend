@@ -10,10 +10,12 @@ const FLAdmin = () => {
     const tokens = qlink.split('/');
     const flId = tokens[4];
     const [requests, setRequests] = useState([]);
+    const [role, setRole] = useState('');
     useEffect(() => {
         getJoinRequests(flId).then((res) => {
             console.log(res);
             setRequests(res.requests);
+            setRole(res.role);
         });
     }, []);
 
@@ -50,7 +52,7 @@ const FLAdmin = () => {
         <div>
             <Box sx={{display: 'flex'}}>
             <Navbar/>
-            <FLDrawer/>
+            <FLDrawer role = {role}/>
             <Box component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginTop: '200px' }}
             >
