@@ -6,6 +6,7 @@ import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import TopBar from "../../Components/TopBar";
+import { getDateAndTime } from "../../util";
 
 export function getFormation(formationString){
     const formation = formationString.split('-');
@@ -149,10 +150,23 @@ const SelectPlayingXI = () => {
     const [formation, setFormation] = useState([]);
     const [selectedFromXI, setSelectedFromXI] = useState(null);
     const [selectedFromBench, setSelectedFromBench] = useState(null);
+    const [matches, setMatches] = useState([]);
+    const [selectedMatch, setSelectedMatch] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
+        console.log("new match")
         getPlayingXI(matchId).then(res => {
             const newTeam = {...res};
+            console.log(res.match_id)
+            if(res.match_id==0) setSelectedMatch({id: 0})
+            for(let i=0;i<res.matches.length;i++){
+                // console.log(res.match_id, res.matches[i].id)
+                if(res.matches[i].id == res.match_id){
+                    console.log('match selected')
+                    setSelectedMatch(res.matches[i]);
+                    break;
+                }
+            }
             console.log(res);
             setTeam(newTeam);
                 // console.log(team);
@@ -161,7 +175,8 @@ const SelectPlayingXI = () => {
             setCaptain(newCaptain);
             // console.log('captain selected');
             console.log(newCaptain)
-               
+            setMatches(res.matches);
+            console.log(res.match_id);
         });
     }, []);
 
@@ -198,6 +213,18 @@ const SelectPlayingXI = () => {
     }
     console.log(formation);
 
+    const handleChangeMatch = (event) => {
+        // console.log(event.target.value);
+        // for(let i=0;i<matches.length;i++){
+        //     if(matches[i].id==event.target.value){
+        //         setSelectedMatch(matches[i]);
+        //         break;
+        //     }
+        // }
+        if(event.target.value==0) navigate('/playingxi/default')
+        else navigate('/playingxi/'+event.target.value)
+        window.location.reload();
+    }
     const handleChangeFormation = (event) => {
         let newTeam = {...team};
         newTeam.formation = event.target.value;
@@ -249,7 +276,21 @@ const SelectPlayingXI = () => {
             <TopBar />
             <Navbar />
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
-
+            <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-required-label">Match</InputLabel>
+                <Select
+                labelId="demo-simple-select-required-label"
+                id="demo-simple-select-required"
+                value={selectedMatch.id}
+                label="Match"
+                onChange={handleChangeMatch}
+                >
+                {matches.map((m) => {
+                    if(m.id===0) return <MenuItem value={m.id}>Default</MenuItem>
+                    return <MenuItem value={m.id}>{m.home} vs {m.away}, {getDateAndTime(m.time)}</MenuItem>
+                })}
+                </Select>
+            </FormControl>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>
                 <Select
@@ -263,7 +304,6 @@ const SelectPlayingXI = () => {
                     return <MenuItem value={formation}>{formation}</MenuItem>
                 })}
                 </Select>
-                <FormHelperText>Formation</FormHelperText>
             </FormControl>
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Captain</InputLabel>
@@ -288,7 +328,6 @@ const SelectPlayingXI = () => {
                 })}
                 
                 </Select>
-                <FormHelperText>Captain</FormHelperText>
             </FormControl>
             </div>
             <div style={{display:"flex",flexDirection:"row", justifyContent: "space-evenly", margin: "50px 60px 0px 60px"}}>
