@@ -5,6 +5,7 @@ import { TableContainer, Typography, IconButton, Table, TablePagination, TableHe
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from "react-router-dom";
 import { getPlayerList } from "../../../api/User";
+import AdminNavbar from "../../../Components/AdminNavbar";
 
 const invertPositionNameConverter = {
     "GK": "goalkeepers",
@@ -77,7 +78,8 @@ const SelectPlayer = () => {
 
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
+            <AdminNavbar />
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingTop: 100}}>
                     <Typography variant="h4">
                         Players

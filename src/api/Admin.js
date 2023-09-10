@@ -12,6 +12,11 @@ export const confirmAdminLogin = async (credentials) => {
     return response.data;
 }
 
+export const adminLogout = async () => {
+    const response = await axios.post(`${URL}/admin/logout`);
+    return response.data;
+}
+
 export const getWeekMatches = async(gw) => {
     const response = await axios.get(`${URL}/admin/matchweek/${gw}`);
     return response.data;
