@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 import Navbar from "../../Components/Navbar";
-import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -9,6 +9,7 @@ import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from 'dayjs';
 import { createFL } from "../../api/User";
 import { useNavigate } from "react-router-dom";
+import { timeZones, weekDays } from "../../util";
 
 const FieldHeader = (props)=>{
     return(
@@ -32,8 +33,21 @@ const FLCreate = () => {
     const [match_time, setMatchTime] = useState("");
     const [allow_auto_join, setAllowAutoJoin] = useState(false);
     const [timeZone, setTimeZone] = useState("GMT+6");    
-    const [matchDays, setMatchDays] = useState(['Saturday']);
+    const [matchDays, setMatchDays] = useState([]);
     const navigate = useNavigate();
+
+    const handleMatchDayChange = (day) => {
+        if(matchDays.includes(day)){
+            let newMatchDays = matchDays.filter((d) => {
+                return d!==day;
+            })
+            setMatchDays(newMatchDays);
+        }else{
+            let newMatchDays = [...matchDays, day];
+            setMatchDays(newMatchDays);
+        }
+    }
+
     const handleCreate = () => {
         console.log(dayjs(start_date).format('DD-MM-YYYY'))
         let league = {
@@ -58,7 +72,7 @@ const FLCreate = () => {
     return (
         <div>
             <Navbar/>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems:'center', padding: '20px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems:'center', padding: '20px', marginTop: '200px'}}>
                 <FormControl>
                     <div style={{display:"flex",flexDirection:"row", justifyContent: "space-between"}}>
                         <FieldHeader title="League Name"/>
@@ -91,6 +105,34 @@ const FLCreate = () => {
                             <TimePicker onChange={(newVal)=>{setMatchTime(newVal)}}/>
                         </DemoContainer>
                     </LocalizationProvider>
+                    </div>
+                    <div style={{display:"flex",flexDirection:"row"}}>
+                    <FieldHeader title="Timezone"/>
+                    <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="demo-simple-select-required-label">Time Zone</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-required-label"
+                        id="demo-simple-select-required"
+                        value={timeZone}
+                        label="Formation"
+                        onChange={(event)=>{setTimeZone(event.target.value)}}
+                        >
+                        {timeZones.map((tz) => {
+                            return <MenuItem value={tz}>{tz}</MenuItem>
+                        })}
+                        </Select>
+                    </FormControl>
+                    </div>
+                    <div style={{display:"flex",flexDirection:"row"}} class="weekDays-selector">
+                    <FieldHeader title="Match days"/>
+                    {weekDays.map((day) => {
+                        return (
+                            <>
+                            <input type="checkbox" onChange={(event)=>{handleMatchDayChange(day)}}/>
+                            <label>{day.charAt(0)}</label>
+                            </>
+                        )
+                    })}
                     </div>
 
                     <div style={{display:"flex",flexDirection:"row"}}>
