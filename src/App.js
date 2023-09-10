@@ -32,7 +32,7 @@ import BestXI from "./Pages/User/Admin/BestXI";
 import BestXIProvider from "./Pages/User/Admin/BestXIContext";
 import SelectGoalKeeper from "./Pages/User/Admin/SelectGoalKeeper";
 import SelectPlayer from "./Pages/User/Admin/SelectPlayer";
-
+import FLStartingTeam from "./Pages/User/FLStartingTeam";
 const App = () => {
     const darkTheme = createTheme({
         palette: {
@@ -68,6 +68,7 @@ const App = () => {
                 <Route path="/friends-league/:id/fixtures" element={<FLFixtures/>}/>
                 <Route path="/friends-league/:id/admin" element={<FLAdmin/>}/>
                 <Route path="/friends-league/:id/standings" element={<FLStandings/>}/>    
+                <Route path="/friends-league/:id/starting-team" element={<FLStartingTeam/>}/>
                 <Route path="/stats/teams" element={<TeamStats/>}/>
                 <Route path="/stats/players" element={<PlayerStats/>}/>
                 <Route path="/standings" element={<DPLStandings/>}/>

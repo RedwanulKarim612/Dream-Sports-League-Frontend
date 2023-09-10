@@ -130,7 +130,7 @@ function Navbar() {
     navigate('/register');
   }
   const navigate = useNavigate();
-  const activeStyle = { my: 1, color: 'white', background: '#0630bf', display: 'flex' }
+  const activeStyle = { my: 1, borderRadius: 0, borderWidth: '3px', borderBottom: 1, borderColor: '#0083d4', display: 'flex' }
   return (
     <div style={{marginBottom: '100px'}}>
     <ThemeProvider theme={darkTheme}>
