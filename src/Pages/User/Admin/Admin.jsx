@@ -7,6 +7,8 @@ import { postMatchToBeSimulated } from "../../../api/Admin";
 import { postMatchToBeUnsimulated } from "../../../api/Admin";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
+import AdminNavbar from "../../../Components/AdminNavbar";
+import { getDateAndTime } from "../../../util";
 
 const WeekMatchesTable = () => {
     const qlink = window.location.href;
@@ -55,9 +57,10 @@ const WeekMatchesTable = () => {
         navigate(0)
     }
     return (
-        <div>
-            <Navbar />
-            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div style={{marginBottom: 100}}>
+            {/* <Navbar/> */}
+            <AdminNavbar/>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", paddingTop: 100}}>
                     <Typography variant="h4">
                         Gameweek
                     </Typography>
@@ -90,9 +93,8 @@ const WeekMatchesTable = () => {
                                     <TableRow>
                                         <TableCell align="center">Home</TableCell>
                                         <TableCell align="center">Away</TableCell>
-                                        <TableCell align="center">Score</TableCell>
                                         <TableCell align="center">Time</TableCell>
-                                        <TableCell align="center">Finished</TableCell>
+                                        <TableCell align="center">Score</TableCell>
                                         <TableCell align="center">Simulate-Match</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -104,10 +106,9 @@ const WeekMatchesTable = () => {
                                         >
                                             <TableCell align="center">{row.home}</TableCell>
                                             <TableCell align="center">{row.away}</TableCell>
-                                            <TableCell align="center">{row.score}</TableCell>
-                                            <TableCell align="center">{row.time}</TableCell>
-                                            <TableCell align="center">{row.finished}</TableCell>
-                                            <TableCell align="Center">
+                                            <TableCell align="center">{getDateAndTime(row.time)}</TableCell>
+                                            <TableCell align="center">{!row.score ? 'N/A' : row.score}</TableCell>
+                                            <TableCell align="center">
                                                 {!row.finished && <Button variant="contained" onClick={()=>{handleSimulation(row.id);}}>Simulate</Button>}   
                                                 {row.finished && <Button variant="contained" onClick={()=>{handleUnsimulation(row.id);}}>Unsimulate</Button>}   
                                             </TableCell>

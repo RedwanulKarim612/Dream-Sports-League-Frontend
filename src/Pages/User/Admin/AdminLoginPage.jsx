@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { confirmAdminLogin } from "../../../api/Admin";
 import { Button, Typography, Container, CardContent, Card, TextField} from "@mui/material";
+import AdminNavbar from "../../../Components/AdminNavbar";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
@@ -30,6 +31,7 @@ const LoginPage = () => {
     // maxWidth="sm"
     return (
         <div style={{backgroundColor:'#171717', width:'100vw', height:'100vh'}}>
+        <AdminNavbar />
             <Container style={{display:'flex',flexDirection:'row'}}>
                 <Card style={{ marginTop: '150px', marginLeft: '300px', width: '300px', height: '500px', backgroundColor: 'black' }}>
                     <CardContent>
