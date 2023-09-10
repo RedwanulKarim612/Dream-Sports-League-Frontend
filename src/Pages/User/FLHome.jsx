@@ -46,7 +46,7 @@ const FLHome = () => {
                 </TableHead>
                 <TableBody>
                     {leagues.map((row) => (
-                        <TableRow >
+                        <TableRow onClick={()=>{navigate('/friends-league/'+row.id+'/fixtures')}} sx={{cursor: 'pointer'}}>
                             <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
                             <TableCell sx={{color: 'white'}} align="center">{row.matches_finished}</TableCell>
                             <TableCell sx={{color: 'white'}} align="center">{row.your_rank}/{row.teams}</TableCell>  
