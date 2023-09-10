@@ -132,6 +132,17 @@ export const handleRequest = async(flId, req) => {
     return response.data;
 }
 
+export const getTransferWindow = async() => {
+    const response = await axios.get(`${URL}/transferwindow`);
+    console.log(response.data);
+    return response.data;
+}
+
+export const confirmTransfer = async(transfer) => {
+    const response = await axios.post(`${URL}/transferwindow`, transfer);
+    return response.data;
+}
+
 export const getFLFixture = async(id) => {
     const response = await axios.get(`${URL}/friendsleague/${id}/fixture`);
     return response.data;

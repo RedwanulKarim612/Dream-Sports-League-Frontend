@@ -12,13 +12,13 @@ const DPLStandings = () => {
         getDPLStandings().then((res) => {
             console.log(res)
             res.sort((a, b) => {
-                if(a.points === b.points){
+                if(a.point === b.point){
                     if(a.worth === b.worth){
                         return a.user_id.localeCompare(b.user_id);
                     }
                     return b.worth - a.worth;
                 }
-                return b.points - a.points;
+                return b.point - a.point;
             });
             for(let i=0; i<res.length; i++){
                 res[i].rank = i+1;

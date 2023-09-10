@@ -23,3 +23,17 @@ export const postMatchToBeSimulated = async(matchId) => {
 export const postMatchToBeUnsimulated = async(matchId) => {
     const response = await axios.post(`${URL}/admin/matchweek/unsimulate/${matchId}`);
 }
+export const getBestXI = async() => {
+    const response = await axios.get(`${URL}/admin/bestxi`);
+    return response.data;
+}
+
+export const setBestxi = async(bestxi) => {
+    const response = await axios.post(`${URL}/admin/bestxi`, bestxi);
+    return response.data;
+}
+
+export const setBestxiAuto = async() => {
+    const response = await axios.post(`${URL}/admin/bestxi/auto`);
+    return response.data;
+}
