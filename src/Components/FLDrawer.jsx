@@ -42,10 +42,24 @@ const FLDrawer = () => {
     const drawerWidth = 240;
     const navigate = useNavigate();
     const [leagueName, setLeagueName] = useState('');
+    const [active, setActive] = useState(null);
     useEffect(()=>{
       getFLInfo(flId).then((res)=>{
         setLeagueName(res.name);
       })
+      let page = tokens[tokens.length-1];
+      if(page === 'admin'){
+        setActive(drawerOptions[0]);
+      }
+      else if(page === 'fixtures'){
+        setActive(drawerOptions[1]);
+      }
+      else if(page === 'standings'){
+        setActive(drawerOptions[2]);
+      }
+      else if(page === 'starting-team'){
+        setActive(drawerOptions[3]);
+      }
     },[]);
     const handleDrawerClick = (option)=>{
         // console.log('Drawer Clicked');
@@ -71,12 +85,14 @@ const FLDrawer = () => {
       >
         <div/>
         <Toolbar> 
-            <Typography variant="h6" noWrap component="div">{leagueName}</Typography>
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <Typography variant="h4">{leagueName}</Typography>
+          </div>
         </Toolbar>
         <Divider />
         <List>
           {drawerOptions.map((option, index) => (
-            <ListItem key={option.text} disablePadding>
+            <ListItem key={option.text} sx={active===option ? {borderLeft: 1, borderColor: 'green', borderWidth: '3px'}:{}}disablePadding>
               <ListItemButton onClick={()=>{handleDrawerClick(option)}}>
                 <ListItemText primary={option.text} />
               </ListItemButton>
