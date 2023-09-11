@@ -48,7 +48,7 @@ const FLHome = () => {
                 </TableHead>
                 <TableBody>
                     {leagues.map((row, index) => (
-                        <TableRow onClick={()=>{navigate('/friends-league/'+row.id+'/fixtures')}} sx={{cursor: 'pointer'}} 
+                        <TableRow onClick={()=>{if(row.role!=='request')navigate('/friends-league/'+row.id+'/fixtures')}} sx={{cursor: 'pointer'}} 
                             onMouseEnter={()=>{setIsHover(index)}} 
                             onMouseLeave={()=>{setIsHover(-1)}}
                             style={{backgroundColor: (isHover === index? 'rgba(0,0,100,0.2)' : 'rgba(0,0,0,0)')}}>

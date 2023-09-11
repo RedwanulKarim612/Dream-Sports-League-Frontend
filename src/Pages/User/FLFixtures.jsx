@@ -19,7 +19,8 @@ const FLFixtures = () => {
     const [noFixture, setNoFixture] = useState(false);
     useEffect(() => {
         getFLFixture(flId).then((res) => {
-            if(res==="Do not have enough members"){
+            setRole(res.role);
+            if(res.status==="Do not have enough members"){
                 setNoFixture(true);
                 return;
             }
@@ -28,7 +29,6 @@ const FLFixtures = () => {
             setMatchDate(res.matches[0].time);
             setMatchesOnDate(res.matches[0].matches);
             setAllDates(res.matches.map((match) => match.time));
-            setRole(res.role);
         });
     }, []);
 
