@@ -71,7 +71,6 @@ const PlayerStats = () => {
                             <TableCell align="center">Player Name</TableCell>
                             <TableCell align="center">Team</TableCell>
                             <TableCell align="center">Position</TableCell>
-                            <TableCell align="center">Minutes</TableCell>
                             <TableCell align="center">Goals</TableCell>
                             <TableCell align="center">Assists</TableCell>
                             <TableCell align="center">Saves</TableCell>
@@ -91,7 +90,6 @@ const PlayerStats = () => {
                                 <TableCell component="th" scope="row" align="center">{row.name}</TableCell>
                                 <TableCell align="center">{row.team}</TableCell>
                                 <TableCell align="center">{row.position}</TableCell>
-                                <TableCell align="center">{row.minutes}</TableCell>
                                 <TableCell align="center">{row.goals}</TableCell>
                                 <TableCell align="center">{row.assists}</TableCell>
                                 <TableCell align="center">{row.saves}</TableCell>
