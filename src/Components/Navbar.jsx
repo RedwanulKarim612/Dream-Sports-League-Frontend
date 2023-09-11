@@ -56,7 +56,7 @@ function Navbar() {
   const tokens = qlink.split('/');
   const link = tokens[3];
   useEffect(() => {
-    if(link === 'fixture') {
+    if(link === 'fixture' || link === 'matches') {
       setActive(pages[1]);
     }
     else if(link === 'squad' || link === 'playingxi' || link === 'transfer-window') {
