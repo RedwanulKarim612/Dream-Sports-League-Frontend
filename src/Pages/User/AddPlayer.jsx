@@ -243,7 +243,7 @@ const AddPlayerPage = () => {
         </div>
         <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", padding: 100}}>
             <Button variant="contained" color="success" disabled={confirmDisabled} onClick={()=>{handleConfirm()}}>Confirm</Button>
-            <Button variant="contained" color="red" onClick={()=>{handleCancel()}}>Cancel</Button>
+            <Button variant="contained" color="warning" onClick={()=>{handleCancel()}}>Cancel</Button>
         </div>
         </div>
     );
