@@ -205,6 +205,7 @@ function Navbar() {
                   >
                     <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
                     <MenuItem onClick={()=>{navigate("/transfer-window")}}>Transfer Window</MenuItem>
+                    <MenuItem onClick={()=>{navigate("/squad/view")}}>Your Squad</MenuItem>
                   </Menu>
                 </>
                 }
