@@ -66,12 +66,11 @@ const PlayerStats = () => {
             <TableContainer component={Paper} style={{width:'80%'}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow style={{backgroundColor: "rgba(0,0,100,0.5"}}>
                             <TableCell align="center">Rank</TableCell>
                             <TableCell align="center">Player Name</TableCell>
                             <TableCell align="center">Team</TableCell>
                             <TableCell align="center">Position</TableCell>
-                            <TableCell align="center">Minutes</TableCell>
                             <TableCell align="center">Goals</TableCell>
                             <TableCell align="center">Assists</TableCell>
                             <TableCell align="center">Saves</TableCell>
@@ -81,16 +80,16 @@ const PlayerStats = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {playerStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                        {playerStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                             <TableRow
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                style={{backgroundColor: (index % 2 === 1 ? 'rgba(0,0,50,0.05)' : 'rgba(0,0,0,0)')}}
                             >
                                 <TableCell align="center">{row.rank}</TableCell>
                                 <TableCell component="th" scope="row" align="center">{row.name}</TableCell>
                                 <TableCell align="center">{row.team}</TableCell>
                                 <TableCell align="center">{row.position}</TableCell>
-                                <TableCell align="center">{row.minutes}</TableCell>
                                 <TableCell align="center">{row.goals}</TableCell>
                                 <TableCell align="center">{row.assists}</TableCell>
                                 <TableCell align="center">{row.saves}</TableCell>
