@@ -59,7 +59,7 @@ function Navbar() {
     if(link === 'fixture') {
       setActive(pages[1]);
     }
-    else if(link === 'squad' || link === 'playingxi') {
+    else if(link === 'squad' || link === 'playingxi' || link === 'transfer-window') {
       setActive(pages[2]);
     }
     else if(link === 'friends-league') {

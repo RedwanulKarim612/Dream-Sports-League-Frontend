@@ -180,7 +180,7 @@ const FLStartingTeam = () => {
                 </Select>
                 <FormHelperText>Formation</FormHelperText>
             </FormControl>
-            <FormControl required sx={{ m: 1, minWidth: 120 }}>
+            {/* <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>
                 <Select
                 labelId="demo-simple-select-required-label"
@@ -194,7 +194,7 @@ const FLStartingTeam = () => {
                 })}
                 </Select>
                 <FormHelperText>Formation</FormHelperText>
-            </FormControl>
+            </FormControl> */}
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Captain</InputLabel>
                 <Select

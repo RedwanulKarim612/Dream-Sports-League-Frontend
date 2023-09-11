@@ -210,10 +210,16 @@ const BuildSquad = () => {
             <BudgetInfo budget={budget} noPlayers={noPlayers}/>
             {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'red', margin: '20px'}} onClick={()=>{handleAutopick()}}>Autopick</Button>} 
         </div>
-        <div style={{marginLeft: '20px'}}>
+        <div style={{display: "flex", justifyContent: "space-between", width: "60%", margin: "auto", marginTop: '5px'}}>
             <PositionTable position="Goalkeepers" players={team.players.goalkeepers} maxNumber={2}/>
+        </div>
+        <div style={{display: "flex", justifyContent: "space-between", width: "60%", margin: "auto", marginTop: '30px'}}>
             <PositionTable position="Defenders" players={team.players.defenders} maxNumber={5}/>
+        </div>
+        <div style={{display: "flex", justifyContent: "space-between", width: "60%", margin: "auto", marginTop: '30px'}}>
             <PositionTable position="Midfielders" players={team.players.midfielders} maxNumber={5}/>
+        </div>
+        <div style={{display: "flex", justifyContent: "space-between", width: "60%", margin: "auto", marginTop: '30px'}}>
             <PositionTable position="Forwards" players={team.players.forwards} maxNumber={4}/>    
         </div>
         {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>}
