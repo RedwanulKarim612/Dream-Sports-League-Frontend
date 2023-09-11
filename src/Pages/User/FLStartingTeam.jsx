@@ -235,7 +235,7 @@ const FLStartingTeam = () => {
                     <PlayingXIposition players={team.bench.forwards} position="Forwards" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
                 </div>
             </div>
-            <div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleCancel()}}>Cancel</Button>
     
