@@ -173,3 +173,8 @@ export const getMyFLMatches = async(id) =>{
     const response = await axios.get(`${URL}/friendsleague/${id}/mymatches`);
     return response.data;
 }
+
+export const getIsLogin = async() => {
+    const response = await axios.get(`${URL}/profile/islogin`);
+    return response.data;
+}

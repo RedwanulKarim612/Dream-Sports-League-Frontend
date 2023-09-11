@@ -37,7 +37,7 @@ const FLStandings = () => {
             <TableContainer component={Paper} style={{width:'80%'}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow style={{backgroundColor: "rgba(0,0,100,0.5"}}>
                             <TableCell align="center">Team Name</TableCell>
                             <TableCell align="center">Matches Played</TableCell>
                             <TableCell align="center">Wins</TableCell>
@@ -48,10 +48,11 @@ const FLStandings = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {standings.map((row) => (
+                        {standings.map((row,  index) => (
                             <TableRow
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                style={{backgroundColor: (index % 2 === 1 ? 'rgba(0,0,50,0.05)' : 'rgba(0,0,0,0)')}}
                             >
                                 <TableCell component="th" scope="row" align="center">{row.user_id}</TableCell>
                                 <TableCell align="center">{row.played}</TableCell>
