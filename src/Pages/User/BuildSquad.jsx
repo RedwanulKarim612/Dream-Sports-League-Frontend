@@ -57,13 +57,13 @@ const PositionTable = ({position, players, maxNumber}) => {
         console.log(team);
     }
     return(
-        <div>
+        <div style={{ width: '1000px'}}>
         <Typography variant="h5" sx={{color: 'white'}}>{position}</Typography>
-        <TableContainer style={{ width: 800}}>
+        <TableContainer>
         <Table aria-label="simple table">
             <TableHead>
                 <TableRow sx={{width: '10px'}}>
-                    <TableCell sx={{color: 'white'}} align="center"> Name </TableCell>
+                    <TableCell sx={{color: 'white', width: '30%'}} align="center"> Name </TableCell>
                     <TableCell sx={{color: 'white'}} align="center"> Team </TableCell>
                     <TableCell sx={{color: 'white'}} align="center"> Overall </TableCell>
                     <TableCell sx={{color: 'white'}} align="center"> Price </TableCell>
@@ -210,12 +210,16 @@ const BuildSquad = () => {
             <BudgetInfo budget={budget} noPlayers={noPlayers}/>
             {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'red', margin: '20px'}} onClick={()=>{handleAutopick()}}>Autopick</Button>} 
         </div>
-        <div style={{marginLeft: '20px'}}>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <PositionTable position="Goalkeepers" players={team.players.goalkeepers} maxNumber={2}/>
+            <div style={{marginTop: 50}}></div>
             <PositionTable position="Defenders" players={team.players.defenders} maxNumber={5}/>
+            <div style={{marginTop: 50}}></div>
             <PositionTable position="Midfielders" players={team.players.midfielders} maxNumber={5}/>
+            <div style={{marginTop: 50}}></div>
             <PositionTable position="Forwards" players={team.players.forwards} maxNumber={4}/>    
-        </div>
+            <div style={{marginTop: 50}}></div>
+            </div>
         {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>}
         {lastToken === 'build' && <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleReset()}}>Reset</Button>}
         <div style={{height: '100px'}}></div>
