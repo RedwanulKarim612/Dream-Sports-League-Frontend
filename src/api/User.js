@@ -176,6 +176,7 @@ export const getMyFLMatches = async(id) =>{
 
 export const getIsLogin = async() => {
     const response = await axios.get(`${URL}/profile/islogin`);
+    console.log(response.data);
     return response.data;
 }
 

@@ -122,7 +122,10 @@ function Navbar() {
   }
   const handleLogout = () => {
     userLogout().then(res => {
-      if(res === "User logged out")navigate('/');
+      if(res === "User logged out"){
+        navigate('/');
+        window.location.reload();
+      }
     })
   }
 
