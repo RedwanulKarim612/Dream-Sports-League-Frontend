@@ -3,6 +3,7 @@ import { getDPLStandings } from "../../api/User";
 import { Typography, TablePagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import Navbar from "../../Components/Navbar";
 import TopBar from "../../Components/TopBar";
+import { blue } from "@mui/material/colors";
 
 const DPLStandings = () => {
     const [users, setUsers] = useState([]);
@@ -39,6 +40,7 @@ const DPLStandings = () => {
     }
     return (
         <div style={{paddingBottom: 100}}>
+
             <TopBar />
             <Navbar />
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
@@ -63,7 +65,7 @@ const DPLStandings = () => {
             <TableContainer component={Paper} style={{width:'80%'}}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow style={{backgroundColor: "rgba(0,0,100,0.5"}}>
                             <TableCell align="center">Rank</TableCell>
                             <TableCell align="center">User ID</TableCell>
                             <TableCell align="center">User Name</TableCell>
@@ -73,10 +75,11 @@ const DPLStandings = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                        {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                             <TableRow
                                 key={row.user_id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                style={{backgroundColor: (index % 2 === 1 ? 'rgba(0,0,50,0.05)' : 'rgba(0,0,0,0)')}}
                             >
                                 <TableCell align="center">{row.rank}</TableCell>
                                 <TableCell component="th" scope="row" align="center">{row.user_id}</TableCell>

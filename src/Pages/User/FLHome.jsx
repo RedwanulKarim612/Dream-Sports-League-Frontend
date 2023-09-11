@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const FLHome = () => {
     const [leagues, setLeagues] = useState(null);
+    const [isHover, setIsHover] = useState(-1);
     const navigate = useNavigate();
     useEffect(() => {
         getFLHome().then(res => {
@@ -38,7 +39,7 @@ const FLHome = () => {
             <TableContainer>
             <Table  sx={{minWidth:'150px'}}>
                 <TableHead>
-                    <TableRow >
+                    <TableRow style={{backgroundColor: 'rgba(0,0,100,0.5)'}}>
                         <TableCell align="center"> Name </TableCell>
                         <TableCell align="center"> Your Rank </TableCell>
                         <TableCell align="center"> Players in Starting Lineup </TableCell>
@@ -46,8 +47,11 @@ const FLHome = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {leagues.map((row) => (
-                        <TableRow onClick={()=>{navigate('/friends-league/'+row.id+'/fixtures')}} sx={{cursor: 'pointer'}}>
+                    {leagues.map((row, index) => (
+                        <TableRow onClick={()=>{navigate('/friends-league/'+row.id+'/fixtures')}} sx={{cursor: 'pointer'}} 
+                            onMouseEnter={()=>{setIsHover(index)}} 
+                            onMouseLeave={()=>{setIsHover(-1)}}
+                            style={{backgroundColor: (isHover === index? 'rgba(0,0,100,0.2)' : 'rgba(0,0,0,0)')}}>
                             <TableCell sx={{color: 'white'}} align="center">{row.name}</TableCell>      
                             <TableCell sx={{color: 'white'}} align="center">{row.rank}</TableCell>
                             <TableCell sx={{color: 'white'}} align="center">{row.team_player_count}</TableCell>  
