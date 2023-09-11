@@ -82,7 +82,7 @@ const FLAdmin = () => {
                                 {/* <TableCell align="center">{row.rank}</TableCell> */}
                                 <TableCell component="th" scope="row" align="center">{row.user_id}</TableCell>
                                 <TableCell align="center">{row.team_name}</TableCell>
-                                <TableCell align="center">{row.points}</TableCell> 
+                                <TableCell align="center">{row.point}</TableCell> 
                                 <TableCell align="center">
                                     <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', marginRight: '20px'}} onClick={()=>{handleAcceptJoinRequest(row.user_id)}}>Accept</Button>
                                     <Button variant="contained" sx={{color: 'white', backgroundColor: 'red'}} onClick={()=>{handleRejectJoinRequest(row.user_id)}}>Reject</Button>

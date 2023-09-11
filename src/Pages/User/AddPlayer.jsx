@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useParams } from "react";
 import { TeamContext } from "./TeamContext";
 import { useNavigate } from "react-router-dom";
 import { getPlayerList } from "../../api/User";
-import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "@mui/material";
+import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography } from "@mui/material";
 import _ from "lodash";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Navbar from "../../Components/Navbar";
@@ -47,7 +47,7 @@ const AddPlayerPage = () => {
     const [fetchedList, setFetchedList] = useState([]);
     const qlink = window.location.href;
     const tokens = qlink.split('/');
-
+    const [name, setSearchName] = useState('');
     const pos = tokens[tokens.length-1];
     useEffect(() => {
         getPlayerList(pos).then(res => {
@@ -96,8 +96,7 @@ const AddPlayerPage = () => {
         else{
             setPlayers(fetchedList);
         }
-        setShowOnlyAvailable(event.target.checked);
-                    
+        setShowOnlyAvailable(event.target.checked);            
     }
 
     const handleCancel = () => {
@@ -133,6 +132,18 @@ const AddPlayerPage = () => {
             setConfirmDisabled(false);
         }
     }
+
+    const handleSearch = (name) => {
+        if(name.length===0 || !name){ 
+            let newPlayers = [...fetchedList];
+            setPlayers(newPlayers)
+        }
+        setSearchName(name);
+        let newPlayers = [...fetchedList];
+        if(showOnlyAvailable) newPlayers = newPlayers.filter((player) => !player.locked);
+        newPlayers = newPlayers.filter((player) => player.name.toLowerCase().includes(name.toLowerCase()));
+        setPlayers(newPlayers);
+    }
     return (
         <div>
             <TopBar />
@@ -142,6 +153,8 @@ const AddPlayerPage = () => {
         
         <div style={{display: "flex", justifyContent: "space-between", width: "90%", margin: "auto"}}>
             <div>
+            <TextField required id="outlined-required" onChange={(event)=>{handleSearch(event.target.value)}}/>
+
             <input type="checkbox" name="person" checked={showOnlyAvailable} 
                    onChange={(event)=>{handleToggleAvailableOnly(event)}}
                     /> Show Available Players Only
@@ -228,9 +241,9 @@ const AddPlayerPage = () => {
             </Paper> 
             </div>
         </div>
-        <div>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", padding: 100}}>
             <Button variant="contained" color="success" disabled={confirmDisabled} onClick={()=>{handleConfirm()}}>Confirm</Button>
-            <Button variant="contained" color="error" onClick={()=>{handleCancel()}}>Cancel</Button>
+            <Button variant="contained" color="red" onClick={()=>{handleCancel()}}>Cancel</Button>
         </div>
         </div>
     );

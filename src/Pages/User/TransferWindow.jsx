@@ -147,7 +147,7 @@ const TransferWindow = () => {
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", padding: 100}}>
                     <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20}}>
                         <h1 style={{justifyContent: "center", alignItems: "center", alignContent: "center"}}>Your Player</h1>
-                        <TableContainer style={{ width: 800}}>
+                        <TableContainer>
                             <Table aria-label="simple table">
                                 <TableHead>
                                     <TableRow sx={{width: '10px'}}>
@@ -184,7 +184,7 @@ const TransferWindow = () => {
                     
                     <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20}}>
                         <h1 style={{justifyContent: "center", alignItems: "center", alignContent: "center"}}>New Player</h1>
-                        <TableContainer style={{ width: 800}}>
+                        <TableContainer >
                             <Table aria-label="simple table">
                                 <TableHead>
                                     <TableRow sx={{width: '10px'}}>

@@ -59,7 +59,7 @@ function Navbar() {
     if(link === 'fixture') {
       setActive(pages[1]);
     }
-    else if(link === 'squad' || link === 'playingxi') {
+    else if(link === 'squad' || link === 'playingxi' || link === 'transfer-window') {
       setActive(pages[2]);
     }
     else if(link === 'friends-league') {
@@ -122,7 +122,10 @@ function Navbar() {
   }
   const handleLogout = () => {
     userLogout().then(res => {
-      if(res === "User logged out")navigate('/');
+      if(res === "User logged out"){
+        navigate('/');
+        window.location.reload();
+      }
     })
   }
 
@@ -205,6 +208,7 @@ function Navbar() {
                   >
                     <MenuItem onClick={()=>{navigate("/playingxi/default")}}>Playing XI</MenuItem>
                     <MenuItem onClick={()=>{navigate("/transfer-window")}}>Transfer Window</MenuItem>
+                    <MenuItem onClick={()=>{navigate("/squad/view")}}>Your Squad</MenuItem>
                   </Menu>
                 </>
                 }

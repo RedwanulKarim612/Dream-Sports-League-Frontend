@@ -16,14 +16,19 @@ const FLFixtures = () => {
     const [matchDate, setMatchDate] = useState();
     const [matchesOnDate, setMatchesOnDate] = useState([]);
     const [role, setRole] = useState('');
+    const [noFixture, setNoFixture] = useState(false);
     useEffect(() => {
         getFLFixture(flId).then((res) => {
+            setRole(res.role);
+            if(res.status==="Do not have enough members"){
+                setNoFixture(true);
+                return;
+            }
             // console.log(res.matches[0].matches);
             setAllMatches(res.matches);
             setMatchDate(res.matches[0].time);
             setMatchesOnDate(res.matches[0].matches);
             setAllDates(res.matches.map((match) => match.time));
-            setRole(res.role);
         });
     }, []);
 
@@ -48,6 +53,8 @@ const FLFixtures = () => {
             <Box component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginTop: '200px' }}
             >
+            {!noFixture &&
+            <>
             <FormControl required sx={{ m: 1, minWidth: 250 }}>
                 <InputLabel id="demo-simple-select-required-label">Date</InputLabel>
                 <Select
@@ -113,6 +120,13 @@ const FLFixtures = () => {
                 })}
                 
             </Grid>
+            </>}
+            {noFixture &&
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 20}}>
+            <Typography variant="h4">
+                Fixture not available now
+            </Typography>
+            </div>}
       </Box>
       </Box>
 

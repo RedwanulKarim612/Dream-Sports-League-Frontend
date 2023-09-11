@@ -180,7 +180,7 @@ const FLStartingTeam = () => {
                 </Select>
                 <FormHelperText>Formation</FormHelperText>
             </FormControl>
-            <FormControl required sx={{ m: 1, minWidth: 120 }}>
+            {/* <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Formation</InputLabel>
                 <Select
                 labelId="demo-simple-select-required-label"
@@ -194,7 +194,7 @@ const FLStartingTeam = () => {
                 })}
                 </Select>
                 <FormHelperText>Formation</FormHelperText>
-            </FormControl>
+            </FormControl> */}
             <FormControl required sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-required-label">Captain</InputLabel>
                 <Select
@@ -235,7 +235,7 @@ const FLStartingTeam = () => {
                     <PlayingXIposition players={team.bench.forwards} position="Forwards" selectedPlayer={selectedFromBench} setSelected={setSelectedFromBench}/>
                 </div>
             </div>
-            <div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'green', margin: '20px'}} onClick={()=>{handleConfirmation()}}>Confirm</Button>
             <Button variant="contained" sx={{color: 'white', backgroundColor: 'orange', margin: '20px'}} onClick={()=>{handleCancel()}}>Cancel</Button>
     

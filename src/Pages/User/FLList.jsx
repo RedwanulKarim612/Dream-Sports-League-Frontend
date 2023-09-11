@@ -5,11 +5,13 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { getFLList, requestJoinFL } from '../../api/User';
 import { getDate, getDateAndTime } from '../../util';
+import { useNavigate } from 'react-router-dom';
 
 const FLList = () => {
     const [leagues, setLeagues] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const navigate = useNavigate();
     useEffect(() => {
         getFLList().then((data) => {
             setLeagues(data.friendsLeagues);
@@ -30,8 +32,9 @@ const FLList = () => {
             id: id
         }
         requestJoinFL(req).then((res) => {
-            console.log(id);
-            console.log(res);            
+            // console.log(id);
+            // console.log(res);         
+            navigate(`/friends-league`)
         });
     }
 
